@@ -50,8 +50,8 @@ export default function HomePage() {
     <div className="bg-[#0E0F12] text-[#FBF9F5] overflow-hidden">
       
       {/* ================= SECTION 1: IMMERSIVE HERO ================= */}
-      <section className="relative min-h-[92vh] flex items-center justify-center bg-cover bg-center" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1920&q=80')" }}>
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0E0F12]/85 via-[#0E0F12]/65 to-[#0E0F12]"></div>
+      <section className="relative min-h-[92vh] flex items-center justify-center bg-cover bg-center" style={{ backgroundImage: "url('/salon-storefront.jpg')" }}>
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0E0F12]/80 via-[#0E0F12]/60 to-[#0E0F12]"></div>
         
         <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-20">
           
@@ -206,6 +206,85 @@ export default function HomePage() {
 
           <SmartDiscovery />
 
+        </div>
+      </section>
+
+      {/* ================= SECTION 3B: OUR SALON SHOWCASE ================= */}
+      <section className="py-24 bg-[#0E0F12] relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            {/* Real Salon Image */}
+            <div className="lg:col-span-7 relative group">
+              <div className="rounded-3xl overflow-hidden border-2 border-[#C5A059]/40 shadow-2xl shadow-[#C5A059]/10 relative">
+                <img
+                  src="/salon-storefront.jpg"
+                  alt="Classic Pearl Unisex Salon — 80ft BDA Main Road, Arekere, Bengaluru"
+                  className="w-full h-auto object-cover group-hover:scale-[1.02] transition-transform duration-700"
+                />
+                {/* Floating Location Badge */}
+                <div className="absolute bottom-4 left-4 sm:bottom-6 sm:left-6 bg-[#0E0F12]/90 backdrop-blur-md border border-[#C5A059]/50 rounded-xl px-4 py-3 shadow-2xl">
+                  <div className="flex items-center gap-2 text-[11px] text-[#DFBA73] font-bold uppercase tracking-wider">
+                    <MapPin className="w-3.5 h-3.5 text-[#C5A059]" />
+                    <span>80ft BDA Main Road, Arekere, Bengaluru</span>
+                  </div>
+                  <span className="text-[10px] text-emerald-400 flex items-center gap-1 mt-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    Open Now • 10 AM – 9 PM
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Text Column */}
+            <div className="lg:col-span-5 space-y-6">
+              <span className="text-[10px] tracking-[0.3em] text-[#C5A059] uppercase font-bold block">
+                VISIT OUR SALON
+              </span>
+              <h2 className="font-serif text-3xl sm:text-4xl text-[#FBF9F5] leading-tight">
+                Your neighbourhood <span className="italic text-[#DFBA73]">premium salon</span>
+              </h2>
+              <p className="text-sm text-[#A39E93] leading-relaxed font-light">
+                Walk into Classic Pearl Unisex Salon on 80ft BDA Main Road in Arekere, Bengaluru — beside Camry Hospital. A modern, well-equipped salon with trained professionals, premium certified products, and a spotless hygienic environment.
+              </p>
+
+              <div className="space-y-3 pt-2">
+                {[
+                  'Expert hair stylists & skin specialists',
+                  'Premium certified products (ammonia-free, organic)',
+                  'Spotless hygienic stations & sterilized tools',
+                  '100% transparent pricing — no hidden charges',
+                  'Walk-in welcome or book via WhatsApp',
+                ].map((item, idx) => (
+                  <div key={idx} className="flex items-center gap-2.5 text-xs text-[#FBF9F5]">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0" />
+                    <span>{item}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="flex flex-wrap gap-3 pt-4">
+                <Link
+                  href="/book"
+                  className="bg-gradient-to-r from-[#C5A059] to-[#DFBA73] hover:from-[#DFBA73] hover:to-[#C5A059] text-[#0E0F12] px-6 py-3 rounded-xl text-xs font-bold uppercase tracking-wider shadow-lg shadow-[#C5A059]/20 flex items-center gap-2 transition-all"
+                >
+                  <Calendar className="w-3.5 h-3.5" />
+                  <span>Book Appointment</span>
+                </Link>
+                <a
+                  href={businessConfig.mapsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-[#17181C] hover:bg-[#22242B] border border-white/15 text-[#FBF9F5] px-5 py-3 rounded-xl text-xs font-semibold uppercase tracking-wider flex items-center gap-2 transition-colors"
+                >
+                  <MapPin className="w-3.5 h-3.5 text-[#C5A059]" />
+                  <span>Get Directions</span>
+                </a>
+              </div>
+            </div>
+
+          </div>
         </div>
       </section>
 
