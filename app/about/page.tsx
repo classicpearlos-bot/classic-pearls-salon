@@ -1,122 +1,102 @@
 import React from 'react';
 import Link from 'next/link';
-import { siteConfig, businessConfig } from '@/lib/config';
-import { Sparkles, Calendar, Award, ShieldCheck, HeartHandshake, ArrowRight } from 'lucide-react';
+import { businessConfig } from '@/lib/config';
+import { Sparkles, ArrowRight, ShieldCheck, HeartHandshake, CheckCircle2 } from 'lucide-react';
 
 export const metadata = {
-  title: 'About the Atelier | Heritage & Artistry | Classic Pearls',
-  description: 'Learn about the philosophy, architectural standards, and dedicated craftsmanship behind Classic Pearls luxury beauty lounge.',
+  title: 'About Us | Classic Pearl Unisex Salon Bengaluru',
+  description: 'Learn about the philosophy, craftsmanship, and standards of Classic Pearl Unisex Salon in Arekere, Bengaluru.',
 };
 
 export default function AboutPage() {
   return (
     <div className="bg-[#0E0F12] text-[#FBF9F5] py-16 sm:py-24">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20">
         
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-20 space-y-4">
+        <div className="text-center max-w-3xl mx-auto space-y-4">
           <span className="text-[10px] tracking-[0.3em] text-[#C5A059] uppercase font-bold block">
-            ATELIER HERITAGE
+            ABOUT CLASSIC PEARL
           </span>
           <h1 className="font-serif text-4xl sm:text-6xl text-[#FBF9F5]">
-            The Architecture of <span className="italic text-[#DFBA73]">Elegance</span>
+            Craftsmanship & <span className="italic text-[#DFBA73]">Hospitality</span>
           </h1>
           <p className="text-sm sm:text-base text-[#A39E93] font-light leading-relaxed">
-            Classic Pearls was created with a singular mandate: to elevate hair and skin artistry into a bespoke, serene, and uncompromising luxury ritual.
+            Welcome to Classic Pearl Unisex Salon, where world-class beauty treatments meet warm, personalized hospitality in Arekere, Bengaluru.
           </p>
         </div>
 
-        {/* Brand Story Editorial Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-24">
+        {/* Story Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           <div className="lg:col-span-6 space-y-6">
-            <h2 className="font-serif text-3xl sm:text-4xl text-[#FBF9F5] leading-tight">
-              Where Parisian Technique Meets Botanical Biology
-            </h2>
-            <p className="text-sm text-[#A39E93] leading-relaxed font-light">
-              We believe true luxury is invisible—it is found in the weightless movement of perfectly cut hair, the natural luminescence of undamaged color, and the deep peace of an unhurried, private appointment.
+            <h2 className="font-serif text-3xl text-[#FBF9F5]">Our Heritage & Vision</h2>
+            <p className="text-xs sm:text-sm text-[#A39E93] leading-relaxed font-light">
+              Classic Pearl Unisex Salon was founded with a clear mission: to provide the highest standard of hair styling, aesthetic skin treatments, and grooming in an atmosphere of refined comfort.
             </p>
-            <p className="text-sm text-[#A39E93] leading-relaxed font-light">
-              From our custom Italian styling stations to our organic amino acid formulations, every element of Classic Pearls is designed to eliminate the harsh chemical rush of commercial salons and replace it with bespoke care.
+            <p className="text-xs sm:text-sm text-[#A39E93] leading-relaxed font-light">
+              From our signature Korean glass skin facials and Hydra pore treatments to organic Nano Plastia, Botox, and Balayage, every service is tailored to enhance each guest's unique individuality.
             </p>
-
-            <div className="pt-4 grid grid-cols-2 gap-6 border-t border-white/10">
-              <div>
-                <span className="font-serif text-2xl font-bold text-[#DFBA73] block">1-on-1</span>
-                <span className="text-xs text-[#A39E93]">Undivided artisan dedication</span>
-              </div>
-              <div>
-                <span className="font-serif text-2xl font-bold text-[#DFBA73] block">100%</span>
-                <span className="text-xs text-[#A39E93]">Cruelty-free & organic peptides</span>
-              </div>
+            <div className="pt-2">
+              <Link
+                href="/services"
+                className="inline-flex items-center space-x-2 text-xs font-bold uppercase tracking-wider text-[#DFBA73] hover:text-white"
+              >
+                <span>View Our Service Menu</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
             </div>
           </div>
 
-          <div className="lg:col-span-6">
-            <div className="rounded-xl overflow-hidden border border-[#C5A059]/30 shadow-2xl">
-              <img
-                src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1000&q=80"
-                alt="Classic Pearls Sanctuary"
-                className="w-full h-full object-cover aspect-[4/3]"
-              />
-            </div>
+          <div className="lg:col-span-6 rounded-xl overflow-hidden border border-white/10 aspect-[4/3]">
+            <img
+              src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1000&q=80"
+              alt="Classic Pearl Unisex Salon Interior"
+              className="w-full h-full object-cover"
+            />
           </div>
         </div>
 
-        {/* Our 3 Core Commitments */}
-        <div className="mb-24">
-          <div className="text-center max-w-2xl mx-auto mb-12 space-y-2">
-            <span className="text-[10px] tracking-[0.25em] text-[#C5A059] uppercase font-bold">
-              THE THREE COMMITMENTS
-            </span>
-            <h2 className="font-serif text-3xl sm:text-4xl text-[#FBF9F5]">Our Atelier Standards</h2>
+        {/* Core Pillars */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="bg-[#14161B] p-8 rounded-xl border border-white/5 space-y-3">
+            <Sparkles className="w-8 h-8 text-[#C5A059]" />
+            <h3 className="font-serif text-2xl text-[#FBF9F5]">Premium Formulations</h3>
+            <p className="text-xs text-[#A39E93] leading-relaxed">
+              We exclusively use authentic, certified, ammonia-free and organic formulations to protect hair and skin health.
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-[#14161B] p-8 rounded-xl border border-white/10 space-y-4">
-              <div className="w-12 h-12 rounded-lg bg-[#C5A059]/15 flex items-center justify-center text-[#DFBA73]">
-                <ShieldCheck className="w-6 h-6" />
-              </div>
-              <h3 className="font-serif text-2xl text-[#FBF9F5]">Biological Integrity</h3>
-              <p className="text-xs text-[#A39E93] leading-relaxed font-light">
-                We never compromise hair or skin health for temporary speed. Every lightening treatment includes continuous bond-multiplying elixirs.
-              </p>
-            </div>
+          <div className="bg-[#14161B] p-8 rounded-xl border border-white/5 space-y-3">
+            <HeartHandshake className="w-8 h-8 text-[#C5A059]" />
+            <h3 className="font-serif text-2xl text-[#FBF9F5]">Personalized Care</h3>
+            <p className="text-xs text-[#A39E93] leading-relaxed">
+              Every appointment begins with a thorough consultation to understand your hair texture, skin needs, and style goals.
+            </p>
+          </div>
 
-            <div className="bg-[#14161B] p-8 rounded-xl border border-white/10 space-y-4">
-              <div className="w-12 h-12 rounded-lg bg-[#C5A059]/15 flex items-center justify-center text-[#DFBA73]">
-                <Award className="w-6 h-6" />
-              </div>
-              <h3 className="font-serif text-2xl text-[#FBF9F5]">Architectural Precision</h3>
-              <p className="text-xs text-[#A39E93] leading-relaxed font-light">
-                Every haircut and color glaze is mathematically designed to enhance cheekbone elevation, eye color, and natural growth patterns.
-              </p>
-            </div>
-
-            <div className="bg-[#14161B] p-8 rounded-xl border border-white/10 space-y-4">
-              <div className="w-12 h-12 rounded-lg bg-[#C5A059]/15 flex items-center justify-center text-[#DFBA73]">
-                <HeartHandshake className="w-6 h-6" />
-              </div>
-              <h3 className="font-serif text-2xl text-[#FBF9F5]">Private Sanctuary</h3>
-              <p className="text-xs text-[#A39E93] leading-relaxed font-light">
-                Enjoy private styling suites, tailored ambient acoustics, and an atmosphere designed to respect personal privacy.
-              </p>
-            </div>
+          <div className="bg-[#14161B] p-8 rounded-xl border border-white/5 space-y-3">
+            <ShieldCheck className="w-8 h-8 text-[#C5A059]" />
+            <h3 className="font-serif text-2xl text-[#FBF9F5]">Strict Hygiene Standards</h3>
+            <p className="text-xs text-[#A39E93] leading-relaxed">
+              Autoclaved instruments, single-use fresh towels, and sanitized stations ensure complete safety.
+            </p>
           </div>
         </div>
 
-        {/* CTA */}
-        <div className="text-center bg-[#17181C] border border-[#C5A059]/30 rounded-xl p-12 max-w-3xl mx-auto shadow-2xl">
-          <h3 className="font-serif text-3xl text-[#FBF9F5] mb-4">Step into the Atelier</h3>
-          <p className="text-xs text-[#A39E93] max-w-md mx-auto mb-8">
-            Experience the difference of individualized luxury and master craftsmanship.
+        {/* Booking CTA */}
+        <div className="bg-[#17181C] border border-[#C5A059]/30 rounded-xl p-10 text-center space-y-6 max-w-4xl mx-auto shadow-2xl">
+          <h2 className="font-serif text-3xl sm:text-4xl text-[#FBF9F5]">Experience Classic Pearl Unisex Salon</h2>
+          <p className="text-xs text-[#A39E93] max-w-xl mx-auto">
+            Visit us in Arekere, Bengaluru or book your appointment online today.
           </p>
-          <Link
-            href="/book"
-            className="inline-flex items-center space-x-2 bg-gradient-to-r from-[#C5A059] to-[#DFBA73] text-[#0E0F12] px-8 py-4 rounded text-xs font-bold tracking-widest uppercase shadow-xl"
-          >
-            <Calendar className="w-4 h-4" />
-            <span>Reserve An Experience</span>
-          </Link>
+          <div className="pt-2">
+            <Link
+              href="/book"
+              className="bg-gradient-to-r from-[#C5A059] to-[#DFBA73] text-[#0E0F12] px-8 py-3.5 rounded text-xs font-bold uppercase tracking-wider"
+            >
+              Book Appointment
+            </Link>
+          </div>
         </div>
 
       </div>

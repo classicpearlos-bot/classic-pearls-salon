@@ -1,97 +1,76 @@
-'use client';
-
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { FAQ_ITEMS } from '@/data/faq';
-import { ChevronDown, Sparkles, MessageSquare, Calendar } from 'lucide-react';
+import { businessConfig } from '@/lib/config';
 import { getWhatsAppConciergeUrl } from '@/lib/whatsapp';
+import { MessageSquare, Phone, MapPin, Clock } from 'lucide-react';
+
+export const metadata = {
+  title: 'Frequently Asked Questions | Classic Pearl Unisex Salon Bengaluru',
+  description: 'Find answers to common questions about services, appointments, treatments, and timings at Classic Pearl Unisex Salon.',
+};
 
 export default function FAQPage() {
-  const [openItems, setOpenItems] = useState<Record<string, boolean>>({
-    'faq-1': true,
-    'faq-2': false,
-  });
-
-  const toggleItem = (id: string) => {
-    setOpenItems((prev) => ({
-      ...prev,
-      [id]: !prev[id],
-    }));
-  };
-
   return (
     <div className="bg-[#0E0F12] text-[#FBF9F5] py-16 sm:py-24">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         
         {/* Header */}
-        <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
+        <div className="text-center space-y-4">
           <span className="text-[10px] tracking-[0.3em] text-[#C5A059] uppercase font-bold block">
-            ATELIER INQUIRIES
+            COMMON QUESTIONS
           </span>
-          <h1 className="font-serif text-3xl sm:text-5xl text-[#FBF9F5]">
+          <h1 className="font-serif text-4xl sm:text-6xl text-[#FBF9F5]">
             Frequently Asked <span className="italic text-[#DFBA73]">Questions</span>
           </h1>
-          <p className="text-xs sm:text-sm text-[#A39E93] font-light">
-            Everything you need to know regarding appointment scheduling, artisan selection, and salon policies.
+          <p className="text-sm sm:text-base text-[#A39E93] font-light leading-relaxed max-w-2xl mx-auto">
+            Everything you need to know before visiting Classic Pearl Unisex Salon in Arekere, Bengaluru.
           </p>
         </div>
 
-        {/* Accordion List */}
-        <div className="space-y-4 mb-16">
-          {FAQ_ITEMS.map((item) => {
-            const isOpen = !!openItems[item.id];
-            return (
-              <div
-                key={item.id}
-                className="bg-[#14161B] border border-white/10 hover:border-[#C5A059]/40 rounded-xl overflow-hidden transition-all shadow-lg"
-              >
-                <button
-                  onClick={() => toggleItem(item.id)}
-                  className="w-full p-6 text-left flex items-center justify-between gap-4 focus:outline-none"
-                  aria-expanded={isOpen}
-                >
-                  <span className="font-serif text-lg sm:text-xl text-[#FBF9F5] font-medium">
-                    {item.question}
-                  </span>
-                  <ChevronDown
-                    className={`w-5 h-5 text-[#C5A059] transition-transform duration-300 flex-shrink-0 ${
-                      isOpen ? 'rotate-180 text-[#DFBA73]' : ''
-                    }`}
-                  />
-                </button>
-
-                {isOpen && (
-                  <div className="px-6 pb-6 text-xs sm:text-sm text-[#A39E93] leading-relaxed border-t border-white/5 pt-4 animate-in fade-in duration-200">
-                    <p>{item.answer}</p>
-                  </div>
-                )}
-              </div>
-            );
-          })}
+        {/* FAQ Accordion List */}
+        <div className="space-y-4">
+          {FAQ_ITEMS.map((item, idx) => (
+            <details
+              key={idx}
+              className="group bg-[#14161B] border border-white/5 open:border-[#C5A059]/40 rounded-xl p-6 transition-colors"
+            >
+              <summary className="font-serif text-lg text-[#FBF9F5] group-hover:text-[#DFBA73] cursor-pointer list-none flex items-center justify-between">
+                <span>{item.question}</span>
+                <span className="text-[#C5A059] group-open:rotate-45 transition-transform duration-200 text-xl font-sans">
+                  +
+                </span>
+              </summary>
+              <p className="text-xs sm:text-sm text-[#A39E93] leading-relaxed pt-4 font-light">
+                {item.answer}
+              </p>
+            </details>
+          ))}
         </div>
 
-        {/* Help Banner */}
-        <div className="bg-[#17181C] border border-[#C5A059]/30 rounded-xl p-8 text-center space-y-4 shadow-2xl">
-          <h3 className="font-serif text-2xl text-[#FBF9F5]">Have an unlisted question?</h3>
+        {/* Contact Help Box */}
+        <div className="bg-[#17181C] border border-[#C5A059]/30 rounded-xl p-8 text-center space-y-4 shadow-xl">
+          <h3 className="font-serif text-2xl text-[#FBF9F5]">Have More Questions?</h3>
           <p className="text-xs text-[#A39E93] max-w-md mx-auto">
-            Our atelier concierge team is always available to assist with custom beauty plans and special event requirements.
+            Our salon reception is happy to assist you with inquiries regarding hair treatments, facials, or bridal bookings.
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+          <div className="pt-2 flex flex-wrap items-center justify-center gap-4">
+            <a
+              href={`tel:${businessConfig.phoneRaw}`}
+              className="bg-gradient-to-r from-[#C5A059] to-[#DFBA73] text-[#0E0F12] px-6 py-2.5 rounded text-xs font-bold uppercase tracking-wider flex items-center gap-1.5"
+            >
+              <Phone className="w-3.5 h-3.5" />
+              <span>Call: {businessConfig.phone}</span>
+            </a>
             <a
               href={getWhatsAppConciergeUrl()}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-[#14161B] hover:bg-[#22242B] border border-[#C5A059]/40 text-[#DFBA73] px-5 py-2.5 rounded text-xs font-semibold uppercase tracking-wider flex items-center gap-1.5"
+              className="bg-[#14161B] border border-[#C5A059]/40 text-[#DFBA73] px-5 py-2.5 rounded text-xs font-semibold uppercase tracking-wider flex items-center gap-1.5"
             >
-              <MessageSquare className="w-4 h-4" />
-              <span>Ask via WhatsApp</span>
+              <MessageSquare className="w-3.5 h-3.5" />
+              <span>WhatsApp Us</span>
             </a>
-            <Link
-              href="/book"
-              className="bg-gradient-to-r from-[#C5A059] to-[#DFBA73] text-[#0E0F12] px-6 py-2.5 rounded text-xs font-bold uppercase tracking-wider"
-            >
-              Reserve An Experience
-            </Link>
           </div>
         </div>
 

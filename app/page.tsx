@@ -45,7 +45,7 @@ export default function HomePage() {
         <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-20">
           <div className="inline-flex items-center space-x-2 bg-[#17181C]/90 border border-[#C5A059]/40 px-4 py-1.5 rounded-full text-[10px] font-bold tracking-[0.25em] text-[#DFBA73] uppercase mb-6 shadow-xl">
             <Sparkles className="w-3.5 h-3.5 text-[#C5A059]" />
-            <span>CLASSIC PEARLS • LUXURY SALON & SPA • AREKERE, BENGALURU</span>
+            <span>CLASSIC PEARL UNISEX SALON • AREKERE, BENGALURU</span>
           </div>
 
           <h1 className="font-serif text-4xl sm:text-6xl md:text-7xl font-normal tracking-tight text-[#FBF9F5] leading-[1.1] mb-6">
@@ -53,7 +53,7 @@ export default function HomePage() {
           </h1>
 
           <p className="text-base sm:text-lg md:text-xl text-[#A39E93] font-light max-w-2xl mx-auto leading-relaxed mb-10">
-            A luxury salon experience in Bengaluru where bespoke hair styling, Korean glass facials, Hydra skin treatments, and botanical hair therapies meet.
+            A luxury unisex salon experience in Bengaluru where bespoke hair styling, Korean glass facials, Hydra skin treatments, and botanical hair therapies meet.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
@@ -82,11 +82,11 @@ export default function HomePage() {
             </div>
             <div>
               <span className="font-serif text-2xl sm:text-3xl font-bold text-[#DFBA73] block">100%</span>
-              <span className="text-[11px] uppercase tracking-wider text-[#A39E93]">Ammonia-Free Organic Care</span>
+              <span className="text-[11px] uppercase tracking-wider text-[#A39E93]">Ammonia-Free Care</span>
             </div>
             <div>
-              <span className="font-serif text-2xl sm:text-3xl font-bold text-[#DFBA73] block">Bridal</span>
-              <span className="text-[11px] uppercase tracking-wider text-[#A39E93]">Makeovers & Styling</span>
+              <span className="font-serif text-2xl sm:text-3xl font-bold text-[#DFBA73] block">Unisex</span>
+              <span className="text-[11px] uppercase tracking-wider text-[#A39E93]">Women, Men & Bridal</span>
             </div>
             <div>
               <span className="font-serif text-2xl sm:text-3xl font-bold text-[#DFBA73] block">Arekere</span>
@@ -109,7 +109,7 @@ export default function HomePage() {
                 BEAUTY, <span className="italic text-[#DFBA73]">REFINED.</span>
               </h2>
               <p className="text-sm sm:text-base text-[#A39E93] leading-relaxed font-light">
-                Classic Pearls is a luxury salon destination in Bengaluru offering advanced hair treatments, Korean glass facials, Hydra rituals, Balayage, Botox, Nano Plastia, and complete grooming services for both women and men.
+                Classic Pearl Unisex Salon is a premier beauty destination in Bengaluru offering advanced hair treatments, Korean glass facials, Hydra rituals, Balayage, Botox, Nano Plastia, and complete grooming services for both women and men.
               </p>
               <p className="text-sm text-[#A39E93] leading-relaxed font-light">
                 We believe in personalized consultations and precision craftsmanship that bring out your natural beauty and confidence.
@@ -136,7 +136,7 @@ export default function HomePage() {
               <div className="relative rounded-lg overflow-hidden border border-[#C5A059]/30 shadow-2xl">
                 <img
                   src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1000&q=80"
-                  alt="Classic Pearls Salon"
+                  alt="Classic Pearl Unisex Salon"
                   className="w-full h-full object-cover aspect-[4/3]"
                 />
               </div>
@@ -371,7 +371,7 @@ export default function HomePage() {
                 LOCATION & CONTACT
               </span>
               <h2 className="font-serif text-3xl sm:text-4xl text-[#FBF9F5]">
-                Visit Classic Pearls <span className="italic text-[#DFBA73]">Salon</span>
+                Visit Classic Pearl <span className="italic text-[#DFBA73]">Unisex Salon</span>
               </h2>
               <p className="text-sm text-[#A39E93] leading-relaxed">
                 Located on 80ft BDA Main Road in Arekere, beside Camry Hospital, Bengaluru.

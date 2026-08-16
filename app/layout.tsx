@@ -5,63 +5,65 @@ import { siteConfig, verificationConfig } from '@/lib/config';
 import { getSalonSchemaJsonLd } from '@/lib/schema';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import CookieConsent from '@/components/layout/CookieConsent';
 import FloatingWhatsApp from '@/components/layout/FloatingWhatsApp';
+import CookieConsent from '@/components/layout/CookieConsent';
 
 const cormorant = Cormorant_Garamond({
+  variable: '--font-cormorant',
   subsets: ['latin'],
-  variable: '--font-serif',
   weight: ['300', '400', '500', '600', '700'],
-  style: ['normal', 'italic'],
   display: 'swap',
 });
 
-const plusJakarta = Plus_Jakarta_Sans({
-  subsets: ['latin'],
+const jakarta = Plus_Jakarta_Sans({
   variable: '--font-sans',
+  subsets: ['latin'],
   weight: ['300', '400', '500', '600', '700'],
   display: 'swap',
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteConfig.url),
   title: {
-    default: 'Classic Pearls | Haute Coiffure & Luxury Beauty Lounge',
-    template: '%s | Classic Pearls',
+    default: 'Classic Pearl Unisex Salon | Luxury Salon & Spa Arekere, Bengaluru',
+    template: '%s | Classic Pearl Unisex Salon',
   },
   description: siteConfig.description,
-  keywords: [
-    'Luxury salon',
-    'Haute Coiffure',
-    'Balayage',
-    'Aesthetic facials',
-    'Bridal hair and makeup',
-    'Classic Pearls',
-    'Bespoke beauty atelier',
-  ],
+  metadataBase: new URL(siteConfig.url),
   alternates: {
     canonical: '/',
   },
   openGraph: {
-    type: 'website',
-    url: siteConfig.url,
-    title: 'Classic Pearls | Haute Coiffure & Luxury Beauty Lounge',
+    title: 'Classic Pearl Unisex Salon | Luxury Salon & Spa Bengaluru',
     description: siteConfig.description,
+    url: siteConfig.url,
     siteName: siteConfig.name,
+    locale: 'en_IN',
+    type: 'website',
     images: [
       {
         url: siteConfig.ogImage,
         width: 1200,
         height: 630,
-        alt: 'Classic Pearls Luxury Atelier',
+        alt: 'Classic Pearl Unisex Salon Bengaluru',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Classic Pearls | Haute Coiffure & Luxury Beauty Lounge',
+    title: 'Classic Pearl Unisex Salon | Luxury Salon & Spa Bengaluru',
     description: siteConfig.description,
     images: [siteConfig.ogImage],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
   other: {
     ...(verificationConfig.metaDomainVerification
@@ -75,26 +77,28 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
-  const jsonLd = getSalonSchemaJsonLd();
+}>) {
+  const salonSchema = getSalonSchemaJsonLd();
 
   return (
-    <html lang="en" className={`${cormorant.variable} ${plusJakarta.variable}`}>
+    <html lang="en" className="dark scroll-smooth">
       <head>
-        {/* Google Structured Data / Local Business Schema */}
+        {/* Google Structured Data JSON-LD Schema */}
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(salonSchema) }}
         />
       </head>
-      <body className="bg-[#0E0F12] text-[#FBF9F5] antialiased selection:bg-[#C5A059] selection:text-[#0E0F12]">
+      <body
+        className={`${cormorant.variable} ${jakarta.variable} antialiased bg-[#0E0F12] text-[#FBF9F5] selection:bg-[#C5A059] selection:text-[#0E0F12] min-h-screen flex flex-col font-sans`}
+      >
         <Header />
-        <main>{children}</main>
+        <main className="flex-grow">{children}</main>
         <Footer />
-        <CookieConsent />
         <FloatingWhatsApp />
+        <CookieConsent />
       </body>
     </html>
   );

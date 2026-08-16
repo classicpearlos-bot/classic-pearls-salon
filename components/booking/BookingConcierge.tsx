@@ -130,7 +130,7 @@ export default function BookingConcierge({ initialServiceId, isModal = false }: 
       serviceId: selectedService?.id || '',
       serviceName: selectedService?.name || 'Selected Service',
       artisanId: 'salon-team',
-      artisanName: 'Classic Pearls Salon Team',
+      artisanName: 'Classic Pearl Salon Team',
       preferredDate,
       preferredTime,
       client: {
@@ -162,7 +162,7 @@ export default function BookingConcierge({ initialServiceId, isModal = false }: 
           ONLINE APPOINTMENT RESERVATION
         </span>
         <h2 className="font-serif text-2xl sm:text-3xl text-[#FBF9F5]">
-          Book Your Visit at Classic Pearls
+          Book Your Visit at Classic Pearl Unisex Salon
         </h2>
         <p className="text-xs text-[#A39E93] mt-1">
           {currentStep === 4
@@ -327,7 +327,7 @@ export default function BookingConcierge({ initialServiceId, isModal = false }: 
           <div className="space-y-6 animate-in fade-in duration-200">
             <h4 className="font-serif text-xl text-[#FBF9F5]">Choose your preferred date and time</h4>
             <p className="text-xs text-[#A39E93]">
-              Classic Pearls is open <strong>10:00 AM to 09:00 PM everyday</strong> in Arekere, Bengaluru.
+              Classic Pearl Unisex Salon is open <strong>10:00 AM to 09:00 PM everyday</strong> in Arekere, Bengaluru.
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -463,7 +463,7 @@ export default function BookingConcierge({ initialServiceId, isModal = false }: 
                   className="mt-0.5 rounded border-white/20 text-[#C5A059] focus:ring-[#C5A059]"
                 />
                 <span>
-                  I agree to submit this appointment request for Classic Pearls salon, Bengaluru.
+                  I agree to submit this appointment request for Classic Pearl Unisex Salon, Bengaluru.
                 </span>
               </label>
               {errors.consent && <p className="text-rose-400 text-[10px] mt-1">{errors.consent}</p>}
@@ -520,7 +520,7 @@ export default function BookingConcierge({ initialServiceId, isModal = false }: 
                   downloadCalendarEvent({
                     reference: completedBooking.reference,
                     serviceName: completedBooking.serviceName,
-                    artisanName: 'Classic Pearls Team',
+                    artisanName: 'Classic Pearl Salon Team',
                     preferredDate: completedBooking.preferredDate,
                     preferredTime: completedBooking.preferredTime,
                     clientName: completedBooking.client.name,
@@ -536,7 +536,7 @@ export default function BookingConcierge({ initialServiceId, isModal = false }: 
                 href={getWhatsAppBookingMessage({
                   reference: completedBooking.reference,
                   serviceName: completedBooking.serviceName,
-                  artisanName: 'Classic Pearls Team',
+                  artisanName: 'Classic Pearl Salon Team',
                   preferredDate: completedBooking.preferredDate,
                   preferredTime: completedBooking.preferredTime,
                   clientName: completedBooking.client.name,

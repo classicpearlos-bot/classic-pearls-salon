@@ -69,11 +69,11 @@ export default function Header() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
           {/* Brand Logo */}
           <Link href="/" className="flex flex-col group focus:outline-none focus:ring-1 focus:ring-[#C5A059]">
-            <span className="font-serif text-xl sm:text-2xl font-bold tracking-[0.22em] text-[#FBF9F5] group-hover:text-[#DFBA73] transition-colors">
-              CLASSIC PEARLS
+            <span className="font-serif text-xl sm:text-2xl font-bold tracking-[0.18em] text-[#FBF9F5] group-hover:text-[#DFBA73] transition-colors">
+              CLASSIC PEARL
             </span>
-            <span className="text-[9px] tracking-[0.38em] text-[#C5A059] uppercase font-sans font-medium -mt-0.5">
-              LUXURY SALON & SPA • BENGALURU
+            <span className="text-[9px] tracking-[0.32em] text-[#C5A059] uppercase font-sans font-medium -mt-0.5">
+              UNISEX SALON & SPA • BENGALURU
             </span>
           </Link>
 
@@ -145,8 +145,8 @@ export default function Header() {
         <div className="fixed inset-0 z-50 bg-[#0E0F12]/98 backdrop-blur-2xl flex flex-col justify-between p-6 lg:hidden animate-in fade-in duration-200">
           <div className="flex items-center justify-between border-b border-white/10 pb-4">
             <div className="flex flex-col">
-              <span className="font-serif text-lg font-bold tracking-[0.2em] text-[#FBF9F5]">CLASSIC PEARLS</span>
-              <span className="text-[8px] tracking-[0.3em] text-[#C5A059] uppercase">LUXURY SALON • BENGALURU</span>
+              <span className="font-serif text-lg font-bold tracking-[0.2em] text-[#FBF9F5]">CLASSIC PEARL</span>
+              <span className="text-[8px] tracking-[0.3em] text-[#C5A059] uppercase">UNISEX SALON • BENGALURU</span>
             </div>
             <button
               onClick={() => setMobileMenuOpen(false)}

@@ -12,18 +12,18 @@ export default function Footer() {
         {/* Main Footer Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-white/5">
           
-          {/* Brand & Mission Column */}
+          {/* Brand Column */}
           <div className="space-y-4">
             <Link href="/" className="inline-block">
-              <span className="font-serif text-2xl font-bold tracking-[0.22em] text-[#FBF9F5]">
-                CLASSIC PEARLS
+              <span className="font-serif text-2xl font-bold tracking-[0.18em] text-[#FBF9F5]">
+                CLASSIC PEARL
               </span>
-              <span className="block text-[9px] tracking-[0.35em] text-[#C5A059] uppercase font-sans font-medium">
-                LUXURY SALON & SPA • BENGALURU
+              <span className="block text-[9px] tracking-[0.32em] text-[#C5A059] uppercase font-sans font-medium">
+                UNISEX SALON & SPA • BENGALURU
               </span>
             </Link>
             <p className="text-sm text-[#A39E93] leading-relaxed max-w-sm">
-              Premier beauty salon in Arekere, Bengaluru specializing in precision hair architecture, Korean glass skin facials, Hydra rituals, Botox, Nano Plastia, and bridal makeovers.
+              Premier luxury unisex salon in Arekere, Bengaluru specializing in precision hair styling, Korean glass skin facials, Hydra treatments, Botox, Nano Plastia, and bridal makeovers.
             </p>
 
             <div className="pt-2 flex items-center space-x-3">
@@ -138,7 +138,7 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Copyright & Legal NAP Statement */}
+        {/* Copyright */}
         <div className="pt-8 text-center text-xs space-y-2 text-[#6E6A62]">
           <p>© {new Date().getFullYear()} {businessConfig.legalName}. All Rights Reserved. Hosted at <code className="text-[#C5A059]">classicpearls.vercel.app</code>.</p>
           <p className="text-[11px] max-w-2xl mx-auto">

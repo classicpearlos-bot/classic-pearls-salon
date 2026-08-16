@@ -1,20 +1,20 @@
 /**
  * Centralized Application & Business Configuration
- * Clean, verified business configuration for Classic Pearls, Bengaluru.
+ * Updated with exact salon brand: Classic Pearl Unisex Salon, Bengaluru.
  */
 
 export const siteConfig = {
-  name: "Classic Pearls",
-  tagline: "Luxury Salon & Spa",
+  name: "Classic Pearl Unisex Salon",
+  tagline: "Luxury Unisex Salon & Spa",
   slogan: "THE ART OF BECOMING.",
-  description: "Premier luxury salon in Arekere, Bengaluru offering bespoke hair styling, Korean glass facials, Hydra treatments, Botox, Nano Plastia, bridal makeovers, and grooming.",
+  description: "Premier luxury unisex salon in Arekere, Bengaluru offering bespoke hair styling, Korean glass facials, Hydra treatments, Botox, Nano Plastia, bridal makeovers, and grooming.",
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://classicpearls.vercel.app",
   ogImage: "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1200&h=630&q=80",
 };
 
 export const businessConfig = {
-  name: "Classic Pearls Luxury Salon",
-  legalName: "Classic Pearls Luxury Salon",
+  name: "Classic Pearl Unisex Salon",
+  legalName: "Classic Pearl Unisex Salon",
   phone: "+91 83107 30322",
   phoneRaw: "8310730322",
   whatsappNumber: "918310730322",
