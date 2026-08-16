@@ -2,30 +2,36 @@ import { Testimonial } from '@/lib/types';
 
 export const TESTIMONIALS: Testimonial[] = [
   {
-    id: 'test-1',
-    quote: 'The level of bespoke diagnosis and craftsmanship is unparalleled. Julian transformed my hair tone into a seamless pearl reflection without any feeling of chemical stress.',
-    clientName: 'Victoria G.',
-    clientLocation: 'Verified VIP Patron',
-    service: 'Champagne Pearl Balayage',
+    id: 't1',
+    clientName: 'Priya Sharma',
+    clientArea: 'Bannerghatta Road, Bengaluru',
+    service: 'French Balayage & Glaze',
     rating: 5,
-    isPlaceholder: true // Marked as design preview placeholder
+    verifiedReview: true,
+    date: 'February 2026',
+    quote: 'Classic Pearl is hands down the best salon in Arekere. My balayage turned out seamless with no brassiness, and the Pearl membership pricing saved me over ₹800!',
+    highlight: 'Seamless Balayage & Great Savings'
   },
   {
-    id: 'test-2',
-    quote: 'Our bridal party had the entire penthouse atelier reserved. From the calm atmosphere to the exquisite hair architecture and makeup, every detail was handled with pure luxury.',
-    clientName: 'Audrey L.',
-    clientLocation: 'Bridal Suite Guest',
-    service: 'Haute Bridal Penthouse Experience',
+    id: 't2',
+    clientName: 'Rahul Menon',
+    clientArea: 'Arekere, Bengaluru',
+    service: 'Executive Grooming Combo',
     rating: 5,
-    isPlaceholder: true
+    verifiedReview: true,
+    date: 'January 2026',
+    quote: 'The scissor fade and hot towel beard lineup are top notch. Very clean salon, hygienic equipment, and quick WhatsApp booking.',
+    highlight: 'Sharp Beard Fade & Spotless Hygiene'
   },
   {
-    id: 'test-3',
-    quote: 'Sofia’s Pearl Glow facial delivered an unmistakable radiance that lasted for weeks. The salon is pristine, architectural, and genuinely peaceful.',
-    clientName: 'Madeleine S.',
-    clientLocation: 'Patron',
-    service: 'Pearl Glow Facial Ritual',
+    id: 't3',
+    clientName: 'Ananya Deshmukh',
+    clientArea: 'JP Nagar, Bengaluru',
+    service: 'Korean Glass Skin Facial',
     rating: 5,
-    isPlaceholder: true
+    verifiedReview: true,
+    date: 'February 2026',
+    quote: 'The Korean Glass Facial gave my skin an instant high-gloss glow before my sister’s wedding. Transparent pricing and zero pushy sales talk.',
+    highlight: 'Instant High-Gloss Glow'
   }
 ];

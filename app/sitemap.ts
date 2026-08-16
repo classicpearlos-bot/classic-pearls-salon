@@ -1,15 +1,17 @@
 import { MetadataRoute } from 'next';
 import { siteConfig } from '@/lib/config';
+import { SEO_PAGES } from '@/data/seoPages';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = siteConfig.url;
+  const lastModified = new Date();
 
-  const routes = [
+  const staticRoutes = [
     '',
     '/services',
-    '/experience',
     '/lookbook',
     '/bridal',
+    '/experience',
     '/about',
     '/contact',
     '/book',
@@ -18,12 +20,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/cancellation-policy',
     '/refund-policy',
     '/faq',
-  ];
-
-  return routes.map((route) => ({
+  ].map((route) => ({
     url: `${baseUrl}${route}`,
-    lastModified: new Date(),
-    changeFrequency: route === '' || route === '/services' ? 'weekly' : 'monthly',
-    priority: route === '' ? 1.0 : route === '/book' || route === '/services' ? 0.9 : 0.7,
+    lastModified,
+    changeFrequency: route === '' ? ('daily' as const) : ('weekly' as const),
+    priority: route === '' ? 1.0 : 0.8,
   }));
+
+  const seoPageRoutes = Object.keys(SEO_PAGES).map((slug) => ({
+    url: `${baseUrl}/${slug}`,
+    lastModified,
+    changeFrequency: 'weekly' as const,
+    priority: 0.9,
+  }));
+
+  return [...staticRoutes, ...seoPageRoutes];
 }

@@ -1,14 +1,13 @@
 /**
  * Centralized Application & Business Configuration
- * Clean, verified business configuration for Classic Pearl Unisex Salon, Bengaluru.
- * (No Spa mentions)
+ * Classic Pearl Unisex Salon, Arekere, Bengaluru
  */
 
 export const siteConfig = {
   name: "Classic Pearl Unisex Salon",
-  tagline: "Luxury Unisex Salon",
+  tagline: "Premium Unisex Hair & Beauty Salon in Bengaluru",
   slogan: "THE ART OF BECOMING.",
-  description: "Premier luxury unisex salon in Arekere, Bengaluru offering bespoke hair styling, Korean glass facials, Hydra treatments, Botox, Nano Plastia, bridal makeovers, and grooming.",
+  description: "Bengaluru's premier customer-focused salon in Arekere offering expert hair transformations, Korean glass skin facials, Hydra rituals, Botox, Nano Plastia, bridal makeovers, and grooming with 100% transparent pricing.",
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://classicpearls.vercel.app",
   ogImage: "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1200&h=630&q=80",
 };
@@ -22,7 +21,8 @@ export const businessConfig = {
   
   address: {
     street: "1st floor, Tony Thomas, MNK Arcade, 36, 80ft, BDA Main Rd, beside Camry hospital, Arekere",
-    landmark: "Beside Camry Hospital",
+    landmark: "Beside Camry Hospital, 80ft BDA Main Road",
+    area: "Arekere, Bannerghatta Road",
     city: "Bengaluru",
     state: "Karnataka",
     postalCode: "560076",
@@ -40,6 +40,23 @@ export const businessConfig = {
   ],
   
   mapsUrl: "https://maps.google.com/?q=MNK+Arcade+Arekere+Bengaluru+Karnataka+560076",
+  googleReviewRating: "4.9",
+  googleReviewCount: "380+",
+};
+
+export const membershipConfig = {
+  name: "Pearl Membership",
+  tagline: "Smart Beauty Care for Smart People",
+  priceAnnual: 199,
+  validityDays: 365,
+  averageSavingsPerVisit: "₹300 - ₹1,200",
+  benefits: [
+    "Exclusive Member Pricing on all services (Save up to 30%)",
+    "Priority Appointment Slot Booking",
+    "Complimentary Scalp & Skin Analysis on every visit",
+    "Special Birthday & Anniversary Makeover Offers",
+    "No Minimum Spend Required — Valid for 365 Days",
+  ],
 };
 
 export const verificationConfig = {
@@ -55,14 +72,12 @@ export const analyticsConfig = {
 export const socialConfig = {
   instagram: "https://instagram.com/classicpearlssalon",
   facebook: "https://facebook.com/classicpearlssalon",
-  pinterest: "https://pinterest.com/classicpearlssalon",
+  youtube: "https://youtube.com/@classicpearlssalon",
 };
 
 export const bookingConfig = {
-  referencePrefix: "CP-2026-",
-  defaultDepositPercent: 0,
+  referencePrefix: "CP-",
   cancellationNoticeHours: 24,
-  bridalNoticeHours: 72,
   timeSlots: [
     "10:00 AM",
     "11:00 AM",
