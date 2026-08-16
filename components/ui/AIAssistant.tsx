@@ -1,243 +1,430 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import Link from 'next/link';
-import { Sparkles, MessageSquare, Send, X, Bot, ArrowRight, UserCheck } from 'lucide-react';
+import {
+  Sparkles,
+  Send,
+  X,
+  Bot,
+  ArrowRight,
+  Calendar,
+  MessageSquare,
+  Minimize2,
+  ChevronDown,
+} from 'lucide-react';
 import { getWhatsAppConciergeUrl } from '@/lib/whatsapp';
+import {
+  processMessage,
+  createInitialContext,
+  ConversationContext,
+  AIResponse,
+} from '@/lib/ai-engine';
+import { ServiceItem } from '@/lib/types';
 
-interface FAQAnswer {
-  keywords: string[];
-  answer: string;
-  recommendedServiceId?: string;
-  recommendedServiceName?: string;
-  recommendedPrice?: string;
+// ========================
+// TYPES
+// ========================
+
+interface ChatMessage {
+  id: string;
+  role: 'user' | 'assistant';
+  text: string;
+  services?: ServiceItem[];
+  quickReplies?: string[];
+  timestamp: Date;
 }
 
-const AI_KNOWLEDGE_BASE: FAQAnswer[] = [
-  {
-    keywords: ['pigmentation', 'tan', 'dark spots', 'tanning', 'dullness'],
-    answer: 'For stubborn pigmentation and sun tan, we highly recommend our O3+ Whitening Facial (₹1,920 for Members) or our Korean Glass Skin Facial (₹2,240 for Members). Both actively oxygenate the dermis and break down sun-induced melanin.',
-    recommendedServiceId: 'korean-glass-facial',
-    recommendedServiceName: 'Korean Glass Skin Facial',
-    recommendedPrice: 'Member: ₹2,240'
-  },
-  {
-    keywords: ['botox', 'hair botox', 'frizz', 'damage', 'split ends'],
-    answer: 'Hair BOTOX is our top non-chemical restorative treatment. It infuses collagen, amino acids, and peptides into damaged hair fibers. It eliminates frizz while keeping your natural volume and waves (Member: ₹2,999, lasts 3–5 months).',
-    recommendedServiceId: 'w-botox-hair',
-    recommendedServiceName: 'Hair BOTOX Fiber Restorative',
-    recommendedPrice: 'Member: ₹2,999'
-  },
-  {
-    keywords: ['nano', 'nano plastia', 'straight', 'straightening'],
-    answer: 'Nano Plastia is our 100% organic, formaldehyde-free hair straightening treatment. It gives pin-straight mirror shine reflection that lasts 6 to 8 months (Member: ₹3,600).',
-    recommendedServiceId: 'w-nano-plastia',
-    recommendedServiceName: 'Nano Plastia Silk Mirror Treatment',
-    recommendedPrice: 'Member: ₹3,600'
-  },
-  {
-    keywords: ['balayage', 'highlights', 'color', 'grey', 'hair color'],
-    answer: 'Our French Balayage is hand-painted freehand with zero harsh grow-out lines (Member: ₹3,360). For 100% grey coverage, we use gentle ammonia-free global colors (Member: ₹1,920).',
-    recommendedServiceId: 'w-balayage-ombre',
-    recommendedServiceName: 'French Balayage & Ombre',
-    recommendedPrice: 'Member: ₹3,360'
-  },
-  {
-    keywords: ['bridal', 'wedding', 'makeup', 'airbrush'],
-    answer: 'Our Signature Bridal Package includes 18-hour waterproof HD airbrush makeup, couture hair styling, and saree draping with a complimentary pre-wedding trial (Member: ₹7,999).',
-    recommendedServiceId: 'bridal-complete-package',
-    recommendedServiceName: 'Signature Bridal Makeover',
-    recommendedPrice: 'Member: ₹7,999'
-  },
-  {
-    keywords: ['men', 'beard', 'shave', 'grooming', 'fade'],
-    answer: 'For gentlemen, our Executive Grooming Combo includes an advance haircut, beard styling with hot towel steam, hair wash, and head & foot massage for just ₹880 (Member price).',
-    recommendedServiceId: 'm-combo-executive',
-    recommendedServiceName: 'Men Executive Grooming Combo',
-    recommendedPrice: 'Member: ₹880'
-  },
-  {
-    keywords: ['membership', 'pearl member', 'discount', '199'],
-    answer: 'The Pearl Membership costs just ₹199 for 365 days. It gives you 20% to 30% savings on every salon service, priority slot booking, and complimentary scalp analysis with no minimum spend.',
-    recommendedServiceId: 'membership',
-    recommendedServiceName: 'Pearl Membership (₹199/yr)',
-    recommendedPrice: 'Save ₹300–₹1,200/visit'
-  },
-  {
-    keywords: ['location', 'address', 'timing', 'time', 'hours', 'where', 'open'],
-    answer: 'Classic Pearl Unisex Salon is located at MNK Arcade, 1st Floor, 80ft BDA Main Road, beside Camry Hospital, Arekere, Bengaluru 560076. We are open 10:00 AM to 09:00 PM everyday (Monday to Sunday).',
-  }
-];
+// ========================
+// HELPER: TYPING INDICATOR
+// ========================
+
+function TypingIndicator() {
+  return (
+    <div className="flex items-start gap-2.5 animate-fade-in-up">
+      <div className="w-7 h-7 rounded-full bg-gradient-to-br from-[#C5A059] to-[#DFBA73] flex items-center justify-center flex-shrink-0 shadow-md">
+        <Bot className="w-3.5 h-3.5 text-[#0E0F12]" />
+      </div>
+      <div className="bg-[#1A1C22] border border-white/10 rounded-2xl rounded-tl-md px-4 py-3 max-w-[85%]">
+        <div className="flex items-center gap-1.5">
+          <span className="w-2 h-2 bg-[#C5A059] rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></span>
+          <span className="w-2 h-2 bg-[#C5A059] rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></span>
+          <span className="w-2 h-2 bg-[#C5A059] rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ========================
+// HELPER: SERVICE CARD
+// ========================
+
+function ServiceCard({ service }: { service: ServiceItem }) {
+  return (
+    <div className="bg-[#14161B] border border-white/10 rounded-xl p-3 hover:border-[#C5A059]/40 transition-colors group">
+      <div className="flex items-start justify-between gap-2 mb-2">
+        <h4 className="text-[11px] font-bold text-[#FBF9F5] leading-tight flex-1">
+          {service.name}
+        </h4>
+        <span className="text-[10px] font-bold text-[#C5A059] whitespace-nowrap">
+          ₹{service.memberPrice}
+        </span>
+      </div>
+      <p className="text-[10px] text-[#A39E93] mb-2 line-clamp-2">{service.tagline}</p>
+      <div className="flex items-center justify-between">
+        <span className="text-[9px] text-[#A39E93]">{service.duration}</span>
+        <Link
+          href="/book"
+          className="text-[9px] font-bold text-[#C5A059] hover:text-[#DFBA73] flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity"
+        >
+          Book <ArrowRight className="w-2.5 h-2.5" />
+        </Link>
+      </div>
+    </div>
+  );
+}
+
+// ========================
+// HELPER: FORMAT MESSAGE TEXT
+// ========================
+
+function FormatText({ text }: { text: string }) {
+  // Parse markdown-like formatting
+  const lines = text.split('\n');
+
+  return (
+    <div className="space-y-1">
+      {lines.map((line, i) => {
+        // Bold: **text**
+        const formatted = line.replace(
+          /\*\*(.*?)\*\*/g,
+          '<strong class="text-[#FBF9F5] font-semibold">$1</strong>'
+        );
+        // Strikethrough: ~~text~~
+        const withStrike = formatted.replace(
+          /~~(.*?)~~/g,
+          '<del class="text-[#A39E93]/60">$1</del>'
+        );
+        // Emoji bullets
+        const isListItem = /^[•✅🔹🏆💍🌸💃💡🧴📍⏰📞📱1️⃣2️⃣3️⃣4️⃣]/.test(line.trim());
+        const isEmpty = line.trim() === '';
+
+        if (isEmpty) return <div key={i} className="h-1.5" />;
+
+        return (
+          <p
+            key={i}
+            className={`text-[12px] leading-[1.6] ${isListItem ? 'pl-0.5' : ''}`}
+            dangerouslySetInnerHTML={{ __html: withStrike }}
+          />
+        );
+      })}
+    </div>
+  );
+}
+
+// ========================
+// MAIN COMPONENT
+// ========================
 
 export default function AIAssistant() {
   const [isOpen, setIsOpen] = useState(false);
-  const [userInput, setUserInput] = useState('');
-  const [messages, setMessages] = useState<Array<{ sender: 'ai' | 'user'; text: string; linkId?: string; linkName?: string; price?: string }>>([
-    {
-      sender: 'ai',
-      text: 'Hello! I am your Classic Pearl Beauty AI Assistant. Ask me anything about hair treatments, skin facials, prices, or recommendations for your hair/skin type!'
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [inputValue, setInputValue] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
+  const [context, setContext] = useState<ConversationContext>(createInitialContext());
+  const [hasSeenWelcome, setHasSeenWelcome] = useState(false);
+  const [showScrollDown, setShowScrollDown] = useState(false);
+
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  // Scroll to bottom
+  const scrollToBottom = useCallback(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, []);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages, isTyping, scrollToBottom]);
+
+  // Focus input when opened
+  useEffect(() => {
+    if (isOpen) {
+      setTimeout(() => inputRef.current?.focus(), 300);
     }
-  ]);
+  }, [isOpen]);
 
-  const handleSend = (textToSend?: string) => {
-    const query = (textToSend || userInput).trim().toLowerCase();
-    if (!query) return;
+  // Detect scroll position for "scroll down" button
+  const handleScroll = useCallback(() => {
+    const container = messagesContainerRef.current;
+    if (!container) return;
+    const isNearBottom = container.scrollHeight - container.scrollTop - container.clientHeight < 100;
+    setShowScrollDown(!isNearBottom);
+  }, []);
 
-    const newMessages = [...messages, { sender: 'user' as const, text: textToSend || userInput }];
-    setUserInput('');
+  // Send welcome message on first open
+  const handleOpen = () => {
+    setIsOpen(true);
+    if (!hasSeenWelcome) {
+      setHasSeenWelcome(true);
+      const welcomeResponse = processMessage('hello', context);
+      const welcomeMsg: ChatMessage = {
+        id: crypto.randomUUID(),
+        role: 'assistant',
+        text: welcomeResponse.response.text,
+        quickReplies: welcomeResponse.response.quickReplies,
+        timestamp: new Date(),
+      };
+      setMessages([welcomeMsg]);
+      setContext(welcomeResponse.updatedContext);
+    }
+  };
 
-    // Search knowledge base
-    let matched = AI_KNOWLEDGE_BASE.find(item => 
-      item.keywords.some(k => query.includes(k))
-    );
+  // Process and send a message
+  const sendMessage = (text: string) => {
+    if (!text.trim()) return;
 
-    let responseText = matched
-      ? matched.answer
-      : `I recommend visiting our salon in Arekere or messaging our expert stylists on WhatsApp for a personalized consultation. You can also ask me about "Hair Botox", "Nano Plastia", "Korean Facial", "Bridal", or "Pearl Membership"!`;
+    const userMsg: ChatMessage = {
+      id: crypto.randomUUID(),
+      role: 'user',
+      text: text.trim(),
+      timestamp: new Date(),
+    };
+
+    setMessages(prev => [...prev, userMsg]);
+    setInputValue('');
+    setIsTyping(true);
+
+    // Simulate thinking delay (200-800ms for realistic feel)
+    const delay = 400 + Math.random() * 400;
 
     setTimeout(() => {
-      setMessages([
-        ...newMessages,
-        {
-          sender: 'ai',
-          text: responseText,
-          linkId: matched?.recommendedServiceId,
-          linkName: matched?.recommendedServiceName,
-          price: matched?.recommendedPrice
-        }
-      ]);
-    }, 300);
+      const { response, updatedContext } = processMessage(text.trim(), context);
+
+      const assistantMsg: ChatMessage = {
+        id: crypto.randomUUID(),
+        role: 'assistant',
+        text: response.text,
+        services: response.services,
+        quickReplies: response.quickReplies,
+        timestamp: new Date(),
+      };
+
+      setMessages(prev => [...prev, assistantMsg]);
+      setContext(updatedContext);
+      setIsTyping(false);
+    }, delay);
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    sendMessage(inputValue);
+  };
+
+  const handleQuickReply = (reply: string) => {
+    // Map quick reply labels to actionable routes or send as message
+    if (reply === 'Book appointment' || reply === 'Book online now' || reply === 'Book a slot') {
+      window.open('/book', '_blank');
+      return;
+    }
+    if (reply === 'WhatsApp us' || reply === 'WhatsApp booking' || reply === 'WhatsApp salon' || reply === 'WhatsApp consultation' || reply === 'WhatsApp directions') {
+      window.open(getWhatsAppConciergeUrl('Hi! I found you via the website.'), '_blank');
+      return;
+    }
+    if (reply === 'Call salon') {
+      window.open('tel:+918310730322', '_self');
+      return;
+    }
+    if (reply === 'View refund policy') {
+      window.open('/refund-policy', '_blank');
+      return;
+    }
+    if (reply === 'View all services' || reply === 'All services' || reply === 'See all prices') {
+      window.open('/services', '_blank');
+      return;
+    }
+    if (reply === 'Get directions') {
+      window.open('https://maps.google.com/?q=Classic+Pearl+Unisex+Salon+Arekere+Bengaluru', '_blank');
+      return;
+    }
+    sendMessage(reply);
   };
 
   return (
-    <div className="fixed bottom-20 right-4 sm:right-6 z-50">
-      {/* Floating Trigger Button */}
+    <>
+      {/* ======= FLOATING ACTION BUTTON ======= */}
       {!isOpen && (
         <button
-          onClick={() => setIsOpen(true)}
-          className="bg-gradient-to-r from-[#C5A059] to-[#DFBA73] hover:from-[#DFBA73] hover:to-[#C5A059] text-[#0E0F12] p-3 sm:px-4 sm:py-3 rounded-full shadow-2xl flex items-center space-x-2 font-bold text-xs uppercase tracking-wider transition-all hover:scale-105 border border-white/20"
-          aria-label="Open AI Beauty Assistant"
+          onClick={handleOpen}
+          className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-gradient-to-br from-[#C5A059] to-[#DFBA73] text-[#0E0F12] flex items-center justify-center shadow-2xl shadow-[#C5A059]/30 hover:scale-110 transition-transform duration-300 group"
+          aria-label="Open AI Beauty Consultant"
         >
-          <Sparkles className="w-4 h-4" />
-          <span className="hidden sm:inline">Ask AI Beauty Assistant</span>
-          <span className="sm:hidden font-sans">AI Guide</span>
+          <Sparkles className="w-6 h-6 group-hover:rotate-12 transition-transform" />
+          {/* Pulse ring */}
+          <span className="absolute inset-0 rounded-full bg-[#C5A059]/20 animate-ping pointer-events-none"></span>
         </button>
       )}
 
-      {/* Interactive Modal Box */}
+      {/* ======= CHAT PANEL ======= */}
       {isOpen && (
-        <div className="w-[90vw] sm:w-96 bg-[#14161B] border border-[#C5A059]/40 rounded-2xl shadow-2xl overflow-hidden text-[#FBF9F5] flex flex-col h-[480px] animate-in zoom-in-95 duration-200">
-          
-          {/* Header */}
-          <div className="bg-[#17181C] p-4 border-b border-white/10 flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 rounded-full bg-[#C5A059]/20 border border-[#C5A059] flex items-center justify-center text-[#DFBA73]">
-                <Bot className="w-4 h-4" />
+        <div
+          className="fixed bottom-0 right-0 sm:bottom-6 sm:right-6 z-50 w-full sm:w-[400px] h-[100dvh] sm:h-[600px] bg-[#0E0F12] sm:rounded-2xl shadow-2xl border-0 sm:border sm:border-[#C5A059]/25 flex flex-col overflow-hidden"
+          style={{
+            animation: 'fadeInUp 0.3s ease-out',
+          }}
+        >
+          {/* ---- HEADER ---- */}
+          <div className="relative bg-gradient-to-r from-[#17181C] to-[#1A1C22] border-b border-[#C5A059]/20 px-4 py-3.5 flex items-center justify-between flex-shrink-0">
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#C5A059] to-[#DFBA73] flex items-center justify-center shadow-lg">
+                <Bot className="w-4.5 h-4.5 text-[#0E0F12]" />
               </div>
               <div>
-                <h4 className="font-serif text-sm font-bold text-[#FBF9F5]">Classic Pearl AI Guide</h4>
-                <span className="text-[10px] text-emerald-400 flex items-center gap-1">
+                <h3 className="text-[13px] font-bold text-[#FBF9F5] tracking-wide">Pearl AI Consultant</h3>
+                <div className="flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                  Instant Hair & Skin Answers
-                </span>
+                  <span className="text-[10px] text-emerald-400 font-medium">Always Online</span>
+                </div>
               </div>
             </div>
-            <button
-              onClick={() => setIsOpen(false)}
-              className="text-[#A39E93] hover:text-white p-1 rounded-full bg-white/5"
-            >
-              <X className="w-4 h-4" />
-            </button>
-          </div>
-
-          {/* Quick Prompts Bar */}
-          <div className="bg-[#0E0F12] px-3 py-2 border-b border-white/5 flex items-center gap-1.5 overflow-x-auto scrollbar-none text-[11px]">
-            {['Hair Botox', 'Korean Facial', 'Nano Plastia', 'Membership ₹199', 'Timings'].map((q) => (
+            <div className="flex items-center gap-1">
               <button
-                key={q}
-                onClick={() => handleSend(q)}
-                className="bg-[#17181C] hover:bg-[#22242B] border border-[#C5A059]/30 text-[#DFBA73] px-2.5 py-1 rounded-full whitespace-nowrap transition-colors"
+                onClick={() => setIsOpen(false)}
+                className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+                aria-label="Minimize chat"
               >
-                {q}
+                <Minimize2 className="w-4 h-4 text-[#A39E93]" />
               </button>
-            ))}
+              <button
+                onClick={() => setIsOpen(false)}
+                className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+                aria-label="Close chat"
+              >
+                <X className="w-4 h-4 text-[#A39E93]" />
+              </button>
+            </div>
           </div>
 
-          {/* Chat Messages */}
-          <div className="flex-1 p-4 overflow-y-auto space-y-3 text-xs">
-            {messages.map((m, idx) => (
-              <div
-                key={idx}
-                className={`flex flex-col ${m.sender === 'user' ? 'items-end' : 'items-start'}`}
-              >
-                <div
-                  className={`p-3 rounded-xl max-w-[85%] leading-relaxed ${
-                    m.sender === 'user'
-                      ? 'bg-[#C5A059] text-[#0E0F12] font-medium rounded-tr-none'
-                      : 'bg-[#1A1C22] text-[#FBF9F5] border border-white/5 rounded-tl-none'
-                  }`}
-                >
-                  {m.text}
-                </div>
-
-                {/* Service Recommendation Card inside Chat */}
-                {m.linkName && (
-                  <div className="mt-2 p-2.5 bg-[#0E0F12] border border-[#C5A059]/40 rounded-lg max-w-[85%] flex items-center justify-between gap-2 shadow">
-                    <div>
-                      <strong className="text-[#FBF9F5] block text-[11px]">{m.linkName}</strong>
-                      {m.price && <span className="text-[#DFBA73] font-bold text-[10px] block">{m.price}</span>}
+          {/* ---- MESSAGES ---- */}
+          <div
+            ref={messagesContainerRef}
+            onScroll={handleScroll}
+            className="flex-1 overflow-y-auto px-3 py-4 space-y-4 scrollbar-none"
+          >
+            {messages.map((msg) => (
+              <div key={msg.id}>
+                {msg.role === 'user' ? (
+                  /* User Message */
+                  <div className="flex justify-end animate-fade-in-up">
+                    <div className="bg-gradient-to-br from-[#C5A059] to-[#DFBA73] text-[#0E0F12] rounded-2xl rounded-tr-md px-4 py-2.5 max-w-[80%] shadow-md">
+                      <p className="text-[12px] font-medium leading-relaxed">{msg.text}</p>
                     </div>
-                    <Link
-                      href={m.linkId === 'membership' ? '/#membership' : `/book?service=${encodeURIComponent(m.linkId || '')}`}
-                      onClick={() => setIsOpen(false)}
-                      className="bg-[#C5A059] text-[#0E0F12] px-2.5 py-1 rounded text-[10px] font-bold uppercase tracking-wider whitespace-nowrap"
-                    >
-                      Book
-                    </Link>
+                  </div>
+                ) : (
+                  /* Assistant Message */
+                  <div className="animate-fade-in-up">
+                    <div className="flex items-start gap-2.5">
+                      <div className="w-7 h-7 rounded-full bg-gradient-to-br from-[#C5A059] to-[#DFBA73] flex items-center justify-center flex-shrink-0 shadow-md mt-0.5">
+                        <Bot className="w-3.5 h-3.5 text-[#0E0F12]" />
+                      </div>
+                      <div className="bg-[#1A1C22] border border-white/8 rounded-2xl rounded-tl-md px-4 py-3 max-w-[85%] shadow-sm">
+                        <FormatText text={msg.text} />
+                      </div>
+                    </div>
+
+                    {/* Service Cards */}
+                    {msg.services && msg.services.length > 0 && (
+                      <div className="ml-[38px] mt-2 grid grid-cols-1 gap-2">
+                        {msg.services.slice(0, 3).map((service) => (
+                          <ServiceCard key={service.id} service={service} />
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Quick Replies */}
+                    {msg.quickReplies && msg.quickReplies.length > 0 && (
+                      <div className="ml-[38px] mt-2 flex flex-wrap gap-1.5">
+                        {msg.quickReplies.map((reply, idx) => (
+                          <button
+                            key={idx}
+                            onClick={() => handleQuickReply(reply)}
+                            className="text-[10px] font-semibold text-[#DFBA73] bg-[#14161B] border border-[#C5A059]/30 hover:border-[#C5A059] hover:bg-[#C5A059]/10 px-3 py-1.5 rounded-full transition-all"
+                          >
+                            {reply}
+                          </button>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
             ))}
+
+            {/* Typing Indicator */}
+            {isTyping && <TypingIndicator />}
+
+            <div ref={messagesEndRef} />
           </div>
 
-          {/* Input & WhatsApp Action */}
-          <div className="p-3 bg-[#17181C] border-t border-white/10 space-y-2">
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                handleSend();
-              }}
-              className="flex items-center gap-2"
+          {/* Scroll Down Button */}
+          {showScrollDown && (
+            <button
+              onClick={scrollToBottom}
+              className="absolute bottom-[72px] left-1/2 -translate-x-1/2 bg-[#1A1C22] border border-[#C5A059]/30 text-[#C5A059] p-1.5 rounded-full shadow-lg hover:bg-[#C5A059]/10 transition-all z-10"
             >
+              <ChevronDown className="w-4 h-4" />
+            </button>
+          )}
+
+          {/* ---- INPUT BAR ---- */}
+          <div className="border-t border-white/10 bg-[#14161B] px-3 py-3 flex-shrink-0">
+            <form onSubmit={handleSubmit} className="flex items-center gap-2">
               <input
+                ref={inputRef}
                 type="text"
-                placeholder="Ask about treatments, pricing..."
-                value={userInput}
-                onChange={(e) => setUserInput(e.target.value)}
-                className="flex-1 bg-[#0E0F12] border border-white/15 rounded-lg px-3 py-2 text-xs text-[#FBF9F5] focus:outline-none focus:border-[#C5A059]"
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                placeholder="Ask about hair, skin, pricing, booking..."
+                className="flex-1 bg-[#0E0F12] border border-white/10 focus:border-[#C5A059]/50 text-[#FBF9F5] text-[12px] rounded-xl px-4 py-3 outline-none transition-colors placeholder:text-[#A39E93]/60"
+                disabled={isTyping}
               />
               <button
                 type="submit"
-                className="bg-[#C5A059] hover:bg-[#DFBA73] text-[#0E0F12] p-2 rounded-lg transition-colors"
-                aria-label="Send"
+                disabled={!inputValue.trim() || isTyping}
+                className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#C5A059] to-[#DFBA73] text-[#0E0F12] flex items-center justify-center disabled:opacity-30 hover:shadow-lg hover:shadow-[#C5A059]/20 transition-all disabled:hover:shadow-none"
               >
-                <Send className="w-3.5 h-3.5" />
+                <Send className="w-4 h-4" />
               </button>
             </form>
 
-            <a
-              href={getWhatsAppConciergeUrl('Hello Classic Pearl, I would like advice on finding the right treatment.')}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full text-center text-[10px] text-[#A39E93] hover:text-[#DFBA73] flex items-center justify-center gap-1 py-0.5"
-            >
-              <MessageSquare className="w-3 h-3 text-emerald-400" />
-              <span>Or chat with human stylist on WhatsApp</span>
-            </a>
+            {/* Quick Action Bar */}
+            <div className="flex items-center justify-between mt-2 px-1">
+              <Link
+                href="/book"
+                className="flex items-center gap-1 text-[9px] font-bold text-[#C5A059] hover:text-[#DFBA73] transition-colors"
+              >
+                <Calendar className="w-3 h-3" />
+                <span>BOOK NOW</span>
+              </Link>
+              <a
+                href={getWhatsAppConciergeUrl('Hi, I was chatting with the AI consultant on your website.')}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1 text-[9px] font-bold text-emerald-400 hover:text-emerald-300 transition-colors"
+              >
+                <MessageSquare className="w-3 h-3" />
+                <span>WHATSAPP</span>
+              </a>
+              <span className="text-[8px] text-[#A39E93]/50">
+                Powered by Classic Pearl AI
+              </span>
+            </div>
           </div>
-
         </div>
       )}
-    </div>
+    </>
   );
 }
