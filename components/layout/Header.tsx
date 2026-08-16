@@ -3,9 +3,9 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { siteConfig, businessConfig } from '@/lib/config';
+import { businessConfig } from '@/lib/config';
 import { getWhatsAppConciergeUrl } from '@/lib/whatsapp';
-import { Menu, X, Phone, MessageSquare, Sparkles, Calendar } from 'lucide-react';
+import { Menu, X, Phone, MessageSquare, Calendar } from 'lucide-react';
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -20,7 +20,6 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close mobile menu on route change
   useEffect(() => {
     setMobileMenuOpen(false);
   }, [pathname]);
@@ -29,32 +28,31 @@ export default function Header() {
     { label: 'Services', href: '/services' },
     { label: 'The Experience', href: '/experience' },
     { label: 'Lookbook', href: '/lookbook' },
-    { label: 'Artisans', href: '/artisans' },
-    { label: 'Bridal Atelier', href: '/bridal' },
+    { label: 'Bridal Studio', href: '/bridal' },
     { label: 'About', href: '/about' },
     { label: 'Contact', href: '/contact' },
   ];
 
   return (
     <>
-      {/* Top Announcement Bar / Verification Signal */}
+      {/* Top Announcement Bar */}
       <aside aria-label="Announcement" className="bg-[#121317] border-b border-[#C5A059]/20 text-[11px] py-1.5 px-4 text-[#F3EFE6] tracking-wider">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <span className="text-[#C5A059] inline-block animate-spin" style={{ animationDuration: '6s' }}>✦</span>
-            <span className="font-medium text-[#DFBA73]">Curated Haute Beauty & Spa Rituals</span>
+            <span className="text-[#C5A059]">✦</span>
+            <span className="font-medium text-[#DFBA73]">Arekere, Bengaluru • Open 10:00 AM – 09:00 PM Everyday</span>
           </div>
           <div className="hidden md:flex items-center space-x-6 text-[#A39E93]">
-            <a href={`tel:${businessConfig.phone.replace(/[^0-9+]/g, '')}`} className="hover:text-[#C5A059] flex items-center gap-1 transition-colors">
+            <a href={`tel:${businessConfig.phoneRaw}`} className="hover:text-[#C5A059] flex items-center gap-1 transition-colors">
               <Phone className="w-3 h-3 text-[#C5A059]" />
               <span>{businessConfig.phone}</span>
             </a>
             <span>|</span>
-            <span className="text-[#A39E93]">{businessConfig.address.street}, {businessConfig.address.city}</span>
+            <span className="text-[#A39E93]">Beside Camry Hospital, Arekere, Bengaluru</span>
             <span>|</span>
             <span className="inline-flex items-center gap-1.5 text-emerald-400 bg-emerald-950/40 px-2 py-0.5 rounded-full text-[10px] border border-emerald-800/40">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-              Atelier Open Today
+              Open Today
             </span>
           </div>
         </div>
@@ -69,13 +67,13 @@ export default function Header() {
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-          {/* Brand Logo Fallback Component */}
+          {/* Brand Logo */}
           <Link href="/" className="flex flex-col group focus:outline-none focus:ring-1 focus:ring-[#C5A059]">
             <span className="font-serif text-xl sm:text-2xl font-bold tracking-[0.22em] text-[#FBF9F5] group-hover:text-[#DFBA73] transition-colors">
               CLASSIC PEARLS
             </span>
             <span className="text-[9px] tracking-[0.38em] text-[#C5A059] uppercase font-sans font-medium -mt-0.5">
-              BEAUTY • ARTISTRY • EXPERIENCE
+              LUXURY SALON & SPA • BENGALURU
             </span>
           </Link>
 
@@ -107,10 +105,10 @@ export default function Header() {
               target="_blank"
               rel="noopener noreferrer"
               className="p-2 text-[#DFBA73] hover:text-white bg-[#17181C] hover:bg-[#22242B] border border-[#C5A059]/30 rounded transition-colors flex items-center gap-1.5 text-xs px-3"
-              aria-label="WhatsApp Concierge"
+              aria-label="WhatsApp"
             >
               <MessageSquare className="w-3.5 h-3.5" />
-              <span className="hidden xl:inline text-[11px] uppercase tracking-wider font-semibold">Concierge</span>
+              <span className="hidden xl:inline text-[11px] uppercase tracking-wider font-semibold">WhatsApp</span>
             </a>
 
             <Link
@@ -118,7 +116,7 @@ export default function Header() {
               className="inline-flex items-center space-x-2 bg-gradient-to-r from-[#C5A059] to-[#DFBA73] hover:from-[#DFBA73] hover:to-[#C5A059] text-[#0E0F12] px-5 py-2.5 rounded text-[11px] font-bold tracking-[0.14em] uppercase shadow-lg shadow-[#C5A059]/10 hover:shadow-[#C5A059]/25 hover:-translate-y-0.5 transition-all"
             >
               <Calendar className="w-3.5 h-3.5" />
-              <span>Reserve An Experience</span>
+              <span>Book Appointment</span>
             </Link>
           </div>
 
@@ -128,7 +126,7 @@ export default function Header() {
               href="/book"
               className="bg-[#C5A059] text-[#0E0F12] px-3 py-1.5 rounded text-[10px] font-bold tracking-wider uppercase sm:hidden"
             >
-              Reserve
+              Book
             </Link>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -148,7 +146,7 @@ export default function Header() {
           <div className="flex items-center justify-between border-b border-white/10 pb-4">
             <div className="flex flex-col">
               <span className="font-serif text-lg font-bold tracking-[0.2em] text-[#FBF9F5]">CLASSIC PEARLS</span>
-              <span className="text-[8px] tracking-[0.3em] text-[#C5A059] uppercase">BEAUTY • ARTISTRY • EXPERIENCE</span>
+              <span className="text-[8px] tracking-[0.3em] text-[#C5A059] uppercase">LUXURY SALON • BENGALURU</span>
             </div>
             <button
               onClick={() => setMobileMenuOpen(false)}
@@ -178,7 +176,7 @@ export default function Header() {
               className="w-full flex items-center justify-center space-x-2 bg-gradient-to-r from-[#C5A059] to-[#DFBA73] text-[#0E0F12] py-3.5 rounded text-xs font-bold tracking-widest uppercase"
             >
               <Calendar className="w-4 h-4" />
-              <span>Reserve An Experience</span>
+              <span>Book Appointment</span>
             </Link>
 
             <a
@@ -188,7 +186,7 @@ export default function Header() {
               className="w-full flex items-center justify-center space-x-2 bg-[#17181C] border border-[#C5A059]/40 text-[#DFBA73] py-3 rounded text-xs font-semibold tracking-wider uppercase"
             >
               <MessageSquare className="w-4 h-4" />
-              <span>WhatsApp Concierge</span>
+              <span>WhatsApp Direct</span>
             </a>
           </div>
         </div>

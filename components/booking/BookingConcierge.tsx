@@ -4,25 +4,19 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { ALL_SERVICES, SERVICE_CATEGORIES } from '@/data/services';
-import { ARTISANS } from '@/data/artisans';
-import { ServiceItem, Artisan, BookingRequest, GenderCategory } from '@/lib/types';
+import { ServiceItem, BookingRequest, GenderCategory } from '@/lib/types';
 import { bookingConfig, businessConfig } from '@/lib/config';
 import { trackEvent } from '@/lib/analytics';
 import { getWhatsAppBookingMessage } from '@/lib/whatsapp';
 import { downloadCalendarEvent } from '@/lib/calendar';
 import {
-  Sparkles,
   Calendar as CalendarIcon,
   Clock,
-  User,
   CheckCircle2,
   ChevronRight,
   ChevronLeft,
   Search,
-  MessageSquare,
-  FileCheck,
-  ShieldCheck,
-  Award
+  MessageSquare
 } from 'lucide-react';
 
 interface BookingConciergeProps {
@@ -34,7 +28,7 @@ export default function BookingConcierge({ initialServiceId, isModal = false }: 
   const searchParams = useSearchParams();
   const urlServiceParam = searchParams ? searchParams.get('service') : null;
 
-  // Wizard Step: 1, 2, 3, 4, 5
+  // Wizard Step: 1, 2, 3, 4
   const [currentStep, setCurrentStep] = useState<number>(1);
 
   // Filters for Step 1
@@ -44,17 +38,14 @@ export default function BookingConcierge({ initialServiceId, isModal = false }: 
 
   // Form State
   const [selectedService, setSelectedService] = useState<ServiceItem | null>(null);
-  const [selectedArtisan, setSelectedArtisan] = useState<Artisan | null>(null);
-  const [isAnyArtisan, setIsAnyArtisan] = useState<boolean>(true);
 
   // Date & Time
   const [preferredDate, setPreferredDate] = useState<string>('');
-  const [preferredTime, setPreferredTime] = useState<string>(bookingConfig.timeSlots[1] || '11:30 AM');
+  const [preferredTime, setPreferredTime] = useState<string>(bookingConfig.timeSlots[1] || '11:00 AM');
 
   // Client Details
   const [clientName, setClientName] = useState<string>('');
   const [clientPhone, setClientPhone] = useState<string>('');
-  const [clientEmail, setClientEmail] = useState<string>('');
   const [clientWhatsApp, setClientWhatsApp] = useState<string>('');
   const [occasion, setOccasion] = useState<string>('Regular appointment');
   const [specialNotes, setSpecialNotes] = useState<string>('');
@@ -88,7 +79,6 @@ export default function BookingConcierge({ initialServiceId, isModal = false }: 
     }
   }, [initialServiceId, urlServiceParam]);
 
-  // Track start
   useEffect(() => {
     trackEvent('booking_started');
   }, []);
@@ -104,11 +94,10 @@ export default function BookingConcierge({ initialServiceId, isModal = false }: 
   });
 
   // Validation
-  const validateStep4 = () => {
+  const validateStep3 = () => {
     const newErrors: Record<string, string> = {};
-    if (!clientName.trim()) newErrors.name = 'Please enter your full name.';
-    if (!clientPhone.trim() || clientPhone.length < 8) newErrors.phone = 'Please enter a valid mobile phone number.';
-    if (!clientEmail.trim() || !clientEmail.includes('@')) newErrors.email = 'Please enter a valid email address.';
+    if (!clientName.trim()) newErrors.name = 'Please enter your name.';
+    if (!clientPhone.trim() || clientPhone.length < 8) newErrors.phone = 'Please enter a valid mobile number.';
     if (!consent) newErrors.consent = 'Consent is required to submit an appointment request.';
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -119,8 +108,8 @@ export default function BookingConcierge({ initialServiceId, isModal = false }: 
       setErrors({ service: 'Please select a service to proceed.' });
       return;
     }
-    if (currentStep === 4) {
-      if (!validateStep4()) return;
+    if (currentStep === 3) {
+      if (!validateStep3()) return;
       submitBookingRequest();
       return;
     }
@@ -135,21 +124,19 @@ export default function BookingConcierge({ initialServiceId, isModal = false }: 
 
   const submitBookingRequest = () => {
     const reference = `${bookingConfig.referencePrefix}${Math.floor(1000 + Math.random() * 9000)}`;
-    const artisanName = isAnyArtisan || !selectedArtisan ? 'First Available Senior Master' : selectedArtisan.name;
-    const artisanId = isAnyArtisan || !selectedArtisan ? 'any' : selectedArtisan.id;
 
     const booking: BookingRequest = {
       reference,
       serviceId: selectedService?.id || '',
-      serviceName: selectedService?.name || 'Selected Treatment',
-      artisanId,
-      artisanName,
+      serviceName: selectedService?.name || 'Selected Service',
+      artisanId: 'salon-team',
+      artisanName: 'Classic Pearls Salon Team',
       preferredDate,
       preferredTime,
       client: {
         name: clientName,
         phone: clientPhone,
-        email: clientEmail,
+        email: '',
         whatsapp: clientWhatsApp || clientPhone,
       },
       occasion,
@@ -160,7 +147,7 @@ export default function BookingConcierge({ initialServiceId, isModal = false }: 
     };
 
     setCompletedBooking(booking);
-    setCurrentStep(5);
+    setCurrentStep(4);
 
     trackEvent('booking_submitted', {
       serviceName: booking.serviceName,
@@ -169,30 +156,29 @@ export default function BookingConcierge({ initialServiceId, isModal = false }: 
 
   return (
     <div className="w-full max-w-4xl mx-auto bg-[#14161B] border border-[#C5A059]/30 rounded-xl shadow-2xl overflow-hidden text-[#FBF9F5]">
-      {/* Concierge Wizard Top Banner */}
+      {/* Top Banner */}
       <div className="bg-[#17181C] border-b border-white/10 p-6 sm:p-8 text-center relative">
         <span className="text-[10px] tracking-[0.28em] text-[#C5A059] uppercase font-bold block mb-1">
-          THE PRIVATE CONCIERGE
+          ONLINE APPOINTMENT RESERVATION
         </span>
         <h2 className="font-serif text-2xl sm:text-3xl text-[#FBF9F5]">
-          Tell us how you would like to be cared for.
+          Book Your Visit at Classic Pearls
         </h2>
         <p className="text-xs text-[#A39E93] mt-1">
-          {currentStep === 5
-            ? 'Your reservation request has been logged into our atelier concierge system.'
-            : 'Step-by-step bespoke reservation experience.'}
+          {currentStep === 4
+            ? 'Your appointment request has been received.'
+            : 'Select your service, choose your preferred date and time, and confirm.'}
         </p>
 
         {/* Step Indicator Bar */}
-        {currentStep < 5 && (
-          <div className="flex items-center justify-center space-x-2 sm:space-x-4 mt-6 overflow-x-auto py-1">
+        {currentStep < 4 && (
+          <div className="flex items-center justify-center space-x-2 sm:space-x-6 mt-6 overflow-x-auto py-1">
             {[
-              { num: 1, label: 'Ritual' },
-              { num: 2, label: 'Artisan' },
-              { num: 3, label: 'Schedule' },
-              { num: 4, label: 'Details' },
+              { num: 1, label: '1. Service' },
+              { num: 2, label: '2. Date & Time' },
+              { num: 3, label: '3. Details' },
             ].map((s) => (
-              <div key={s.num} className="flex items-center space-x-1.5 flex-shrink-0">
+              <div key={s.num} className="flex items-center space-x-2 flex-shrink-0">
                 <div
                   className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold border transition-colors ${
                     currentStep === s.num
@@ -211,20 +197,20 @@ export default function BookingConcierge({ initialServiceId, isModal = false }: 
                 >
                   {s.label}
                 </span>
-                {s.num < 4 && <span className="text-white/20 text-xs pl-2">›</span>}
+                {s.num < 3 && <span className="text-white/20 text-xs pl-2">›</span>}
               </div>
             ))}
           </div>
         )}
       </div>
 
-      {/* Concierge Step Content */}
-      <div className="p-6 sm:p-8 min-h-[420px] flex flex-col justify-between">
+      {/* Step Content */}
+      <div className="p-6 sm:p-8 min-h-[400px] flex flex-col justify-between">
         {/* ================= STEP 1: SELECT SERVICE ================= */}
         {currentStep === 1 && (
           <div className="space-y-6 animate-in fade-in duration-200">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-4">
-              {/* Gender Segmented Control */}
+              {/* Gender Switcher */}
               <div className="inline-flex rounded-lg bg-[#0E0F12] p-1 border border-white/10">
                 <button
                   type="button"
@@ -235,7 +221,7 @@ export default function BookingConcierge({ initialServiceId, isModal = false }: 
                       : 'text-[#A39E93] hover:text-white'
                   }`}
                 >
-                  Women’s Rituals
+                  Women’s Services
                 </button>
                 <button
                   type="button"
@@ -246,7 +232,7 @@ export default function BookingConcierge({ initialServiceId, isModal = false }: 
                       : 'text-[#A39E93] hover:text-white'
                   }`}
                 >
-                  Men’s Grooming
+                  Men’s Services
                 </button>
                 <button
                   type="button"
@@ -306,11 +292,8 @@ export default function BookingConcierge({ initialServiceId, isModal = false }: 
                       </div>
                     </div>
                     <div className="text-right flex flex-col items-end justify-between self-stretch">
-                      <span className="text-[10px] text-[#DFBA73] uppercase tracking-widest font-bold font-sans">
-                        Bespoke
-                      </span>
                       <span
-                        className={`w-4 h-4 rounded-full border flex items-center justify-center text-[10px] mt-2 ${
+                        className={`w-5 h-5 rounded-full border flex items-center justify-center text-[10px] ${
                           isSelected ? 'bg-[#C5A059] text-[#0E0F12] border-[#C5A059]' : 'border-white/20'
                         }`}
                       >
@@ -323,10 +306,10 @@ export default function BookingConcierge({ initialServiceId, isModal = false }: 
             </div>
 
             {selectedService && (
-              <div className="p-3 bg-[#0E0F12] border border-[#C5A059]/30 rounded-lg flex items-center justify-between text-xs">
+              <div className="p-3.5 bg-[#0E0F12] border border-[#C5A059]/30 rounded-lg flex items-center justify-between text-xs">
                 <div>
-                  <span className="text-[#A39E93] block text-[10px] uppercase tracking-wider">Selected Ritual</span>
-                  <strong className="text-[#FBF9F5]">{selectedService.name}</strong>
+                  <span className="text-[#A39E93] block text-[10px] uppercase tracking-wider">Selected Service</span>
+                  <strong className="text-[#FBF9F5] text-sm">{selectedService.name}</strong>
                 </div>
                 <div className="text-right">
                   <span className="text-[#DFBA73] font-serif font-bold text-xs uppercase tracking-wider block">
@@ -339,101 +322,18 @@ export default function BookingConcierge({ initialServiceId, isModal = false }: 
           </div>
         )}
 
-        {/* ================= STEP 2: SELECT ARTISAN ================= */}
+        {/* ================= STEP 2: PREFERRED DATE & TIME ================= */}
         {currentStep === 2 && (
-          <div className="space-y-6 animate-in fade-in duration-200">
-            <h4 className="font-serif text-xl text-[#FBF9F5]">Choose your preferred Master Artisan</h4>
-            <p className="text-xs text-[#A39E93]">
-              Select a dedicated specialist or allow our concierge to pair you with the best available director.
-            </p>
-
-            <div className="space-y-3 max-h-[360px] overflow-y-auto pr-1">
-              <div
-                onClick={() => {
-                  setIsAnyArtisan(true);
-                  setSelectedArtisan(null);
-                  trackEvent('artisan_selected', { artisanName: 'Any Available Master' });
-                }}
-                className={`p-4 rounded-lg border cursor-pointer transition-all flex items-center justify-between ${
-                  isAnyArtisan
-                    ? 'bg-[#C5A059]/15 border-[#C5A059]'
-                    : 'bg-[#17181C] border-white/5 hover:border-[#C5A059]/40'
-                }`}
-              >
-                <div className="flex items-center space-x-3">
-                  <div className="w-12 h-12 rounded-full bg-[#C5A059]/20 border border-[#C5A059]/40 flex items-center justify-center text-[#DFBA73]">
-                    <Sparkles className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h5 className="font-serif text-base text-[#FBF9F5] font-semibold">First Available Senior Master</h5>
-                    <p className="text-xs text-[#A39E93]">Optimal schedule flexibility & tailored pairing</p>
-                  </div>
-                </div>
-                <span
-                  className={`w-4 h-4 rounded-full border flex items-center justify-center text-[10px] ${
-                    isAnyArtisan ? 'bg-[#C5A059] text-[#0E0F12] border-[#C5A059]' : 'border-white/20'
-                  }`}
-                >
-                  {isAnyArtisan && '✓'}
-                </span>
-              </div>
-
-              {ARTISANS.map((artisan) => {
-                const isSelected = !isAnyArtisan && selectedArtisan?.id === artisan.id;
-                return (
-                  <div
-                    key={artisan.id}
-                    onClick={() => {
-                      setIsAnyArtisan(false);
-                      setSelectedArtisan(artisan);
-                      trackEvent('artisan_selected', { artisanName: artisan.name });
-                    }}
-                    className={`p-4 rounded-lg border cursor-pointer transition-all flex items-center justify-between ${
-                      isSelected
-                        ? 'bg-[#C5A059]/15 border-[#C5A059]'
-                        : 'bg-[#17181C] border-white/5 hover:border-[#C5A059]/40'
-                    }`}
-                  >
-                    <div className="flex items-center space-x-3">
-                      <img
-                        src={artisan.image}
-                        alt={artisan.name}
-                        className="w-12 h-12 rounded-full object-cover border border-[#C5A059]/30"
-                      />
-                      <div>
-                        <h5 className="font-serif text-base text-[#FBF9F5] font-semibold">{artisan.name}</h5>
-                        <span className="text-[10px] text-[#C5A059] font-medium tracking-wider uppercase block">
-                          {artisan.title}
-                        </span>
-                        <p className="text-xs text-[#A39E93] line-clamp-1">{artisan.speciality}</p>
-                      </div>
-                    </div>
-                    <span
-                      className={`w-4 h-4 rounded-full border flex items-center justify-center text-[10px] ${
-                        isSelected ? 'bg-[#C5A059] text-[#0E0F12] border-[#C5A059]' : 'border-white/20'
-                      }`}
-                    >
-                      {isSelected && '✓'}
-                    </span>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        )}
-
-        {/* ================= STEP 3: PREFERRED DATE & TIME ================= */}
-        {currentStep === 3 && (
           <div className="space-y-6 animate-in fade-in duration-200">
             <h4 className="font-serif text-xl text-[#FBF9F5]">Choose your preferred date and time</h4>
             <p className="text-xs text-[#A39E93]">
-              *Note: Selection represents your preferred schedule. Our concierge verifies actual artisan slots.
+              Classic Pearls is open <strong>10:00 AM to 09:00 PM everyday</strong> in Arekere, Bengaluru.
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
                 <label className="text-xs uppercase tracking-wider text-[#A39E93] font-bold block">
-                  Select Preferred Date
+                  Select Date
                 </label>
                 <input
                   type="date"
@@ -450,7 +350,7 @@ export default function BookingConcierge({ initialServiceId, isModal = false }: 
 
               <div className="space-y-2">
                 <label className="text-xs uppercase tracking-wider text-[#A39E93] font-bold block">
-                  Preferred Time Window
+                  Select Preferred Time Slot (10:00 AM – 09:00 PM)
                 </label>
                 <div className="grid grid-cols-2 gap-2 max-h-[220px] overflow-y-auto pr-1">
                   {bookingConfig.timeSlots.map((slot) => {
@@ -477,16 +377,16 @@ export default function BookingConcierge({ initialServiceId, isModal = false }: 
             <div className="bg-[#17181C] p-4 rounded-lg border border-white/5 text-xs text-[#A39E93] flex items-center space-x-3">
               <Clock className="w-4 h-4 text-[#C5A059] flex-shrink-0" />
               <span>
-                Standard consultation diagnostic takes place at the start of your appointment.
+                Selected Time: <strong className="text-[#FBF9F5]">{preferredTime}</strong> on <strong className="text-[#FBF9F5]">{preferredDate}</strong>
               </span>
             </div>
           </div>
         )}
 
-        {/* ================= STEP 4: CLIENT DETAILS & CONSENT ================= */}
-        {currentStep === 4 && (
+        {/* ================= STEP 3: CLIENT DETAILS & CONSENT ================= */}
+        {currentStep === 3 && (
           <div className="space-y-5 animate-in fade-in duration-200">
-            <h4 className="font-serif text-xl text-[#FBF9F5]">Client Details & VIP Preferences</h4>
+            <h4 className="font-serif text-xl text-[#FBF9F5]">Your Contact Details</h4>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
@@ -495,7 +395,7 @@ export default function BookingConcierge({ initialServiceId, isModal = false }: 
                 </label>
                 <input
                   type="text"
-                  placeholder="e.g. Eleanor Vance"
+                  placeholder="e.g. Priya Sharma / Rahul"
                   value={clientName}
                   onChange={(e) => setClientName(e.target.value)}
                   className={`w-full bg-[#0E0F12] border rounded-lg p-2.5 text-xs text-[#FBF9F5] focus:outline-none focus:border-[#C5A059] ${
@@ -508,11 +408,11 @@ export default function BookingConcierge({ initialServiceId, isModal = false }: 
 
               <div>
                 <label className="text-[11px] uppercase tracking-wider text-[#A39E93] font-semibold block mb-1">
-                  Mobile Phone (SMS Confirmation) *
+                  Mobile Number (Calling & WhatsApp) *
                 </label>
                 <input
                   type="tel"
-                  placeholder="+91 98765 00000"
+                  placeholder="+91 83107 30322"
                   value={clientPhone}
                   onChange={(e) => setClientPhone(e.target.value)}
                   className={`w-full bg-[#0E0F12] border rounded-lg p-2.5 text-xs text-[#FBF9F5] focus:outline-none focus:border-[#C5A059] ${
@@ -522,57 +422,38 @@ export default function BookingConcierge({ initialServiceId, isModal = false }: 
                 />
                 {errors.phone && <p className="text-rose-400 text-[10px] mt-1">{errors.phone}</p>}
               </div>
-
-              <div>
-                <label className="text-[11px] uppercase tracking-wider text-[#A39E93] font-semibold block mb-1">
-                  Email (Calendar Invite) *
-                </label>
-                <input
-                  type="email"
-                  placeholder="eleanor@example.com"
-                  value={clientEmail}
-                  onChange={(e) => setClientEmail(e.target.value)}
-                  className={`w-full bg-[#0E0F12] border rounded-lg p-2.5 text-xs text-[#FBF9F5] focus:outline-none focus:border-[#C5A059] ${
-                    errors.email ? 'border-rose-500' : 'border-white/15'
-                  }`}
-                  required
-                />
-                {errors.email && <p className="text-rose-400 text-[10px] mt-1">{errors.email}</p>}
-              </div>
-
-              <div>
-                <label className="text-[11px] uppercase tracking-wider text-[#A39E93] font-semibold block mb-1">
-                  Occasion
-                </label>
-                <select
-                  value={occasion}
-                  onChange={(e) => setOccasion(e.target.value)}
-                  className="w-full bg-[#0E0F12] border border-white/15 rounded-lg p-2.5 text-xs text-[#FBF9F5] focus:outline-none focus:border-[#C5A059]"
-                >
-                  <option>Regular appointment</option>
-                  <option>Bridal & Wedding</option>
-                  <option>Gala & Red Carpet</option>
-                  <option>Birthday & Celebration</option>
-                  <option>Photoshoot / Fashion</option>
-                  <option>Other Special Event</option>
-                </select>
-              </div>
             </div>
 
             <div>
               <label className="text-[11px] uppercase tracking-wider text-[#A39E93] font-semibold block mb-1">
-                Special Requests or Hair/Skin History (Optional)
+                Occasion / Service Reason
+              </label>
+              <select
+                value={occasion}
+                onChange={(e) => setOccasion(e.target.value)}
+                className="w-full bg-[#0E0F12] border border-white/15 rounded-lg p-2.5 text-xs text-[#FBF9F5] focus:outline-none focus:border-[#C5A059]"
+              >
+                <option>Regular appointment</option>
+                <option>Bridal & Wedding Event</option>
+                <option>Party & Function Makeover</option>
+                <option>Weekend Relaxation</option>
+                <option>Other</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="text-[11px] uppercase tracking-wider text-[#A39E93] font-semibold block mb-1">
+                Special Requests or Notes (Optional)
               </label>
               <textarea
                 rows={2}
-                placeholder="Mention allergies, past color history, or bespoke refreshment preferences..."
+                placeholder="Mention any specific preferences, hair length, or questions..."
                 value={specialNotes}
                 onChange={(e) => setSpecialNotes(e.target.value)}
                 className="w-full bg-[#0E0F12] border border-white/15 rounded-lg p-2.5 text-xs text-[#FBF9F5] focus:outline-none focus:border-[#C5A059]"
               ></textarea>
             </div>
 
-            {/* Mandatory Consent Statement */}
             <div className="pt-2">
               <label className="flex items-start space-x-2.5 cursor-pointer text-xs text-[#A39E93]">
                 <input
@@ -582,12 +463,7 @@ export default function BookingConcierge({ initialServiceId, isModal = false }: 
                   className="mt-0.5 rounded border-white/20 text-[#C5A059] focus:ring-[#C5A059]"
                 />
                 <span>
-                  I agree to the{' '}
-                  <Link href="/privacy-policy" className="text-[#DFBA73] underline">
-                    Privacy Policy
-                  </Link>{' '}
-                  and understand that submitting this request does not guarantee an appointment until confirmed by
-                  Classic Pearls concierge.
+                  I agree to submit this appointment request for Classic Pearls salon, Bengaluru.
                 </span>
               </label>
               {errors.consent && <p className="text-rose-400 text-[10px] mt-1">{errors.consent}</p>}
@@ -595,8 +471,8 @@ export default function BookingConcierge({ initialServiceId, isModal = false }: 
           </div>
         )}
 
-        {/* ================= STEP 5: CONFIRMATION TICKET ================= */}
-        {currentStep === 5 && completedBooking && (
+        {/* ================= STEP 4: CONFIRMATION TICKET ================= */}
+        {currentStep === 4 && completedBooking && (
           <div className="space-y-6 py-4 text-center animate-in zoom-in-95 duration-200">
             <div className="w-16 h-16 rounded-full bg-[#C5A059]/20 border border-[#C5A059] flex items-center justify-center text-[#DFBA73] mx-auto shadow-lg shadow-[#C5A059]/20">
               <CheckCircle2 className="w-8 h-8" />
@@ -604,44 +480,39 @@ export default function BookingConcierge({ initialServiceId, isModal = false }: 
 
             <div>
               <span className="text-[10px] tracking-[0.3em] text-[#C5A059] font-bold uppercase block">
-                REQUEST RECEIVED
+                APPOINTMENT REQUEST RECEIVED
               </span>
               <h3 className="font-serif text-3xl text-[#FBF9F5] mt-1">Thank You, {completedBooking.client.name}</h3>
               <p className="text-xs text-[#A39E93] max-w-md mx-auto mt-2">
-                Our atelier concierge team will review artisan availability and contact you shortly to confirm your
-                appointment.
+                We have received your appointment request. You can also directly confirm or message us on WhatsApp.
               </p>
             </div>
 
-            {/* Luxury Ticket Card */}
+            {/* Ticket Summary Card */}
             <div className="max-w-md mx-auto bg-[#17181C] border border-dashed border-[#C5A059]/60 rounded-xl p-5 text-left text-xs space-y-2.5 shadow-xl">
               <div className="flex justify-between border-b border-white/10 pb-2">
-                <span className="text-[#A39E93]">Reference Code</span>
+                <span className="text-[#A39E93]">Booking Reference</span>
                 <strong className="text-[#DFBA73] font-mono tracking-wider">{completedBooking.reference}</strong>
               </div>
               <div className="flex justify-between border-b border-white/10 pb-2">
-                <span className="text-[#A39E93]">Ritual</span>
+                <span className="text-[#A39E93]">Service</span>
                 <strong className="text-[#FBF9F5]">{completedBooking.serviceName}</strong>
               </div>
               <div className="flex justify-between border-b border-white/10 pb-2">
-                <span className="text-[#A39E93]">Master Artisan</span>
-                <strong className="text-[#FBF9F5]">{completedBooking.artisanName}</strong>
-              </div>
-              <div className="flex justify-between border-b border-white/10 pb-2">
-                <span className="text-[#A39E93]">Preferred Schedule</span>
+                <span className="text-[#A39E93]">Date & Time</span>
                 <strong className="text-[#DFBA73]">
                   {completedBooking.preferredDate} at {completedBooking.preferredTime}
                 </strong>
               </div>
               <div className="flex justify-between pt-1">
-                <span className="text-[#A39E93]">Service Scope</span>
-                <strong className="text-[#FBF9F5] font-serif text-xs uppercase tracking-wider">
-                  Bespoke Atelier Consultation & Ritual
+                <span className="text-[#A39E93]">Location</span>
+                <strong className="text-[#FBF9F5] text-right">
+                  Arekere, BDA Main Rd, Bengaluru
                 </strong>
               </div>
             </div>
 
-            {/* Next Action Buttons */}
+            {/* Action Buttons */}
             <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
               <button
                 type="button"
@@ -649,7 +520,7 @@ export default function BookingConcierge({ initialServiceId, isModal = false }: 
                   downloadCalendarEvent({
                     reference: completedBooking.reference,
                     serviceName: completedBooking.serviceName,
-                    artisanName: completedBooking.artisanName,
+                    artisanName: 'Classic Pearls Team',
                     preferredDate: completedBooking.preferredDate,
                     preferredTime: completedBooking.preferredTime,
                     clientName: completedBooking.client.name,
@@ -665,7 +536,7 @@ export default function BookingConcierge({ initialServiceId, isModal = false }: 
                 href={getWhatsAppBookingMessage({
                   reference: completedBooking.reference,
                   serviceName: completedBooking.serviceName,
-                  artisanName: completedBooking.artisanName,
+                  artisanName: 'Classic Pearls Team',
                   preferredDate: completedBooking.preferredDate,
                   preferredTime: completedBooking.preferredTime,
                   clientName: completedBooking.client.name,
@@ -675,20 +546,20 @@ export default function BookingConcierge({ initialServiceId, isModal = false }: 
                 className="bg-gradient-to-r from-[#C5A059] to-[#DFBA73] text-[#0E0F12] px-5 py-2.5 rounded text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-lg shadow-[#C5A059]/20"
               >
                 <MessageSquare className="w-3.5 h-3.5" />
-                <span>Confirm via WhatsApp</span>
+                <span>Confirm on WhatsApp</span>
               </a>
             </div>
 
             <div className="pt-2">
               <Link href="/" className="text-xs text-[#A39E93] hover:text-[#DFBA73] underline">
-                Return to Classic Pearls Atelier
+                Return to Home
               </Link>
             </div>
           </div>
         )}
 
         {/* Wizard Footer Navigation Controls */}
-        {currentStep < 5 && (
+        {currentStep < 4 && (
           <div className="pt-6 border-t border-white/10 flex items-center justify-between mt-6">
             {currentStep > 1 ? (
               <button
@@ -708,7 +579,7 @@ export default function BookingConcierge({ initialServiceId, isModal = false }: 
               onClick={handleNext}
               className="bg-gradient-to-r from-[#C5A059] to-[#DFBA73] hover:from-[#DFBA73] hover:to-[#C5A059] text-[#0E0F12] px-6 py-2.5 rounded text-xs font-bold uppercase tracking-widest flex items-center gap-1.5 shadow-lg shadow-[#C5A059]/15"
             >
-              <span>{currentStep === 4 ? 'Submit Request' : 'Continue'}</span>
+              <span>{currentStep === 3 ? 'Confirm Request' : 'Continue'}</span>
               <ChevronRight className="w-4 h-4" />
             </button>
           </div>

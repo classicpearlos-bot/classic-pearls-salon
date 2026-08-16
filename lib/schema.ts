@@ -15,10 +15,9 @@ export function getSalonSchemaJsonLd() {
     "@id": siteConfig.url,
     "url": siteConfig.url,
     "telephone": businessConfig.phone,
-    "email": businessConfig.email,
-    "priceRange": "$$$$",
-    "currenciesAccepted": businessConfig.currency.code,
-    "paymentAccepted": "Cash, Credit Card, UPI, Apple Pay",
+    "priceRange": "$$$",
+    "currenciesAccepted": "INR",
+    "paymentAccepted": "Cash, Credit Card, UPI",
     "address": {
       "@type": "PostalAddress",
       "streetAddress": businessConfig.address.street,
@@ -35,15 +34,17 @@ export function getSalonSchemaJsonLd() {
     "openingHoursSpecification": [
       {
         "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-        "opens": "09:30",
-        "closes": "20:30"
-      },
-      {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Sunday"],
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday"
+        ],
         "opens": "10:00",
-        "closes": "19:00"
+        "closes": "21:00"
       }
     ],
     "sameAs": [

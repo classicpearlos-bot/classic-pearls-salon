@@ -1,247 +1,118 @@
-'use client';
-
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { businessConfig } from '@/lib/config';
 import { getWhatsAppConciergeUrl } from '@/lib/whatsapp';
-import { trackEvent } from '@/lib/analytics';
-import { MapPin, Phone, Mail, Clock, MessageSquare, CheckCircle2, ShieldCheck } from 'lucide-react';
+import { MapPin, Phone, Clock, MessageSquare, ShieldCheck } from 'lucide-react';
+
+export const metadata = {
+  title: 'Contact & Directions | Classic Pearls Luxury Salon Bengaluru',
+  description: 'Visit Classic Pearls Luxury Salon at MNK Arcade, Arekere, Bengaluru. Phone: +91 83107 30322. Open 10:00 AM – 09:00 PM Everyday.',
+};
 
 export default function ContactPage() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    subject: 'General Inquiries',
-    message: '',
-    consent: true,
-  });
-
-  const [submitted, setSubmitted] = useState(false);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setSubmitted(true);
-    trackEvent('contact_submitted');
-  };
-
   return (
     <div className="bg-[#0E0F12] text-[#FBF9F5] py-16 sm:py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-20 space-y-4">
+        <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
           <span className="text-[10px] tracking-[0.3em] text-[#C5A059] uppercase font-bold block">
-            CONCIERGE & LOCATION
+            VISIT & CONNECT
           </span>
           <h1 className="font-serif text-4xl sm:text-6xl text-[#FBF9F5]">
-            Connect with <span className="italic text-[#DFBA73]">Classic Pearls</span>
+            Contact & <span className="italic text-[#DFBA73]">Directions</span>
           </h1>
           <p className="text-sm sm:text-base text-[#A39E93] font-light leading-relaxed">
-            Our atelier concierge team is at your disposal for appointments, private suite reservations, and bespoke styling consultations.
+            We are conveniently located in Arekere, Bengaluru. Reach out to schedule an appointment or ask any questions.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-20">
+        {/* Contact Cards */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 mb-16">
           
-          {/* Left Column: Verified NAP & Contact Cards */}
-          <div className="lg:col-span-5 space-y-8">
-            <div className="bg-[#14161B] p-8 rounded-xl border border-white/10 space-y-6 shadow-xl">
-              <h2 className="font-serif text-2xl text-[#FBF9F5]">Atelier Headquarters</h2>
+          <div className="lg:col-span-6 space-y-6">
+            <div className="bg-[#14161B] p-8 rounded-xl border border-white/10 space-y-6">
+              <h2 className="font-serif text-2xl text-[#FBF9F5]">Salon Information</h2>
               
               <div className="space-y-4 text-xs">
                 <div className="flex items-start space-x-3">
-                  <MapPin className="w-4 h-4 text-[#C5A059] flex-shrink-0 mt-0.5" />
+                  <MapPin className="w-5 h-5 text-[#C5A059] flex-shrink-0 mt-0.5" />
                   <div>
-                    <strong className="text-[#FBF9F5] block">Physical Address</strong>
-                    <span className="text-[#A39E93]">{businessConfig.address.street}, {businessConfig.address.city}, {businessConfig.address.state} {businessConfig.address.postalCode}</span>
+                    <strong className="text-[#FBF9F5] block text-sm mb-0.5">Physical Address</strong>
+                    <span className="text-[#A39E93] leading-relaxed block">
+                      {businessConfig.address.street}, {businessConfig.address.city}, {businessConfig.address.state} {businessConfig.address.postalCode}
+                    </span>
+                    <span className="text-[#DFBA73] text-[11px] block mt-1">Landmark: Beside Camry Hospital, 80ft BDA Main Road</span>
                   </div>
                 </div>
 
-                <div className="flex items-start space-x-3">
-                  <Phone className="w-4 h-4 text-[#C5A059] flex-shrink-0 mt-0.5" />
+                <div className="flex items-start space-x-3 border-t border-white/5 pt-4">
+                  <Phone className="w-5 h-5 text-[#C5A059] flex-shrink-0 mt-0.5" />
                   <div>
-                    <strong className="text-[#FBF9F5] block">Telephone Concierge</strong>
-                    <a href={`tel:${businessConfig.phone.replace(/[^0-9+]/g, '')}`} className="text-[#DFBA73]">
+                    <strong className="text-[#FBF9F5] block text-sm mb-0.5">Phone & Calling</strong>
+                    <a href={`tel:${businessConfig.phoneRaw}`} className="text-[#DFBA73] font-semibold text-sm">
                       {businessConfig.phone}
                     </a>
                   </div>
                 </div>
 
-                <div className="flex items-start space-x-3">
-                  <Mail className="w-4 h-4 text-[#C5A059] flex-shrink-0 mt-0.5" />
+                <div className="flex items-start space-x-3 border-t border-white/5 pt-4">
+                  <Clock className="w-5 h-5 text-[#C5A059] flex-shrink-0 mt-0.5" />
                   <div>
-                    <strong className="text-[#FBF9F5] block">Official Email</strong>
-                    <a href={`mailto:${businessConfig.email}`} className="text-[#DFBA73]">
-                      {businessConfig.email}
-                    </a>
-                  </div>
-                </div>
-
-                <div className="flex items-start space-x-3">
-                  <MessageSquare className="w-4 h-4 text-[#C5A059] flex-shrink-0 mt-0.5" />
-                  <div>
-                    <strong className="text-[#FBF9F5] block">WhatsApp Concierge</strong>
-                    <a href={getWhatsAppConciergeUrl()} target="_blank" rel="noopener noreferrer" className="text-[#DFBA73] hover:underline">
-                      Chat directly with Concierge →
-                    </a>
+                    <strong className="text-[#FBF9F5] block text-sm mb-0.5">Operating Hours</strong>
+                    <span className="text-[#DFBA73] font-medium">10:00 AM – 09:00 PM Everyday (Monday – Sunday)</span>
                   </div>
                 </div>
               </div>
 
-              <div className="pt-2 border-t border-white/5">
+              <div className="pt-4 flex flex-wrap items-center gap-3">
                 <a
                   href={businessConfig.mapsUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-xs text-[#DFBA73] hover:underline font-bold uppercase tracking-wider"
+                  className="bg-gradient-to-r from-[#C5A059] to-[#DFBA73] text-[#0E0F12] px-5 py-2.5 rounded text-xs font-bold uppercase tracking-wider"
                 >
-                  <span>Open in Google Maps Directions →</span>
+                  Get Directions
                 </a>
-              </div>
-            </div>
-
-            {/* Hours Card */}
-            <div className="bg-[#14161B] p-8 rounded-xl border border-white/10 space-y-4 shadow-xl">
-              <div className="flex items-center space-x-2">
-                <Clock className="w-4 h-4 text-[#C5A059]" />
-                <h3 className="font-serif text-xl text-[#FBF9F5]">Atelier Operating Schedule</h3>
-              </div>
-              <div className="space-y-2.5 text-xs">
-                {businessConfig.openingHours.map((sched, idx) => (
-                  <div key={idx} className="flex justify-between py-1.5 border-b border-white/5">
-                    <span className="text-[#A39E93]">{sched.days}</span>
-                    <strong className="text-[#FBF9F5]">{sched.hours}</strong>
-                  </div>
-                ))}
+                <a
+                  href={getWhatsAppConciergeUrl()}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-[#17181C] hover:bg-[#22242B] border border-[#C5A059]/40 text-[#DFBA73] px-5 py-2.5 rounded text-xs font-semibold uppercase tracking-wider flex items-center gap-2"
+                >
+                  <MessageSquare className="w-4 h-4" />
+                  <span>Chat on WhatsApp</span>
+                </a>
               </div>
             </div>
           </div>
 
-          {/* Right Column: Contact Inquiry Form */}
-          <div className="lg:col-span-7">
-            <div className="bg-[#14161B] p-8 sm:p-10 rounded-xl border border-white/10 shadow-2xl">
-              <span className="text-[10px] tracking-[0.25em] text-[#C5A059] uppercase font-bold block mb-1">
-                ONLINE INQUIRIES
-              </span>
-              <h2 className="font-serif text-3xl text-[#FBF9F5] mb-2">Send a Message</h2>
-              <p className="text-xs text-[#A39E93] mb-8 font-light">
-                Have a specialized treatment request or corporate inquiry? Fill out the form below.
+          <div className="lg:col-span-6 bg-[#14161B] p-8 rounded-xl border border-white/10 flex flex-col justify-between space-y-6">
+            <div className="space-y-4">
+              <h2 className="font-serif text-2xl text-[#FBF9F5]">Appointment Booking</h2>
+              <p className="text-xs text-[#A39E93] leading-relaxed">
+                Whether you need a haircut, hair color, facial, or bridal styling, you can easily reserve your appointment online.
               </p>
 
-              {submitted ? (
-                <div className="py-12 text-center space-y-4 animate-in zoom-in-95 duration-200">
-                  <div className="w-14 h-14 rounded-full bg-[#C5A059]/20 border border-[#C5A059] flex items-center justify-center text-[#DFBA73] mx-auto">
-                    <CheckCircle2 className="w-7 h-7" />
-                  </div>
-                  <h3 className="font-serif text-2xl text-[#FBF9F5]">Inquiry Transmitted</h3>
-                  <p className="text-xs text-[#A39E93] max-w-sm mx-auto">
-                    Thank you for connecting with Classic Pearls. Our concierge will review your message and reply promptly.
-                  </p>
-                  <button
-                    onClick={() => setSubmitted(false)}
-                    className="mt-4 text-xs text-[#DFBA73] underline uppercase tracking-wider"
-                  >
-                    Send Another Message
-                  </button>
+              <div className="space-y-2 text-xs text-[#DFBA73] pt-2">
+                <div className="p-3 bg-[#17181C] rounded border border-white/5 flex items-center gap-2">
+                  <Clock className="w-4 h-4 text-[#C5A059]" />
+                  <span>Quick confirmation via Phone or WhatsApp</span>
                 </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="text-[11px] uppercase tracking-wider text-[#A39E93] font-semibold block mb-1">
-                        Full Name *
-                      </label>
-                      <input
-                        type="text"
-                        placeholder="Eleanor Vance"
-                        value={formData.name}
-                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        required
-                        className="w-full bg-[#0E0F12] border border-white/15 rounded-lg p-2.5 text-xs text-[#FBF9F5] focus:outline-none focus:border-[#C5A059]"
-                      />
-                    </div>
-                    <div>
-                      <label className="text-[11px] uppercase tracking-wider text-[#A39E93] font-semibold block mb-1">
-                        Mobile Phone *
-                      </label>
-                      <input
-                        type="tel"
-                        placeholder="+91 98765 00000"
-                        value={formData.phone}
-                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                        required
-                        className="w-full bg-[#0E0F12] border border-white/15 rounded-lg p-2.5 text-xs text-[#FBF9F5] focus:outline-none focus:border-[#C5A059]"
-                      />
-                    </div>
-                  </div>
+                <div className="p-3 bg-[#17181C] rounded border border-white/5 flex items-center gap-2">
+                  <ShieldCheck className="w-4 h-4 text-[#C5A059]" />
+                  <span>No deposit required for standard salon visits</span>
+                </div>
+              </div>
+            </div>
 
-                  <div>
-                    <label className="text-[11px] uppercase tracking-wider text-[#A39E93] font-semibold block mb-1">
-                      Email Address *
-                    </label>
-                    <input
-                      type="email"
-                      placeholder="eleanor@example.com"
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      required
-                      className="w-full bg-[#0E0F12] border border-white/15 rounded-lg p-2.5 text-xs text-[#FBF9F5] focus:outline-none focus:border-[#C5A059]"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="text-[11px] uppercase tracking-wider text-[#A39E93] font-semibold block mb-1">
-                      Subject
-                    </label>
-                    <select
-                      value={formData.subject}
-                      onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                      className="w-full bg-[#0E0F12] border border-white/15 rounded-lg p-2.5 text-xs text-[#FBF9F5] focus:outline-none focus:border-[#C5A059]"
-                    >
-                      <option>General Inquiries</option>
-                      <option>Bridal Penthouse Booking</option>
-                      <option>Private Suite Rental</option>
-                      <option>Editorial / Media Request</option>
-                      <option>Career Opportunities</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="text-[11px] uppercase tracking-wider text-[#A39E93] font-semibold block mb-1">
-                      Message *
-                    </label>
-                    <textarea
-                      rows={4}
-                      placeholder="How may our concierge assist you?"
-                      value={formData.message}
-                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      required
-                      className="w-full bg-[#0E0F12] border border-white/15 rounded-lg p-2.5 text-xs text-[#FBF9F5] focus:outline-none focus:border-[#C5A059]"
-                    ></textarea>
-                  </div>
-
-                  <div className="pt-2">
-                    <label className="flex items-start space-x-2 text-xs text-[#A39E93] cursor-pointer">
-                      <input
-                        type="checkbox"
-                        checked={formData.consent}
-                        onChange={(e) => setFormData({ ...formData, consent: e.target.checked })}
-                        required
-                        className="mt-0.5 rounded border-white/20 text-[#C5A059] focus:ring-[#C5A059]"
-                      />
-                      <span>I agree to the <Link href="/privacy-policy" className="text-[#DFBA73] underline">Privacy Policy</Link> for contact communications.</span>
-                    </label>
-                  </div>
-
-                  <button
-                    type="submit"
-                    className="w-full bg-gradient-to-r from-[#C5A059] to-[#DFBA73] hover:from-[#DFBA73] hover:to-[#C5A059] text-[#0E0F12] py-3.5 rounded text-xs font-bold uppercase tracking-widest transition-all shadow-lg"
-                  >
-                    Transmit Inquiry
-                  </button>
-                </form>
-              )}
+            <div className="pt-6 border-t border-white/5">
+              <Link
+                href="/book"
+                className="w-full block text-center bg-gradient-to-r from-[#C5A059] to-[#DFBA73] text-[#0E0F12] py-3.5 rounded text-xs font-bold uppercase tracking-wider shadow-lg"
+              >
+                Launch Appointment Booking
+              </Link>
             </div>
           </div>
 

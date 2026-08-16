@@ -1,70 +1,77 @@
 import React from 'react';
+import Link from 'next/link';
 import { businessConfig } from '@/lib/config';
-import { Clock, ShieldCheck, Phone } from 'lucide-react';
 
 export const metadata = {
-  title: 'Appointment & Cancellation Policy | Classic Pearls',
-  description: 'Learn about the 24-hour cancellation notice and rescheduling guidelines at Classic Pearls luxury salon.',
+  title: '24-Hour Appointment & Cancellation Policy | Classic Pearls Bengaluru',
+  description: 'Learn about our 24-hour appointment rescheduling and cancellation guidelines at Classic Pearls Luxury Salon.',
 };
 
 export default function CancellationPolicyPage() {
   return (
     <div className="bg-[#0E0F12] text-[#FBF9F5] py-16 sm:py-24">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
         
-        <div className="border-b border-white/10 pb-8 mb-10 space-y-2">
-          <span className="text-[10px] tracking-[0.3em] text-[#C5A059] uppercase font-bold block">
-            ATELIER SCHEDULING GUIDELINES
+        {/* Header */}
+        <div className="space-y-3 border-b border-white/10 pb-8">
+          <span className="text-[10px] tracking-[0.25em] text-[#C5A059] uppercase font-bold">
+            CLIENT GUIDELINES
           </span>
-          <h1 className="font-serif text-3xl sm:text-5xl text-[#FBF9F5]">Appointment & Cancellation Policy</h1>
-          <p className="text-xs text-[#A39E93]">
-            Designed with mutual respect for our patrons and our master artisans' dedicated time.
-          </p>
+          <h1 className="font-serif text-3xl sm:text-5xl text-[#FBF9F5]">
+            Appointment & <span className="italic text-[#DFBA73]">Cancellation Policy</span>
+          </h1>
+          <p className="text-xs text-[#A39E93]">Last updated: August 2026 • Classic Pearls Luxury Salon, Bengaluru</p>
         </div>
 
-        <div className="space-y-8 text-sm text-[#A39E93] leading-relaxed font-light">
+        {/* Policy Content */}
+        <div className="space-y-8 text-xs sm:text-sm text-[#A39E93] leading-relaxed font-light">
           
-          <div className="p-5 bg-[#14161B] rounded-lg border border-[#C5A059]/30 flex items-start gap-4">
-            <Clock className="w-6 h-6 text-[#C5A059] flex-shrink-0 mt-0.5" />
-            <div>
-              <h3 className="font-serif text-lg text-[#FBF9F5] font-semibold mb-1">Standard 24-Hour Notice Window</h3>
-              <p className="text-xs text-[#A39E93]">
-                Appointments may be rescheduled or cancelled without fee or penalty up to <strong>24 hours prior</strong> to your scheduled appointment start time.
-              </p>
-            </div>
-          </div>
-
           <section className="space-y-3">
-            <h2 className="font-serif text-xl text-[#FBF9F5] font-semibold">1. Individual Appointments</h2>
+            <h2 className="font-serif text-xl text-[#FBF9F5]">1. Respecting Time & Schedule</h2>
             <p>
-              Our Master Artisans reserve an undivided block of time exclusively for you. If you need to modify your reservation, please notify our concierge via phone or WhatsApp at least 24 hours in advance so another patron may be accommodated.
+              At Classic Pearls, our specialists dedicate uninterrupted time slots to each client to ensure unhurried, meticulous artistry. We kindly request timely arrival so we can provide your full treatment duration.
             </p>
           </section>
 
           <section className="space-y-3">
-            <h2 className="font-serif text-xl text-[#FBF9F5] font-semibold">2. Bridal Suites & Group Bookings</h2>
+            <h2 className="font-serif text-xl text-[#FBF9F5]">2. 24-Hour Notice for Rescheduling</h2>
             <p>
-              Due to the extensive multi-stylist preparation required for our private Penthouse Bridal Suite, custom bridal parties require a <strong>72-hour notice</strong> for cancellation or significant rescheduling.
+              We understand that schedules shift. Should you need to cancel or reschedule your visit, please notify us at least <strong>24 hours prior</strong> to your scheduled appointment. This courtesy allows us to accommodate other clients on our waitlist.
             </p>
           </section>
 
           <section className="space-y-3">
-            <h2 className="font-serif text-xl text-[#FBF9F5] font-semibold">3. Late Arrivals</h2>
+            <h2 className="font-serif text-xl text-[#FBF9F5]">3. Bridal & Multi-Hour Packages</h2>
             <p>
-              If you anticipate arriving past your appointment time, please alert our concierge. To avoid delaying subsequent scheduled guests, arrivals exceeding 15 minutes may necessitate an abbreviated treatment ritual while retaining the original service scope.
+              For extensive multi-hour bridal bookings and group styling sessions, we request at least <strong>72 hours advance notice</strong> for any major timing modifications or cancellations.
             </p>
           </section>
 
-          <section className="space-y-3 border-t border-white/10 pt-6">
-            <h2 className="font-serif text-xl text-[#FBF9F5] font-semibold">4. How to Reschedule or Cancel</h2>
+          <section className="space-y-3">
+            <h2 className="font-serif text-xl text-[#FBF9F5]">4. Late Arrivals</h2>
             <p>
-              Contact our concierge directly via:<br />
-              • WhatsApp: <a href={`https://wa.me/${businessConfig.whatsappNumber}`} className="text-[#DFBA73] underline">Click to Message Concierge</a><br />
-              • Phone: <a href={`tel:${businessConfig.phone.replace(/[^0-9+]/g, '')}`} className="text-[#DFBA73]">{businessConfig.phone}</a><br />
-              • Email: <a href={`mailto:${businessConfig.email}`} className="text-[#DFBA73]">{businessConfig.email}</a>
+              If you anticipate arriving late, please notify our reception team immediately. We will do everything possible to complete your ritual, though your service time may be adjusted if subsequent appointments are booked.
             </p>
           </section>
 
+          <section className="space-y-3">
+            <h2 className="font-serif text-xl text-[#FBF9F5]">5. How to Modify Your Appointment</h2>
+            <p>
+              To reschedule or cancel your visit, please contact us directly via telephone or WhatsApp at{' '}
+              <a href={`tel:${businessConfig.phoneRaw}`} className="text-[#DFBA73] font-semibold underline">
+                {businessConfig.phone}
+              </a>
+              . Our salon is open everyday from 10:00 AM to 09:00 PM.
+            </p>
+          </section>
+
+        </div>
+
+        {/* Back Link */}
+        <div className="pt-8 border-t border-white/10">
+          <Link href="/" className="text-xs uppercase tracking-wider text-[#DFBA73] hover:underline font-bold">
+            ← Return to Classic Pearls Homepage
+          </Link>
         </div>
 
       </div>
