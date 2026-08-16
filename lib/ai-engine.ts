@@ -273,15 +273,28 @@ function extractSkinType(text: string): string | null {
   return null;
 }
 
+// Category groupings — used by both findMatchingServices and recommendation engine
+const HAIR_CATEGORIES = ['haircut-styling', 'color-balayage', 'advance-hair-treatments', 'hair-care-deep-conditioning'];
+const SKIN_CATEGORIES = ['facials-cleanup-detan'];
+const GROOMING_CATEGORIES = ['mens-grooming'];
+
 function findMatchingServices(text: string, limit = 3): ServiceItem[] {
   const expanded = expandSynonyms(text);
   const combined = expanded.join(' ');
+  const lower = text.toLowerCase();
+
+  // Detect the domain of the query to prioritize matching categories
+  const isHairQuery = containsAny(lower, ['hair', 'frizz', 'frizzy', 'keratin', 'botox', 'nano', 'balayage', 'color', 'colour', 'highlight', 'haircut', 'straighten', 'smoothing', 'dandruff', 'scalp']);
+  const isSkinQuery = containsAny(lower, ['skin', 'facial', 'face', 'glow', 'tan', 'acne', 'pimple', 'detan', 'cleanup', 'hydra', 'korean']);
+  const isMensQuery = containsAny(lower, ['men', 'beard', 'shave', 'gents', 'male', 'fade']);
+  const isBridalQuery = containsAny(lower, ['bridal', 'wedding', 'bride', 'makeup']);
 
   const scored = ALL_SERVICES.map(service => {
     let score = 0;
     const nameWords = service.name.toLowerCase().split(/\s+/);
     const descWords = service.description.toLowerCase();
     const catWords = service.categoryName.toLowerCase();
+    const allServiceText = (service.id + ' ' + service.name + ' ' + service.description + ' ' + catWords + ' ' + (service.benefits || []).join(' ')).toLowerCase();
 
     // Direct name match
     for (const word of nameWords) {
@@ -293,7 +306,7 @@ function findMatchingServices(text: string, limit = 3): ServiceItem[] {
 
     // Description keyword match
     for (const exp of expanded) {
-      if (descWords.includes(exp)) score += 1;
+      if (exp.length > 2 && descWords.includes(exp)) score += 1;
     }
 
     // Fuzzy match on service name
@@ -305,10 +318,16 @@ function findMatchingServices(text: string, limit = 3): ServiceItem[] {
     if (service.benefits) {
       for (const benefit of service.benefits) {
         for (const exp of expanded) {
-          if (benefit.toLowerCase().includes(exp)) score += 1;
+          if (exp.length > 2 && benefit.toLowerCase().includes(exp)) score += 1;
         }
       }
     }
+
+    // DOMAIN PENALTY: Penalize services from wrong domain heavily
+    if (isHairQuery && !HAIR_CATEGORIES.includes(service.category)) score -= 5;
+    if (isSkinQuery && !SKIN_CATEGORIES.includes(service.category) && service.category !== 'facials-cleanup-detan') score -= 5;
+    if (isMensQuery && service.category !== 'mens-grooming' && service.gender !== 'men') score -= 3;
+    if (isBridalQuery && service.category !== 'bridal-makeover') score -= 3;
 
     return { service, score };
   })
@@ -327,28 +346,69 @@ function findMatchingServices(text: string, limit = 3): ServiceItem[] {
 // RECOMMENDATION ENGINE
 // ========================
 
-function getHairRecommendations(context: ConversationContext): ServiceItem[] {
-  const { hairType, concerns, gender, budget } = context;
-  let candidates = ALL_SERVICES.filter(s => 
-    s.gender === gender || s.gender === 'all'
-  );
+// (Category constants defined above findMatchingServices)
 
-  // Filter by concern
-  if (containsAny(concerns.join(' '), ['frizz', 'frizzy', 'unmanageable', 'humidity'])) {
-    candidates = candidates.filter(s => containsAny(s.id + ' ' + s.description.toLowerCase(), ['keratin', 'nano', 'botox', 'smoothing']));
-  } else if (containsAny(concerns.join(' '), ['damage', 'dry', 'split', 'brittle', 'rough'])) {
-    candidates = candidates.filter(s => containsAny(s.id + ' ' + s.description.toLowerCase(), ['botox', 'damage', 'repair', 'conditioning', 'nourish']));
-  } else if (containsAny(concerns.join(' '), ['straight', 'straightening', 'rebond'])) {
-    candidates = candidates.filter(s => containsAny(s.id + ' ' + s.description.toLowerCase(), ['nano', 'keratin', 'straighten']));
-  } else if (containsAny(concerns.join(' '), ['color', 'grey', 'gray', 'white hair', 'highlight', 'balayage'])) {
-    candidates = candidates.filter(s => s.category === 'color-balayage' || containsAny(s.categoryName.toLowerCase(), ['color', 'balayage']));
-  } else if (containsAny(concerns.join(' '), ['dandruff', 'flake', 'itchy', 'scalp'])) {
-    candidates = candidates.filter(s => containsAny(s.id + ' ' + s.name.toLowerCase(), ['dandruff', 'scalp', 'anti']));
-  } else if (containsAny(concerns.join(' '), ['hair fall', 'hairfall', 'thinning', 'loss'])) {
-    candidates = candidates.filter(s => containsAny(s.id + ' ' + s.name.toLowerCase(), ['fall', 'anti', 'scalp', 'botox']));
+function getHairRecommendations(context: ConversationContext): ServiceItem[] {
+  const { concerns, gender, budget } = context;
+
+  // STEP 1: Start with ONLY hair-related services — never facials, pedicure, waxing
+  let candidates = ALL_SERVICES.filter(s => HAIR_CATEGORIES.includes(s.category));
+
+  // STEP 2: Filter by gender (but if unknown, show all — don't exclude anything)
+  if (gender !== 'unknown') {
+    const genderFiltered = candidates.filter(s => s.gender === gender || s.gender === 'all');
+    // Only apply gender filter if it produces results
+    if (genderFiltered.length > 0) candidates = genderFiltered;
   }
 
-  // Budget filter
+  // STEP 3: Filter by specific concern keywords
+  const allConcerns = concerns.join(' ').toLowerCase();
+  let concerned: ServiceItem[] = [];
+
+  if (containsAny(allConcerns, ['frizz', 'frizzy', 'unmanageable', 'humidity', 'puffy', 'flyaway'])) {
+    concerned = candidates.filter(s => containsAny(
+      (s.id + ' ' + s.name + ' ' + s.description + ' ' + (s.benefits || []).join(' ')).toLowerCase(),
+      ['keratin', 'nano', 'botox', 'smoothing', 'smoothening', 'frizz', 'anti-frizz']
+    ));
+  } else if (containsAny(allConcerns, ['damage', 'damaged', 'dry hair', 'split end', 'split ends', 'brittle', 'rough hair', 'broken'])) {
+    concerned = candidates.filter(s => containsAny(
+      (s.id + ' ' + s.name + ' ' + s.description + ' ' + (s.benefits || []).join(' ')).toLowerCase(),
+      ['botox', 'repair', 'restorative', 'conditioning', 'nourish', 'deep condition', 'fiber']
+    ));
+  } else if (containsAny(allConcerns, ['straight', 'straightening', 'rebond', 'rebonding', 'curly to straight'])) {
+    concerned = candidates.filter(s => containsAny(
+      (s.id + ' ' + s.name + ' ' + s.description).toLowerCase(),
+      ['nano', 'keratin', 'straighten', 'smooth']
+    ));
+  } else if (containsAny(allConcerns, ['color', 'colour', 'grey', 'gray', 'white hair', 'highlight', 'balayage', 'streak', 'dye'])) {
+    concerned = candidates.filter(s => s.category === 'color-balayage');
+  } else if (containsAny(allConcerns, ['dandruff', 'flake', 'flaky scalp', 'itchy scalp', 'scalp'])) {
+    concerned = candidates.filter(s => containsAny(
+      (s.id + ' ' + s.name + ' ' + s.description).toLowerCase(),
+      ['dandruff', 'scalp', 'anti-dandruff']
+    ));
+  } else if (containsAny(allConcerns, ['hair fall', 'hairfall', 'thinning', 'hair loss', 'bald', 'receding'])) {
+    concerned = candidates.filter(s => containsAny(
+      (s.id + ' ' + s.name + ' ' + s.description).toLowerCase(),
+      ['hair fall', 'anti-hair', 'scalp', 'botox', 'growth']
+    ));
+  } else if (containsAny(allConcerns, ['haircut', 'trim', 'cut', 'layers', 'bob', 'bangs', 'style', 'styling'])) {
+    concerned = candidates.filter(s => s.category === 'haircut-styling');
+  }
+
+  // STEP 4: Use concerned results if found, else fallback to all hair candidates sorted by popularity
+  if (concerned.length > 0) {
+    candidates = concerned;
+  } else {
+    // Default to featured/popular hair services
+    candidates.sort((a, b) => {
+      const aScore = (a.featured ? 2 : 0) + (a.isPopular ? 1 : 0);
+      const bScore = (b.featured ? 2 : 0) + (b.isPopular ? 1 : 0);
+      return bScore - aScore;
+    });
+  }
+
+  // STEP 5: Budget sort
   if (budget === 'budget') {
     candidates.sort((a, b) => a.memberPrice - b.memberPrice);
   } else if (budget === 'premium') {
