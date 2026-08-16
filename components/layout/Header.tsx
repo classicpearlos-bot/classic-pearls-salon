@@ -73,7 +73,7 @@ export default function Header() {
               CLASSIC PEARL
             </span>
             <span className="text-[9px] tracking-[0.32em] text-[#C5A059] uppercase font-sans font-medium -mt-0.5">
-              UNISEX SALON & SPA • BENGALURU
+              UNISEX SALON • BENGALURU
             </span>
           </Link>
 

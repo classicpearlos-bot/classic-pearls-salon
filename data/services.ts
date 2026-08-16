@@ -14,7 +14,7 @@ export const ALL_SERVICES: ServiceItem[] = [
     description: 'Advanced Korean aesthetic formulation with deep peptide infusion, micro-exfoliation, and intense moisture barrier locking for unmistakable glass-skin luminescence.',
     duration: '75 mins',
     durationMinutes: 75,
-    tier: 'Signature Ritual',
+    tier: 'Signature Facial',
     whatsIncluded: ['Double botanical cleanse', 'Mild enzymatic peeling', 'Ampoule peptide infusion', 'Glass glow hydro-jelly mask'],
     image: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=800&q=80',
     featured: true
@@ -41,10 +41,10 @@ export const ALL_SERVICES: ServiceItem[] = [
     category: 'skincare-facials',
     categoryName: 'Aesthetic Facials',
     tagline: 'High-definition bridal illumination and melanin reduction.',
-    description: 'Luxury oxygenated brightening therapy curated specifically for wedding milestones and red-carpet appearances to provide immediate, even-toned luminescence.',
+    description: 'Luxury oxygenated brightening therapy curated specifically for wedding milestones and events to provide immediate, even-toned luminescence.',
     duration: '90 mins',
     durationMinutes: 90,
-    tier: 'Haute Bridal Suite',
+    tier: 'Bridal Facial',
     whatsIncluded: ['O3+ whitening tonic cleanse', 'Oxygen micro-dermabrasion', 'Brightening rubber mask', 'Illuminating serum lock'],
     image: 'https://images.unsplash.com/photo-1519699047748-de8e457a634e?auto=format&fit=crop&w=800&q=80',
     featured: true
@@ -73,8 +73,8 @@ export const ALL_SERVICES: ServiceItem[] = [
     description: 'Restorative gold leaf therapy that accelerates collagen synthesis, improves elasticity, and gives an imperial glow.',
     duration: '60 mins',
     durationMinutes: 60,
-    tier: 'Imperial Restorative',
-    whatsIncluded: ['Gold scrub exfoliation', '24K gold cream lymphatic massage', 'Gold peel-off radiance mask'],
+    tier: 'Radiance Facial',
+    whatsIncluded: ['Gold scrub exfoliation', '24K gold cream massage', 'Gold peel-off radiance mask'],
     image: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=800&q=80'
   },
   {
@@ -142,7 +142,7 @@ export const ALL_SERVICES: ServiceItem[] = [
     name: 'Pearl / Diamond Radiance Cleanup',
     gender: 'all',
     category: 'skincare-facials',
-    categoryName: 'Clean-Up Rituals',
+    categoryName: 'Clean-Up Treatments',
     tagline: 'Micro-fine pearl powder exfoliation & blackhead extraction.',
     description: 'Intensive mini-facial designed for rapid skin clarity, pore tightening, and instantaneous shimmer.',
     duration: '40 mins',
@@ -156,7 +156,7 @@ export const ALL_SERVICES: ServiceItem[] = [
     name: 'Gold Radiance Cleanup',
     gender: 'all',
     category: 'skincare-facials',
-    categoryName: 'Clean-Up Rituals',
+    categoryName: 'Clean-Up Treatments',
     tagline: 'Quick golden glow refresh and skin polish.',
     description: 'Ideal for pre-event skin pick-me-ups with instant luminance.',
     duration: '35 mins',
@@ -170,7 +170,7 @@ export const ALL_SERVICES: ServiceItem[] = [
     name: 'Herbal Botanical Cleanup',
     gender: 'all',
     category: 'skincare-facials',
-    categoryName: 'Clean-Up Rituals',
+    categoryName: 'Clean-Up Treatments',
     tagline: 'Gentle clarifying organic extraction for sensitive skin.',
     description: 'Calming botanical extracts that soothe redness and eliminate sebum.',
     duration: '35 mins',
@@ -184,7 +184,7 @@ export const ALL_SERVICES: ServiceItem[] = [
     name: 'Fruit Vitamin Cleanup',
     gender: 'all',
     category: 'skincare-facials',
-    categoryName: 'Clean-Up Rituals',
+    categoryName: 'Clean-Up Treatments',
     tagline: 'Refreshing natural fruit AHA skin reviver.',
     description: 'Quick pore clearing with fresh fruit aromas.',
     duration: '30 mins',
@@ -235,7 +235,7 @@ export const ALL_SERVICES: ServiceItem[] = [
     description: 'Decadent chocolate scrub, crystal bath fizz, cuticle grooming, callus removal, and deep conditioning foot massage.',
     duration: '60 mins',
     durationMinutes: 60,
-    tier: 'Luxury Ritual',
+    tier: 'Luxury Pedicure',
     whatsIncluded: ['Crystal bath soak', 'Cocoa scrub & polish', 'Callus smoothing', 'Pressure point foot massage'],
     image: 'https://images.unsplash.com/photo-1632345031435-8727f6897d53?auto=format&fit=crop&w=800&q=80',
     featured: true
@@ -250,7 +250,7 @@ export const ALL_SERVICES: ServiceItem[] = [
     description: 'Deep nourishing hand wrap with crystal salt soak and precision cuticle finishing.',
     duration: '45 mins',
     durationMinutes: 45,
-    tier: 'Luxury Ritual',
+    tier: 'Luxury Manicure',
     whatsIncluded: ['Crystal hand bath', 'Cocoa mask', 'Cuticle care & shaping'],
     image: 'https://images.unsplash.com/photo-1632345031435-8727f6897d53?auto=format&fit=crop&w=800&q=80'
   },
@@ -312,7 +312,7 @@ export const ALL_SERVICES: ServiceItem[] = [
   },
 
   // ==========================================
-  // 3. WOMEN: ADVANCE HAIR TREATMENTS & HAIR SPA
+  // 3. WOMEN: ADVANCE HAIR TREATMENTS & CONDITIONING
   // ==========================================
   {
     id: 'w-nano-plastia',
@@ -324,7 +324,7 @@ export const ALL_SERVICES: ServiceItem[] = [
     description: 'Formaldehyde-free organic straightening and restructuring infused with nanoparticles that penetrate deeply into the hair cortex.',
     duration: '180 mins',
     durationMinutes: 180,
-    tier: 'Master Bio-Restorative',
+    tier: 'Bio-Restorative',
     whatsIncluded: ['Deep clarification wash', 'Nano plastia bio-infusion', 'Thermal sealant lock', 'Take-home care guide'],
     image: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=800&q=80',
     featured: true
@@ -360,7 +360,7 @@ export const ALL_SERVICES: ServiceItem[] = [
   },
   {
     id: 'w-hair-perming',
-    name: 'Women Hair Perming Ritual',
+    name: 'Women Hair Perming Treatment',
     gender: 'women',
     category: 'haute-coiffure',
     categoryName: 'Advance Hair Treatment',
@@ -373,13 +373,13 @@ export const ALL_SERVICES: ServiceItem[] = [
     image: 'https://images.unsplash.com/photo-1580618672591-eb180b1a973f?auto=format&fit=crop&w=800&q=80'
   },
   {
-    id: 'w-spa-damage-repair',
-    name: 'Women Deluxe Damage Repair / Deep Nourishing Spa',
+    id: 'w-damage-repair-care',
+    name: 'Women Deluxe Damage Repair / Deep Nourishing Hair Treatment',
     gender: 'women',
     category: 'haute-coiffure',
-    categoryName: 'Women Hair Spa',
+    categoryName: 'Women Hair Care',
     tagline: 'Intensive hydration for chemically processed or dry strands.',
-    description: 'Customized luxury hair spa combining steam infusion, scalp massage, and lipid restorative creams.',
+    description: 'Customized deep conditioning combining warm steam infusion, scalp massage, and lipid restorative creams.',
     duration: '60 mins',
     durationMinutes: 60,
     tier: 'Intensive Nourishment',
@@ -388,10 +388,10 @@ export const ALL_SERVICES: ServiceItem[] = [
   },
   {
     id: 'w-treatment-anti-dandruff-fall',
-    name: 'Women Anti-Dandruff & Anti-Hairfall Clinical Spa',
+    name: 'Women Anti-Dandruff & Anti-Hairfall Treatment',
     gender: 'women',
     category: 'haute-coiffure',
-    categoryName: 'Women Hair Treatment',
+    categoryName: 'Women Hair Care',
     tagline: 'Targeted scalp micro-peeling and follicular strengthening.',
     description: 'Therapeutic treatment for sensitive scalps, flake control, and root fortification.',
     duration: '60 mins',
@@ -414,7 +414,7 @@ export const ALL_SERVICES: ServiceItem[] = [
     description: 'Bespoke hand-painted highlights customized to your bone structure with zero harsh lines.',
     duration: '180 mins',
     durationMinutes: 180,
-    tier: 'Master Colorist',
+    tier: 'Master Color',
     whatsIncluded: ['Color consultation', 'Bond-building lightening', 'Custom gloss glaze', 'Post-color hydration'],
     image: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80',
     featured: true
@@ -475,7 +475,7 @@ export const ALL_SERVICES: ServiceItem[] = [
     description: 'Consultation, botanical shampoo & conditioner wash, precision cut, and high-fashion blow dry setting.',
     duration: '60 mins',
     durationMinutes: 60,
-    tier: 'Senior Stylist',
+    tier: 'Senior Styling',
     whatsIncluded: ['Shampoo & conditioning', 'Precision layering/bob cut', 'Blow dry setting'],
     image: 'https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?auto=format&fit=crop&w=800&q=80',
     featured: true
@@ -504,7 +504,7 @@ export const ALL_SERVICES: ServiceItem[] = [
     description: 'Patient and adorable hair trimming for children under 10.',
     duration: '30 mins',
     durationMinutes: 30,
-    tier: 'Junior Care',
+    tier: 'Junior Cut',
     whatsIncluded: ['Gentle comb & cut', 'Styling finish'],
     image: 'https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?auto=format&fit=crop&w=800&q=80'
   },
@@ -518,7 +518,7 @@ export const ALL_SERVICES: ServiceItem[] = [
     description: 'Available for small, medium, and long lengths with heat-defense serums.',
     duration: '45 mins',
     durationMinutes: 45,
-    tier: 'Red-Carpet Finish',
+    tier: 'Party Styling',
     whatsIncluded: ['Heat protectant spray', 'Thermal styling (straightening/tongs)', 'Hold spray'],
     image: 'https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?auto=format&fit=crop&w=800&q=80'
   },
@@ -532,7 +532,7 @@ export const ALL_SERVICES: ServiceItem[] = [
     description: 'Hygienic, strip and stripless waxing options for Full Arms, Full Legs, Under-Arms, Stomach, Full Back, and Bikini.',
     duration: '45 mins',
     durationMinutes: 45,
-    tier: 'Italian Liposoluble',
+    tier: 'Italian Waxing',
     whatsIncluded: ['Pre-wax soothing lotion', 'Rica/Brazilian wax application', 'Post-wax calming oil'],
     image: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=800&q=80'
   },
@@ -546,7 +546,7 @@ export const ALL_SERVICES: ServiceItem[] = [
     description: 'Clean shaping for eyebrows, upper lip, chin, side locks, and full face.',
     duration: '20 mins',
     durationMinutes: 20,
-    tier: 'Precision Brow & Face',
+    tier: 'Face Grooming',
     whatsIncluded: ['Aseptic wipe', 'Precision threading/waxing', 'Aloe cooling gel'],
     image: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=800&q=80'
   },
@@ -564,7 +564,7 @@ export const ALL_SERVICES: ServiceItem[] = [
     description: 'Detailed head diagnostic, precision cut, refreshing scalp wash, and blast dry styling.',
     duration: '40 mins',
     durationMinutes: 40,
-    tier: 'Executive Master',
+    tier: 'Executive Cut',
     whatsIncluded: ['Consultation', 'Precision cut', 'Scalp wash', 'Blast dry styling'],
     image: 'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=800&q=80',
     featured: true
@@ -579,7 +579,7 @@ export const ALL_SERVICES: ServiceItem[] = [
     description: 'Sharp, clean grooming for the on-the-go gentleman.',
     duration: '30 mins',
     durationMinutes: 30,
-    tier: 'Classic Gentleman',
+    tier: 'Classic Cut',
     whatsIncluded: ['Taper/trim or shave', 'Neck cleanup', 'Cooling after-balm'],
     image: 'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=800&q=80'
   },
@@ -593,13 +593,13 @@ export const ALL_SERVICES: ServiceItem[] = [
     description: 'Patient and trendy haircuts for boys.',
     duration: '25 mins',
     durationMinutes: 25,
-    tier: 'Junior Care',
+    tier: 'Junior Cut',
     whatsIncluded: ['Gentle trim', 'Styling'],
     image: 'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=800&q=80'
   },
   {
     id: 'm-beard-styling-shave',
-    name: 'Men Beard Styling & Royal Razor Shave',
+    name: 'Men Beard Styling & Razor Shave',
     gender: 'men',
     category: 'mens-grooming',
     categoryName: 'Men Beard Cut',
@@ -607,7 +607,7 @@ export const ALL_SERVICES: ServiceItem[] = [
     description: 'Detailed beard lineup, trim, or double smooth shave with hot towel steam.',
     duration: '30 mins',
     durationMinutes: 30,
-    tier: 'Royal Barber Ritual',
+    tier: 'Beard Grooming',
     whatsIncluded: ['Hot steam wrap', 'Razor alignment', 'Beard balm & aftershave'],
     image: 'https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&w=800&q=80',
     featured: true
@@ -641,22 +641,22 @@ export const ALL_SERVICES: ServiceItem[] = [
     image: 'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=800&q=80'
   },
   {
-    id: 'm-hair-spa-anti-dandruff',
-    name: 'Men Damage Repair / Anti-Dandruff / Anti-Hair Fall Spa',
+    id: 'm-hair-care-anti-dandruff',
+    name: 'Men Damage Repair / Anti-Dandruff / Anti-Hair Fall Treatment',
     gender: 'men',
     category: 'mens-grooming',
-    categoryName: 'Men Hair Spa',
+    categoryName: 'Men Hair Care',
     tagline: 'Deep scalp detoxification and root revitalization.',
     description: 'Intense steam therapy unclogging hair follicles and relieving scalp stress.',
     duration: '45 mins',
     durationMinutes: 45,
-    tier: 'Scalp Rebalance',
-    whatsIncluded: ['Exfoliating wash', 'Deep spa cream massage', 'Steam therapy'],
+    tier: 'Scalp Care',
+    whatsIncluded: ['Exfoliating wash', 'Deep conditioning cream massage', 'Steam therapy'],
     image: 'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=800&q=80'
   },
 
   // ==========================================
-  // 7. LUXURY RELAXATION & GROOMING COMBOS (MEN & WOMEN)
+  // 7. RELAXATION & GROOMING COMBOS (MEN & WOMEN)
   // ==========================================
   {
     id: 'm-combo-haircut-massage-foot',
@@ -668,7 +668,7 @@ export const ALL_SERVICES: ServiceItem[] = [
     description: 'Complete package including precision haircut, relaxing oil head & neck therapy, and foot reflexology.',
     duration: '75 mins',
     durationMinutes: 75,
-    tier: 'Executive Relax Combo',
+    tier: 'Relax Combo',
     whatsIncluded: ['Executive haircut', 'Navarathna/Almond head massage', 'Shoulder release', 'Foot massage'],
     image: 'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=800&q=80',
     featured: true
@@ -697,23 +697,23 @@ export const ALL_SERVICES: ServiceItem[] = [
     description: 'Releases shoulder tightness, stimulates scalp blood circulation with almond or coconut oil, and revitalizes tired feet.',
     duration: '75 mins',
     durationMinutes: 75,
-    tier: 'Holistic Stress Release',
+    tier: 'Stress Relief Combo',
     whatsIncluded: ['Warm herbal oil head massage', 'Neck & shoulder release', 'Foot reflexology massage'],
     image: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=800&q=80',
     featured: true
   },
   {
-    id: 'w-combo-hair-spa-cut-blowdry',
-    name: 'Women Hair Focus Combo: Hair Spa + Haircut + Blow Dry',
+    id: 'w-combo-hair-care-cut-blowdry',
+    name: 'Women Hair Focus Combo: Deep Conditioning + Haircut + Blow Dry',
     gender: 'women',
     category: 'haute-coiffure',
     categoryName: 'Hair Focus Combo',
     tagline: 'Complete hair rejuvenation, reshaping, and bounce styling.',
-    description: 'Restores shine with a deluxe spa, followed by precision layer haircut and blow dry setting.',
+    description: 'Restores shine with deluxe deep conditioning, followed by precision layer haircut and blow dry setting.',
     duration: '90 mins',
     durationMinutes: 90,
-    tier: 'Complete Hair Transformation',
-    whatsIncluded: ['Deluxe hair spa with steam', 'Precision haircut', 'Blow dry styling'],
+    tier: 'Hair Transformation',
+    whatsIncluded: ['Deluxe deep conditioning with steam', 'Precision haircut', 'Blow dry styling'],
     image: 'https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?auto=format&fit=crop&w=800&q=80',
     featured: true
   },
@@ -727,7 +727,7 @@ export const ALL_SERVICES: ServiceItem[] = [
     description: 'Radiance facial paired with eyebrow shaping, upper lip, and soothing head massage.',
     duration: '90 mins',
     durationMinutes: 90,
-    tier: 'Radiance & Rebalance',
+    tier: 'Radiance Combo',
     whatsIncluded: ['Radiance facial', 'Eyebrow & upper lip threading', 'Botanical head massage'],
     image: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=800&q=80'
   }
@@ -735,7 +735,7 @@ export const ALL_SERVICES: ServiceItem[] = [
 
 export const SERVICE_CATEGORIES = [
   { id: 'skincare-facials', label: 'Facials, Clean-Up & De-Tan', icon: 'Sparkles' },
-  { id: 'haute-coiffure', label: 'Haircut, Spa & Treatments', icon: 'Scissors' },
+  { id: 'haute-coiffure', label: 'Haircut & Hair Treatments', icon: 'Scissors' },
   { id: 'color-balayage', label: 'Color, Balayage & Highlights', icon: 'Palette' },
   { id: 'mens-grooming', label: "Men's Grooming & Combos", icon: 'UserCheck' },
   { id: 'nail-artistry', label: 'Manicure & Pedicure', icon: 'Sparkle' }

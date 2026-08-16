@@ -24,7 +24,7 @@ const jakarta = Plus_Jakarta_Sans({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Classic Pearl Unisex Salon | Luxury Salon & Spa Arekere, Bengaluru',
+    default: 'Classic Pearl Unisex Salon | Luxury Hair & Beauty Salon Arekere, Bengaluru',
     template: '%s | Classic Pearl Unisex Salon',
   },
   description: siteConfig.description,
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     canonical: '/',
   },
   openGraph: {
-    title: 'Classic Pearl Unisex Salon | Luxury Salon & Spa Bengaluru',
+    title: 'Classic Pearl Unisex Salon | Luxury Hair & Beauty Salon Bengaluru',
     description: siteConfig.description,
     url: siteConfig.url,
     siteName: siteConfig.name,
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Classic Pearl Unisex Salon | Luxury Salon & Spa Bengaluru',
+    title: 'Classic Pearl Unisex Salon | Luxury Hair & Beauty Salon Bengaluru',
     description: siteConfig.description,
     images: [siteConfig.ogImage],
   },

@@ -19,7 +19,7 @@ export default function Footer() {
                 CLASSIC PEARL
               </span>
               <span className="block text-[9px] tracking-[0.32em] text-[#C5A059] uppercase font-sans font-medium">
-                UNISEX SALON & SPA • BENGALURU
+                UNISEX SALON • BENGALURU
               </span>
             </Link>
             <p className="text-sm text-[#A39E93] leading-relaxed max-w-sm">

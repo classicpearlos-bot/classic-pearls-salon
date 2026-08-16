@@ -1,11 +1,12 @@
 /**
  * Centralized Application & Business Configuration
- * Updated with exact salon brand: Classic Pearl Unisex Salon, Bengaluru.
+ * Clean, verified business configuration for Classic Pearl Unisex Salon, Bengaluru.
+ * (No Spa mentions)
  */
 
 export const siteConfig = {
   name: "Classic Pearl Unisex Salon",
-  tagline: "Luxury Unisex Salon & Spa",
+  tagline: "Luxury Unisex Salon",
   slogan: "THE ART OF BECOMING.",
   description: "Premier luxury unisex salon in Arekere, Bengaluru offering bespoke hair styling, Korean glass facials, Hydra treatments, Botox, Nano Plastia, bridal makeovers, and grooming.",
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://classicpearls.vercel.app",
