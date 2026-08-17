@@ -156,50 +156,48 @@ export default function BookingConcierge({ initialServiceId, isModal = false }: 
   };
 
   return (
-    <div className="w-full max-w-3xl mx-auto bg-[#14161B] border border-[#C5A059]/40 rounded-2xl shadow-2xl overflow-hidden text-[#FBF9F5]">
+    <div className="w-full max-w-3xl mx-auto bg-onyx border border-pearl/10 rounded-none overflow-hidden text-pearl font-sans">
       {/* Top Banner */}
-      <div className="bg-[#17181C] border-b border-white/10 p-6 text-center relative">
-        <div className="inline-flex items-center space-x-1.5 bg-[#C5A059]/15 border border-[#C5A059]/40 px-3 py-1 rounded-full text-[10px] tracking-wider text-[#DFBA73] uppercase font-bold mb-2">
-          <Sparkles className="w-3 h-3 text-[#C5A059]" />
-          <span>FAST 30-SECOND APPOINTMENT BOOKING</span>
-        </div>
-        <h2 className="font-serif text-2xl sm:text-3xl text-[#FBF9F5]">
-          Book Your Salon Visit
+      <div className="bg-charcoal border-b border-pearl/10 p-8 text-center relative">
+        <span className="text-[10px] tracking-[0.2em] text-gold uppercase font-bold mb-4 block">
+          Fast 30-Second Appointment
+        </span>
+        <h2 className="font-serif text-3xl sm:text-4xl text-pearl mb-2">
+          Reserve Your Visit
         </h2>
-        <p className="text-xs text-[#A39E93] mt-1">
+        <p className="text-xs text-pearl/50">
           {currentStep === 4
-            ? 'Your booking request is confirmed with instant WhatsApp summary.'
-            : 'No prepayment required • Pay at salon after your service.'}
+            ? 'Your booking request is confirmed.'
+            : 'No prepayment required. Settle at the salon.'}
         </p>
 
         {/* 3 Step Indicator */}
         {currentStep < 4 && (
-          <div className="flex items-center justify-center space-x-3 sm:space-x-8 mt-5">
+          <div className="flex items-center justify-center space-x-4 sm:space-x-12 mt-8">
             {[
-              { num: 1, label: '1. Select Service' },
-              { num: 2, label: '2. Date & Time' },
-              { num: 3, label: '3. Your Details' },
+              { num: 1, label: 'Service' },
+              { num: 2, label: 'Schedule' },
+              { num: 3, label: 'Details' },
             ].map((s) => (
-              <div key={s.num} className="flex items-center space-x-1.5">
+              <div key={s.num} className="flex items-center space-x-2">
                 <div
-                  className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold border transition-colors ${
+                  className={`w-5 h-5 flex items-center justify-center text-[9px] font-bold transition-colors ${
                     currentStep === s.num
-                      ? 'bg-[#C5A059] text-[#0E0F12] border-[#C5A059]'
+                      ? 'bg-pearl text-onyx'
                       : currentStep > s.num
-                      ? 'bg-white/10 text-[#DFBA73] border-[#C5A059]/40'
-                      : 'bg-transparent text-[#6E6A62] border-white/10'
+                      ? 'bg-transparent text-gold border border-gold/40'
+                      : 'bg-transparent text-pearl/30 border border-pearl/10'
                   }`}
                 >
                   {currentStep > s.num ? '✓' : s.num}
                 </div>
                 <span
-                  className={`text-[11px] uppercase tracking-wider font-semibold ${
-                    currentStep === s.num ? 'text-[#DFBA73]' : 'text-[#6E6A62]'
+                  className={`text-[9px] uppercase tracking-[0.2em] ${
+                    currentStep === s.num ? 'text-pearl font-semibold' : 'text-pearl/40'
                   }`}
                 >
                   {s.label}
                 </span>
-                {s.num < 3 && <span className="text-white/20 text-xs pl-2">›</span>}
               </div>
             ))}
           </div>
@@ -207,64 +205,45 @@ export default function BookingConcierge({ initialServiceId, isModal = false }: 
       </div>
 
       {/* Step Content */}
-      <div className="p-6 sm:p-8 min-h-[380px] flex flex-col justify-between">
+      <div className="p-6 sm:p-10 min-h-[420px] flex flex-col justify-between">
         
         {/* ================= SCREEN 1: CHOOSE SERVICE ================= */}
         {currentStep === 1 && (
-          <div className="space-y-5 animate-in fade-in duration-200">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/10 pb-4">
+          <div className="space-y-8 animate-fade-in-up">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 border-b border-pearl/10 pb-6">
               {/* Gender Switcher */}
-              <div className="inline-flex rounded-lg bg-[#0E0F12] p-1 border border-white/10">
-                <button
-                  type="button"
-                  onClick={() => setGenderFilter('women')}
-                  className={`px-4 py-1.5 rounded text-xs font-bold uppercase tracking-wider transition-all ${
-                    genderFilter === 'women'
-                      ? 'bg-[#C5A059] text-[#0E0F12] shadow'
-                      : 'text-[#A39E93] hover:text-white'
-                  }`}
-                >
-                  Women
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setGenderFilter('men')}
-                  className={`px-4 py-1.5 rounded text-xs font-bold uppercase tracking-wider transition-all ${
-                    genderFilter === 'men'
-                      ? 'bg-[#C5A059] text-[#0E0F12] shadow'
-                      : 'text-[#A39E93] hover:text-white'
-                  }`}
-                >
-                  Men
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setGenderFilter('all')}
-                  className={`px-3 py-1.5 rounded text-xs font-medium uppercase tracking-wider transition-all ${
-                    genderFilter === 'all'
-                      ? 'bg-[#C5A059] text-[#0E0F12] shadow'
-                      : 'text-[#A39E93] hover:text-white'
-                  }`}
-                >
-                  All
-                </button>
+              <div className="flex w-full sm:w-auto">
+                {['women', 'men', 'all'].map((gender) => (
+                  <button
+                    key={gender}
+                    type="button"
+                    onClick={() => setGenderFilter(gender as GenderCategory)}
+                    className={`flex-1 sm:flex-none px-6 py-2 text-[9px] font-sans uppercase tracking-[0.2em] transition-all duration-300 ${
+                      genderFilter === gender
+                        ? 'bg-pearl text-onyx'
+                        : 'bg-transparent text-pearl/50 hover:text-pearl border-y border-r first:border-l border-pearl/10'
+                    }`}
+                  >
+                    {gender === 'women' ? 'Womens' : gender === 'men' ? 'Mens' : 'All'}
+                  </button>
+                ))}
               </div>
 
               {/* Search Bar */}
-              <div className="relative">
-                <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[#A39E93]" />
+              <div className="relative w-full sm:w-64">
+                <Search className="w-3.5 h-3.5 absolute left-0 top-1/2 -translate-y-1/2 text-pearl/40" />
                 <input
                   type="text"
                   placeholder="Search treatments..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="bg-[#0E0F12] border border-white/10 rounded-lg pl-9 pr-3 py-1.5 text-xs text-[#FBF9F5] focus:outline-none focus:border-[#C5A059] w-full sm:w-56"
+                  className="w-full bg-transparent border-b border-pearl/20 pl-8 pr-4 py-2 text-xs font-sans tracking-widest uppercase text-pearl placeholder:text-pearl/30 focus:outline-none focus:border-gold transition-colors rounded-none"
                 />
               </div>
             </div>
 
             {/* Service Selection List */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[320px] overflow-y-auto pr-1">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[360px] overflow-y-auto pr-2 custom-scrollbar">
               {filteredServices.map((service) => {
                 const isSelected = selectedService?.id === service.id;
                 return (
@@ -275,35 +254,35 @@ export default function BookingConcierge({ initialServiceId, isModal = false }: 
                       setErrors({});
                       trackEvent('service_selected', { serviceName: service.name });
                     }}
-                    className={`p-3.5 rounded-xl border cursor-pointer transition-all flex justify-between items-start ${
+                    className={`p-5 border cursor-pointer transition-all flex justify-between items-start ${
                       isSelected
-                        ? 'bg-[#C5A059]/20 border-[#C5A059] shadow-lg shadow-[#C5A059]/10'
-                        : 'bg-[#17181C] border-white/5 hover:border-[#C5A059]/40'
+                        ? 'bg-charcoal border-gold'
+                        : 'bg-transparent border-pearl/10 hover:border-pearl/30'
                     }`}
                   >
-                    <div className="space-y-1 pr-2">
-                      <span className="text-[9px] uppercase tracking-wider text-[#C5A059] font-bold block">
+                    <div className="space-y-3 pr-4">
+                      <span className="text-[9px] uppercase tracking-[0.2em] text-gold block">
                         {service.categoryName}
                       </span>
-                      <h4 className="font-serif text-base text-[#FBF9F5] font-semibold leading-snug">{service.name}</h4>
-                      <div className="flex items-center gap-2 text-[11px] text-[#A39E93]">
-                        <Clock className="w-3 h-3 text-[#C5A059]" />
+                      <h4 className="font-serif text-lg text-pearl leading-snug">{service.name}</h4>
+                      <div className="flex items-center gap-2 text-[10px] text-pearl/50 tracking-[0.1em] uppercase">
+                        <Clock className="w-3 h-3 text-gold/50" />
                         <span>{service.duration}</span>
                       </div>
                     </div>
                     
                     <div className="text-right flex flex-col items-end justify-between self-stretch">
                       <div>
-                        <span className="text-[10px] text-[#A39E93] line-through block">₹{service.regularPrice}</span>
-                        <span className="font-serif text-sm font-bold text-[#DFBA73]">₹{service.memberPrice}</span>
+                        <span className="text-[9px] text-pearl/30 uppercase tracking-wider block">Reg: ₹{service.regularPrice}</span>
+                        <span className="font-serif text-base text-pearl">₹{service.memberPrice}</span>
                       </div>
-                      <span
-                        className={`w-5 h-5 rounded-full border flex items-center justify-center text-[10px] mt-2 ${
-                          isSelected ? 'bg-[#C5A059] text-[#0E0F12] border-[#C5A059]' : 'border-white/20'
+                      <div
+                        className={`w-4 h-4 border flex items-center justify-center text-[8px] mt-4 ${
+                          isSelected ? 'bg-gold text-onyx border-gold' : 'border-pearl/20'
                         }`}
                       >
                         {isSelected && '✓'}
-                      </span>
+                      </div>
                     </div>
                   </div>
                 );
@@ -311,17 +290,17 @@ export default function BookingConcierge({ initialServiceId, isModal = false }: 
             </div>
 
             {selectedService && (
-              <div className="p-3.5 bg-[#0E0F12] border border-[#C5A059]/30 rounded-xl flex items-center justify-between text-xs">
+              <div className="p-5 bg-charcoal border border-pearl/10 flex flex-col sm:flex-row sm:items-center justify-between text-xs gap-4">
                 <div>
-                  <span className="text-[#A39E93] block text-[10px] uppercase tracking-wider">Selected Service</span>
-                  <strong className="text-[#FBF9F5] text-sm">{selectedService.name}</strong>
+                  <span className="text-pearl/40 block text-[9px] uppercase tracking-[0.2em] mb-1">Selected Canvas</span>
+                  <strong className="text-pearl font-serif text-lg font-normal">{selectedService.name}</strong>
                 </div>
-                <div className="text-right">
-                  <span className="text-[#DFBA73] font-serif font-bold text-base block">
+                <div className="text-left sm:text-right">
+                  <span className="text-pearl font-serif text-xl block">
                     ₹{isMember ? selectedService.memberPrice : selectedService.regularPrice}
                   </span>
-                  <span className="text-emerald-400 text-[10px] font-semibold">
-                    {isMember ? `Save ₹${selectedService.regularPrice - selectedService.memberPrice}` : ''}
+                  <span className="text-gold text-[9px] font-sans uppercase tracking-[0.1em]">
+                    {isMember ? `Member Savings: ₹${selectedService.regularPrice - selectedService.memberPrice}` : ''}
                   </span>
                 </div>
               </div>
@@ -331,15 +310,15 @@ export default function BookingConcierge({ initialServiceId, isModal = false }: 
 
         {/* ================= SCREEN 2: CHOOSE DATE & TIME ================= */}
         {currentStep === 2 && (
-          <div className="space-y-6 animate-in fade-in duration-200">
+          <div className="space-y-10 animate-fade-in-up">
             <div>
-              <h4 className="font-serif text-xl text-[#FBF9F5]">Choose your preferred schedule</h4>
-              <p className="text-xs text-[#A39E93]">Open 10:00 AM – 09:00 PM Everyday in Arekere, Bengaluru.</p>
+              <h4 className="font-serif text-3xl text-pearl mb-2">Preferred Schedule</h4>
+              <p className="text-xs text-pearl/50">Operating Hours: 10:00 AM – 09:00 PM Everyday.</p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <label className="text-xs uppercase tracking-wider text-[#A39E93] font-bold block">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+              <div className="space-y-4">
+                <label className="text-[10px] uppercase tracking-[0.2em] text-gold block">
                   Select Date
                 </label>
                 <input
@@ -347,16 +326,16 @@ export default function BookingConcierge({ initialServiceId, isModal = false }: 
                   value={preferredDate}
                   onChange={(e) => setPreferredDate(e.target.value)}
                   min={new Date().toISOString().split('T')[0]}
-                  className="w-full bg-[#0E0F12] border border-white/15 rounded-xl p-3 text-sm text-[#FBF9F5] focus:outline-none focus:border-[#C5A059]"
+                  className="w-full bg-transparent border-b border-pearl/20 py-3 text-sm font-sans text-pearl focus:outline-none focus:border-gold transition-colors rounded-none"
                   required
                 />
               </div>
 
-              <div className="space-y-2">
-                <label className="text-xs uppercase tracking-wider text-[#A39E93] font-bold block">
+              <div className="space-y-4">
+                <label className="text-[10px] uppercase tracking-[0.2em] text-gold block">
                   Select Time Slot
                 </label>
-                <div className="grid grid-cols-2 gap-2 max-h-[200px] overflow-y-auto pr-1">
+                <div className="grid grid-cols-2 gap-3 max-h-[220px] overflow-y-auto pr-2 custom-scrollbar">
                   {bookingConfig.timeSlots.map((slot) => {
                     const isSelected = preferredTime === slot;
                     return (
@@ -364,10 +343,10 @@ export default function BookingConcierge({ initialServiceId, isModal = false }: 
                         key={slot}
                         type="button"
                         onClick={() => setPreferredTime(slot)}
-                        className={`p-2.5 rounded-lg text-xs font-semibold tracking-wider transition-all ${
+                        className={`p-3 text-[10px] uppercase tracking-[0.2em] transition-all ${
                           isSelected
-                            ? 'bg-[#C5A059] text-[#0E0F12] font-bold shadow'
-                            : 'bg-[#0E0F12] text-[#A39E93] border border-white/10 hover:border-[#C5A059]/40'
+                            ? 'bg-pearl text-onyx font-bold'
+                            : 'bg-transparent text-pearl/60 border border-pearl/10 hover:border-pearl/40'
                         }`}
                       >
                         {slot}
@@ -378,92 +357,89 @@ export default function BookingConcierge({ initialServiceId, isModal = false }: 
               </div>
             </div>
 
-            <div className="bg-[#17181C] p-3.5 rounded-xl border border-white/5 text-xs text-[#A39E93] flex items-center justify-between">
-              <span>Appointment on: <strong className="text-[#FBF9F5]">{preferredDate}</strong> at <strong className="text-[#DFBA73]">{preferredTime}</strong></span>
-              <span className="text-[#C5A059] font-medium">{selectedService?.duration}</span>
+            <div className="bg-charcoal p-5 border border-pearl/10 text-xs text-pearl/60 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <span>Appointment Date: <strong className="text-pearl font-normal">{preferredDate}</strong> at <strong className="text-pearl font-normal">{preferredTime}</strong></span>
+              <span className="text-gold font-sans uppercase tracking-[0.1em] text-[10px]">{selectedService?.duration} required</span>
             </div>
           </div>
         )}
 
         {/* ================= SCREEN 3: NAME + WHATSAPP NUMBER ================= */}
         {currentStep === 3 && (
-          <div className="space-y-5 animate-in fade-in duration-200">
+          <div className="space-y-10 animate-fade-in-up">
             <div>
-              <h4 className="font-serif text-xl text-[#FBF9F5]">Your Contact Details</h4>
-              <p className="text-xs text-[#A39E93]">We will send you an instant booking confirmation via WhatsApp.</p>
+              <h4 className="font-serif text-3xl text-pearl mb-2">Client Details</h4>
+              <p className="text-xs text-pearl/50">Your confirmation will be delivered via WhatsApp instantly.</p>
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-8">
               <div>
-                <label className="text-[11px] uppercase tracking-wider text-[#A39E93] font-semibold block mb-1">
-                  Your Full Name *
+                <label className="text-[10px] uppercase tracking-[0.2em] text-gold block mb-2">
+                  Full Name *
                 </label>
                 <input
                   type="text"
-                  placeholder="e.g. Priya Sharma / Rahul Kumar"
+                  placeholder="Enter your name"
                   value={clientName}
                   onChange={(e) => setClientName(e.target.value)}
-                  className={`w-full bg-[#0E0F12] border rounded-xl p-3 text-xs text-[#FBF9F5] focus:outline-none focus:border-[#C5A059] ${
-                    errors.name ? 'border-rose-500' : 'border-white/15'
+                  className={`w-full bg-transparent border-b py-3 text-sm text-pearl focus:outline-none transition-colors rounded-none ${
+                    errors.name ? 'border-rose-500' : 'border-pearl/20 focus:border-gold'
                   }`}
                   required
                 />
-                {errors.name && <p className="text-rose-400 text-[10px] mt-1">{errors.name}</p>}
+                {errors.name && <p className="text-rose-400 text-[10px] mt-2 font-sans">{errors.name}</p>}
               </div>
 
               <div>
-                <label className="text-[11px] uppercase tracking-wider text-[#A39E93] font-semibold block mb-1">
-                  Mobile Number (WhatsApp) *
+                <label className="text-[10px] uppercase tracking-[0.2em] text-gold block mb-2">
+                  WhatsApp Number *
                 </label>
                 <input
                   type="tel"
-                  placeholder="e.g. 98765 43210"
+                  placeholder="10-digit mobile number"
                   value={clientPhone}
                   onChange={(e) => setClientPhone(e.target.value)}
-                  className={`w-full bg-[#0E0F12] border rounded-xl p-3 text-xs text-[#FBF9F5] focus:outline-none focus:border-[#C5A059] ${
-                    errors.phone ? 'border-rose-500' : 'border-white/15'
+                  className={`w-full bg-transparent border-b py-3 text-sm text-pearl focus:outline-none transition-colors rounded-none ${
+                    errors.phone ? 'border-rose-500' : 'border-pearl/20 focus:border-gold'
                   }`}
                   required
                 />
-                {errors.phone && <p className="text-rose-400 text-[10px] mt-1">{errors.phone}</p>}
+                {errors.phone && <p className="text-rose-400 text-[10px] mt-2 font-sans">{errors.phone}</p>}
               </div>
 
               {/* Pearl Membership Toggle Banner */}
               <div
                 onClick={() => setIsMember(!isMember)}
-                className={`p-3.5 rounded-xl border cursor-pointer transition-all flex items-center justify-between ${
+                className={`p-5 border cursor-pointer transition-all flex items-center justify-between ${
                   isMember
-                    ? 'bg-gradient-to-r from-[#C5A059]/20 to-[#17181C] border-[#C5A059]'
-                    : 'bg-[#17181C] border-white/10'
+                    ? 'bg-charcoal border-gold'
+                    : 'bg-transparent border-pearl/10 hover:border-pearl/30'
                 }`}
               >
-                <div className="flex items-center space-x-3">
-                  <div className="w-8 h-8 rounded-full bg-[#C5A059]/20 border border-[#C5A059] flex items-center justify-center text-[#DFBA73]">
+                <div className="flex items-center space-x-4">
+                  <div className="w-8 h-8 rounded-full border border-gold flex items-center justify-center text-gold">
                     <Tag className="w-4 h-4" />
                   </div>
                   <div>
-                    <strong className="text-[#FBF9F5] text-xs block">Apply Pearl Member Pricing (₹{selectedService?.memberPrice})</strong>
-                    <span className="text-[10px] text-[#A39E93]">Save ₹{(selectedService?.regularPrice || 0) - (selectedService?.memberPrice || 0)} today with ₹199/yr Pearl Pass</span>
+                    <strong className="text-pearl text-xs font-sans tracking-widest uppercase block mb-1">Apply Pearl Pricing (₹{selectedService?.memberPrice})</strong>
+                    <span className="text-[10px] text-pearl/50 font-sans block">Unlock savings today with the ₹199/yr Pass</span>
                   </div>
                 </div>
-                <input
-                  type="checkbox"
-                  checked={isMember}
-                  onChange={() => {}}
-                  className="rounded border-white/20 text-[#C5A059] focus:ring-[#C5A059] w-4 h-4"
-                />
+                <div className={`w-4 h-4 border flex items-center justify-center text-[8px] transition-colors ${isMember ? 'bg-gold border-gold text-onyx' : 'border-pearl/20'}`}>
+                  {isMember && '✓'}
+                </div>
               </div>
 
               <div>
-                <label className="text-[11px] uppercase tracking-wider text-[#A39E93] font-semibold block mb-1">
-                  Special Notes or Requests (Optional)
+                <label className="text-[10px] uppercase tracking-[0.2em] text-gold block mb-2">
+                  Special Notes (Optional)
                 </label>
                 <input
                   type="text"
-                  placeholder="e.g. Sensitive scalp, hair length, etc."
+                  placeholder="Any allergies, previous treatments, or specific requests"
                   value={specialNotes}
                   onChange={(e) => setSpecialNotes(e.target.value)}
-                  className="w-full bg-[#0E0F12] border border-white/15 rounded-xl p-2.5 text-xs text-[#FBF9F5] focus:outline-none focus:border-[#C5A059]"
+                  className="w-full bg-transparent border-b border-pearl/20 py-3 text-sm text-pearl focus:outline-none focus:border-gold transition-colors rounded-none"
                 />
               </div>
             </div>
@@ -472,59 +448,59 @@ export default function BookingConcierge({ initialServiceId, isModal = false }: 
 
         {/* ================= SCREEN 4: CONFIRMATION TICKET ================= */}
         {currentStep === 4 && completedBooking && (
-          <div className="space-y-6 py-2 text-center animate-in zoom-in-95 duration-200">
-            <div className="w-14 h-14 rounded-full bg-[#C5A059]/20 border border-[#C5A059] flex items-center justify-center text-[#DFBA73] mx-auto shadow-lg shadow-[#C5A059]/20">
-              <CheckCircle2 className="w-7 h-7" />
+          <div className="space-y-8 py-6 text-center animate-fade-in-up">
+            <div className="w-16 h-16 rounded-full border border-gold flex items-center justify-center text-gold mx-auto">
+              <CheckCircle2 className="w-6 h-6" />
             </div>
 
             <div>
-              <span className="text-[10px] tracking-[0.25em] text-[#C5A059] font-bold uppercase block">
-                BOOKING CONFIRMED
+              <span className="text-[10px] tracking-[0.3em] text-gold font-bold uppercase block mb-4">
+                Reservation Confirmed
               </span>
-              <h3 className="font-serif text-2xl sm:text-3xl text-[#FBF9F5] mt-1">Thank You, {completedBooking.client.name}!</h3>
-              <p className="text-xs text-[#A39E93] max-w-md mx-auto mt-1">
-                Your appointment request is registered. Show this reference at the reception.
+              <h3 className="font-serif text-4xl text-pearl mb-4">Thank You, {completedBooking.client.name}.</h3>
+              <p className="text-xs text-pearl/60 max-w-sm mx-auto">
+                Your appointment is securely logged in our system. Please present your reference at the reception.
               </p>
             </div>
 
             {/* Ticket Card */}
-            <div className="max-w-md mx-auto bg-[#17181C] border border-dashed border-[#C5A059]/60 rounded-2xl p-5 text-left text-xs space-y-2.5 shadow-xl">
-              <div className="flex justify-between border-b border-white/10 pb-2">
-                <span className="text-[#A39E93]">Reference Code</span>
-                <strong className="text-[#DFBA73] font-mono tracking-wider">{completedBooking.reference}</strong>
+            <div className="max-w-md mx-auto bg-charcoal border border-pearl/10 p-8 text-left text-xs space-y-4 font-sans tracking-wide uppercase">
+              <div className="flex justify-between border-b border-pearl/10 pb-3">
+                <span className="text-pearl/40">Reference</span>
+                <strong className="text-gold tracking-[0.2em]">{completedBooking.reference}</strong>
               </div>
-              <div className="flex justify-between border-b border-white/10 pb-2">
-                <span className="text-[#A39E93]">Service</span>
-                <strong className="text-[#FBF9F5]">{completedBooking.serviceName}</strong>
+              <div className="flex justify-between border-b border-pearl/10 pb-3">
+                <span className="text-pearl/40">Canvas</span>
+                <strong className="text-pearl">{completedBooking.serviceName}</strong>
               </div>
-              <div className="flex justify-between border-b border-white/10 pb-2">
-                <span className="text-[#A39E93]">Schedule</span>
-                <strong className="text-[#DFBA73]">
-                  {completedBooking.preferredDate} at {completedBooking.preferredTime}
+              <div className="flex justify-between border-b border-pearl/10 pb-3">
+                <span className="text-pearl/40">Time</span>
+                <strong className="text-pearl">
+                  {completedBooking.preferredDate} | {completedBooking.preferredTime}
                 </strong>
               </div>
-              <div className="flex justify-between pt-1">
-                <span className="text-[#A39E93]">Estimated Price</span>
-                <strong className="text-[#FBF9F5] font-serif text-sm">
-                  ₹{completedBooking.isMember ? completedBooking.memberPrice : completedBooking.regularPrice} (Pay at Salon)
+              <div className="flex justify-between pt-2">
+                <span className="text-pearl/40">Est. Total</span>
+                <strong className="text-pearl font-serif text-lg font-normal normal-case tracking-normal">
+                  ₹{completedBooking.isMember ? completedBooking.memberPrice : completedBooking.regularPrice}
                 </strong>
               </div>
             </div>
 
             {/* Action Buttons */}
-            <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
               <a
                 href={getWhatsAppBookingMessage({
                   reference: completedBooking.reference,
                   serviceName: completedBooking.serviceName,
-                  artisanName: 'Classic Pearl Team',
+                  artisanName: 'Classic Pearls',
                   preferredDate: completedBooking.preferredDate,
                   preferredTime: completedBooking.preferredTime,
                   clientName: completedBooking.client.name,
                 })}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-gradient-to-r from-[#C5A059] to-[#DFBA73] text-[#0E0F12] px-6 py-3 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center gap-2 shadow-lg shadow-[#C5A059]/20"
+                className="bg-pearl text-onyx hover:bg-gold px-8 py-4 text-[10px] font-bold uppercase tracking-[0.2em] flex items-center gap-3 transition-colors w-full sm:w-auto justify-center"
               >
                 <MessageSquare className="w-4 h-4" />
                 <span>Confirm on WhatsApp</span>
@@ -536,35 +512,29 @@ export default function BookingConcierge({ initialServiceId, isModal = false }: 
                   downloadCalendarEvent({
                     reference: completedBooking.reference,
                     serviceName: completedBooking.serviceName,
-                    artisanName: 'Classic Pearl Team',
+                    artisanName: 'Classic Pearls',
                     preferredDate: completedBooking.preferredDate,
                     preferredTime: completedBooking.preferredTime,
                     clientName: completedBooking.client.name,
                   })
                 }
-                className="bg-[#17181C] hover:bg-[#22242B] border border-[#C5A059]/40 text-[#DFBA73] px-4 py-3 rounded-xl text-xs font-semibold uppercase tracking-wider flex items-center gap-1.5 transition-colors"
+                className="bg-transparent hover:bg-charcoal border border-pearl/20 text-pearl px-8 py-4 text-[10px] font-bold uppercase tracking-[0.2em] flex items-center gap-3 transition-colors w-full sm:w-auto justify-center"
               >
-                <CalendarIcon className="w-3.5 h-3.5" />
-                <span>Add to Calendar</span>
+                <CalendarIcon className="w-4 h-4 text-gold" />
+                <span>Save to Calendar</span>
               </button>
-            </div>
-
-            <div className="pt-2">
-              <Link href="/" className="text-xs text-[#A39E93] hover:text-[#DFBA73] underline">
-                Return to Home
-              </Link>
             </div>
           </div>
         )}
 
         {/* Wizard Controls */}
         {currentStep < 4 && (
-          <div className="pt-5 border-t border-white/10 flex items-center justify-between mt-6">
+          <div className="pt-8 border-t border-pearl/10 flex items-center justify-between mt-12">
             {currentStep > 1 ? (
               <button
                 type="button"
                 onClick={handlePrev}
-                className="px-4 py-2 rounded-xl text-xs font-semibold uppercase tracking-wider text-[#A39E93] hover:text-white border border-white/10 flex items-center gap-1"
+                className="px-6 py-3 text-[10px] font-bold uppercase tracking-[0.2em] text-pearl/50 hover:text-pearl flex items-center gap-2 transition-colors"
               >
                 <ChevronLeft className="w-4 h-4" />
                 <span>Back</span>
@@ -576,9 +546,9 @@ export default function BookingConcierge({ initialServiceId, isModal = false }: 
             <button
               type="button"
               onClick={handleNext}
-              className="bg-gradient-to-r from-[#C5A059] to-[#DFBA73] hover:from-[#DFBA73] hover:to-[#C5A059] text-[#0E0F12] px-7 py-3 rounded-xl text-xs font-bold uppercase tracking-widest flex items-center gap-1.5 shadow-lg shadow-[#C5A059]/15"
+              className="bg-pearl text-onyx hover:bg-gold px-8 py-4 text-[10px] font-bold uppercase tracking-[0.2em] flex items-center gap-3 transition-colors"
             >
-              <span>{currentStep === 3 ? 'Confirm Booking' : 'Continue'}</span>
+              <span>{currentStep === 3 ? 'Finalize' : 'Continue'}</span>
               <ChevronRight className="w-4 h-4" />
             </button>
           </div>

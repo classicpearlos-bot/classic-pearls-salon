@@ -36,19 +36,19 @@ export default function Header() {
   return (
     <>
       {/* Top Announcement Bar */}
-      <aside aria-label="Announcement" className="bg-[#121317] border-b border-[#C5A059]/20 text-[11px] py-1.5 px-4 text-[#F3EFE6] tracking-wider">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
+      <aside aria-label="Announcement" className="bg-charcoal border-b border-gold/20 text-[11px] py-1.5 px-4 text-cashmere tracking-wider">
+        <div className="max-w-[1400px] mx-auto flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <span className="text-[#C5A059]">✦</span>
-            <span className="font-medium text-[#DFBA73]">Arekere, Bengaluru • Open 10:00 AM – 09:00 PM Everyday</span>
+            <span className="text-gold">✦</span>
+            <span className="font-medium text-gold-soft">Arekere, Bengaluru • Open 10:00 AM – 09:00 PM Everyday</span>
           </div>
-          <div className="hidden md:flex items-center space-x-6 text-[#A39E93]">
-            <a href={`tel:${businessConfig.phoneRaw}`} className="hover:text-[#C5A059] flex items-center gap-1 transition-colors">
-              <Phone className="w-3 h-3 text-[#C5A059]" />
+          <div className="hidden md:flex items-center space-x-6 text-pearl/60">
+            <a href={`tel:${businessConfig.phoneRaw}`} className="hover:text-gold flex items-center gap-1 transition-colors">
+              <Phone className="w-3 h-3 text-gold" />
               <span>{businessConfig.phone}</span>
             </a>
             <span>|</span>
-            <span className="text-[#A39E93]">Beside Camry Hospital, Arekere, Bengaluru</span>
+            <span className="text-pearl/60">Beside Camry Hospital, Arekere, Bengaluru</span>
             <span>|</span>
             <span className="inline-flex items-center gap-1.5 text-emerald-400 bg-emerald-950/40 px-2 py-0.5 rounded-full text-[10px] border border-emerald-800/40">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
@@ -60,38 +60,38 @@ export default function Header() {
 
       {/* Main Sticky Header */}
       <header
-        className={`sticky top-0 z-40 transition-all duration-300 ${
+        className={`sticky top-0 z-40 transition-all duration-500 ${
           isScrolled
-            ? 'bg-[#0E0F12]/95 backdrop-blur-md border-b border-[#C5A059]/25 py-3 shadow-xl'
-            : 'bg-[#0E0F12]/80 backdrop-blur-sm border-b border-white/5 py-4'
+            ? 'bg-onyx/95 backdrop-blur-md border-b border-gold/20 py-4 shadow-xl'
+            : 'bg-onyx/80 backdrop-blur-sm border-b border-pearl/5 py-5'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-12 flex items-center justify-between">
           {/* Brand Logo */}
-          <Link href="/" className="flex flex-col group focus:outline-none focus:ring-1 focus:ring-[#C5A059]">
-            <span className="font-serif text-xl sm:text-2xl font-bold tracking-[0.18em] text-[#FBF9F5] group-hover:text-[#DFBA73] transition-colors">
-              CLASSIC PEARL
+          <Link href="/" className="flex flex-col group focus:outline-none focus:ring-1 focus:ring-gold">
+            <span className="font-serif text-2xl sm:text-3xl font-normal tracking-[0.18em] text-pearl group-hover:text-gold-soft transition-colors">
+              CLASSIC PEARLS
             </span>
-            <span className="text-[9px] tracking-[0.32em] text-[#C5A059] uppercase font-sans font-medium -mt-0.5">
+            <span className="text-[9px] tracking-[0.35em] text-gold uppercase font-sans font-medium -mt-1 pl-1">
               UNISEX SALON • BENGALURU
             </span>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-7" aria-label="Main Navigation">
+          <nav className="hidden lg:flex items-center space-x-8" aria-label="Main Navigation">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
               return (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`text-[12px] uppercase tracking-[0.14em] font-medium transition-all py-1 relative ${
-                    isActive ? 'text-[#DFBA73]' : 'text-[#A39E93] hover:text-[#FBF9F5]'
+                  className={`text-[11px] uppercase tracking-[0.15em] font-medium transition-all py-1 relative ${
+                    isActive ? 'text-gold-soft' : 'text-pearl/60 hover:text-pearl'
                   }`}
                 >
                   {link.label}
                   {isActive && (
-                    <span className="absolute bottom-0 left-0 w-full h-[1px] bg-[#C5A059]"></span>
+                    <span className="absolute bottom-0 left-0 w-full h-[1px] bg-gold"></span>
                   )}
                 </Link>
               );
@@ -99,42 +99,42 @@ export default function Header() {
           </nav>
 
           {/* Desktop Action CTAs */}
-          <div className="hidden sm:flex items-center space-x-3">
+          <div className="hidden sm:flex items-center space-x-4">
             <a
               href={getWhatsAppConciergeUrl()}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 text-[#DFBA73] hover:text-white bg-[#17181C] hover:bg-[#22242B] border border-[#C5A059]/30 rounded transition-colors flex items-center gap-1.5 text-xs px-3"
+              className="text-pearl/70 hover:text-gold transition-colors flex items-center gap-2 text-xs font-semibold uppercase tracking-wider"
               aria-label="WhatsApp"
             >
-              <MessageSquare className="w-3.5 h-3.5" />
-              <span className="hidden xl:inline text-[11px] uppercase tracking-wider font-semibold">WhatsApp</span>
+              <MessageSquare className="w-4 h-4" />
+              <span className="hidden xl:inline">Enquire</span>
             </a>
 
             <Link
               href="/book"
-              className="inline-flex items-center space-x-2 bg-gradient-to-r from-[#C5A059] to-[#DFBA73] hover:from-[#DFBA73] hover:to-[#C5A059] text-[#0E0F12] px-5 py-2.5 rounded text-[11px] font-bold tracking-[0.14em] uppercase shadow-lg shadow-[#C5A059]/10 hover:shadow-[#C5A059]/25 hover:-translate-y-0.5 transition-all"
+              className="inline-flex items-center space-x-2 bg-pearl text-onyx hover:bg-gold px-6 py-3 rounded-none text-[11px] font-bold tracking-[0.15em] uppercase transition-colors duration-300"
             >
               <Calendar className="w-3.5 h-3.5" />
-              <span>Book Appointment</span>
+              <span>Reserve</span>
             </Link>
           </div>
 
           {/* Mobile Hamburger Toggle */}
-          <div className="flex items-center space-x-2 lg:hidden">
+          <div className="flex items-center space-x-4 lg:hidden">
             <Link
               href="/book"
-              className="bg-[#C5A059] text-[#0E0F12] px-3 py-1.5 rounded text-[10px] font-bold tracking-wider uppercase sm:hidden"
+              className="bg-pearl text-onyx px-4 py-2 rounded-none text-[10px] font-bold tracking-wider uppercase sm:hidden"
             >
-              Book
+              Reserve
             </Link>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 text-[#FBF9F5] hover:text-[#C5A059] focus:outline-none focus:ring-1 focus:ring-[#C5A059] rounded"
+              className="text-pearl hover:text-gold focus:outline-none focus:ring-1 focus:ring-gold"
               aria-label="Toggle navigation menu"
               aria-expanded={mobileMenuOpen}
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {mobileMenuOpen ? <X className="w-7 h-7 stroke-[1.5]" /> : <Menu className="w-7 h-7 stroke-[1.5]" />}
             </button>
           </div>
         </div>
@@ -142,48 +142,48 @@ export default function Header() {
 
       {/* Full-Screen Mobile Navigation Overlay */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 z-50 bg-[#0E0F12]/98 backdrop-blur-2xl flex flex-col justify-between p-6 lg:hidden animate-in fade-in duration-200">
-          <div className="flex items-center justify-between border-b border-white/10 pb-4">
+        <div className="fixed inset-0 z-50 bg-onyx/98 backdrop-blur-2xl flex flex-col justify-between p-8 lg:hidden animate-in fade-in duration-300">
+          <div className="flex items-center justify-between border-b border-pearl/10 pb-6">
             <div className="flex flex-col">
-              <span className="font-serif text-lg font-bold tracking-[0.2em] text-[#FBF9F5]">CLASSIC PEARL</span>
-              <span className="text-[8px] tracking-[0.3em] text-[#C5A059] uppercase">UNISEX SALON • BENGALURU</span>
+              <span className="font-serif text-2xl font-normal tracking-[0.2em] text-pearl">CLASSIC PEARLS</span>
+              <span className="text-[9px] tracking-[0.3em] text-gold uppercase">UNISEX SALON • BENGALURU</span>
             </div>
             <button
               onClick={() => setMobileMenuOpen(false)}
-              className="p-2 text-[#A39E93] hover:text-white rounded-full bg-white/5"
+              className="text-pearl/60 hover:text-pearl"
               aria-label="Close menu"
             >
-              <X className="w-6 h-6" />
+              <X className="w-8 h-8 stroke-[1.5]" />
             </button>
           </div>
 
-          <nav className="flex flex-col space-y-4 my-auto py-6" aria-label="Mobile Navigation">
+          <nav className="flex flex-col space-y-6 my-auto py-8" aria-label="Mobile Navigation">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="font-serif text-2xl text-[#FBF9F5] hover:text-[#DFBA73] transition-colors py-1 flex items-center justify-between border-b border-white/5"
+                className="font-serif text-3xl text-pearl hover:text-gold-soft transition-colors py-2 flex items-center justify-between border-b border-pearl/5"
               >
                 <span>{link.label}</span>
-                <span className="text-xs text-[#C5A059] tracking-widest font-sans">→</span>
+                <span className="text-xs text-gold tracking-widest font-sans">→</span>
               </Link>
             ))}
           </nav>
 
-          <div className="space-y-3 pt-4 border-t border-white/10">
+          <div className="space-y-4 pt-8 border-t border-pearl/10">
             <Link
               href="/book"
-              className="w-full flex items-center justify-center space-x-2 bg-gradient-to-r from-[#C5A059] to-[#DFBA73] text-[#0E0F12] py-3.5 rounded text-xs font-bold tracking-widest uppercase"
+              className="w-full flex items-center justify-center space-x-3 bg-pearl text-onyx hover:bg-gold transition-colors py-4 rounded-none text-xs font-bold tracking-[0.2em] uppercase"
             >
               <Calendar className="w-4 h-4" />
-              <span>Book Appointment</span>
+              <span>Reserve Appointment</span>
             </Link>
 
             <a
               href={getWhatsAppConciergeUrl()}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full flex items-center justify-center space-x-2 bg-[#17181C] border border-[#C5A059]/40 text-[#DFBA73] py-3 rounded text-xs font-semibold tracking-wider uppercase"
+              className="w-full flex items-center justify-center space-x-3 border border-gold/40 text-gold hover:bg-gold/10 py-4 rounded-none text-xs font-semibold tracking-wider uppercase transition-colors"
             >
               <MessageSquare className="w-4 h-4" />
               <span>WhatsApp Direct</span>

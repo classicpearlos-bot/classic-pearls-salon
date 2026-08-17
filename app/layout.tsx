@@ -11,7 +11,7 @@ import AIAssistant from '@/components/ui/AIAssistant';
 import CookieConsent from '@/components/layout/CookieConsent';
 
 const cormorant = Cormorant_Garamond({
-  variable: '--font-cormorant',
+  variable: '--font-serif',
   subsets: ['latin'],
   weight: ['300', '400', '500', '600', '700'],
   display: 'swap',
@@ -94,7 +94,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${cormorant.variable} ${jakarta.variable} antialiased bg-[#0E0F12] text-[#FBF9F5] selection:bg-[#C5A059] selection:text-[#0E0F12] min-h-screen flex flex-col font-sans pb-16 md:pb-0`}
+        className={`${cormorant.variable} ${jakarta.variable} antialiased bg-onyx text-pearl selection:bg-gold selection:text-onyx min-h-screen flex flex-col font-sans pb-16 md:pb-0`}
       >
         <Header />
         <main className="flex-grow">{children}</main>

@@ -7,19 +7,12 @@ import {
   Send,
   X,
   Bot,
-  ArrowRight,
   Calendar,
   MessageSquare,
   Minimize2,
   ChevronDown,
 } from 'lucide-react';
 import { getWhatsAppConciergeUrl } from '@/lib/whatsapp';
-import {
-  processMessage,
-  createInitialContext,
-  ConversationContext,
-  AIResponse,
-} from '@/lib/ai-engine';
 import { ServiceItem } from '@/lib/types';
 
 // ========================
@@ -41,15 +34,15 @@ interface ChatMessage {
 
 function TypingIndicator() {
   return (
-    <div className="flex items-start gap-2.5 animate-fade-in-up">
-      <div className="w-7 h-7 rounded-full bg-gradient-to-br from-[#C5A059] to-[#DFBA73] flex items-center justify-center flex-shrink-0 shadow-md">
-        <Bot className="w-3.5 h-3.5 text-[#0E0F12]" />
+    <div className="flex items-start gap-3 animate-fade-in-up">
+      <div className="w-8 h-8 rounded-full bg-pearl flex items-center justify-center flex-shrink-0 border border-pearl/10">
+        <Bot className="w-4 h-4 text-onyx" />
       </div>
-      <div className="bg-[#1A1C22] border border-white/10 rounded-2xl rounded-tl-md px-4 py-3 max-w-[85%]">
+      <div className="bg-charcoal border border-pearl/10 px-5 py-4 max-w-[85%] rounded-r-2xl rounded-bl-2xl">
         <div className="flex items-center gap-1.5">
-          <span className="w-2 h-2 bg-[#C5A059] rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></span>
-          <span className="w-2 h-2 bg-[#C5A059] rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></span>
-          <span className="w-2 h-2 bg-[#C5A059] rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></span>
+          <span className="w-1.5 h-1.5 bg-gold rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></span>
+          <span className="w-1.5 h-1.5 bg-gold rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></span>
+          <span className="w-1.5 h-1.5 bg-gold rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></span>
         </div>
       </div>
     </div>
@@ -62,23 +55,23 @@ function TypingIndicator() {
 
 function ServiceCard({ service }: { service: ServiceItem }) {
   return (
-    <div className="bg-[#14161B] border border-white/10 rounded-xl p-3 hover:border-[#C5A059]/40 transition-colors group">
-      <div className="flex items-start justify-between gap-2 mb-2">
-        <h4 className="text-[11px] font-bold text-[#FBF9F5] leading-tight flex-1">
+    <div className="bg-onyx border border-pearl/10 p-4 hover:border-gold transition-colors group rounded-none">
+      <div className="flex items-start justify-between gap-3 mb-3">
+        <h4 className="text-xs font-serif text-pearl leading-tight flex-1">
           {service.name}
         </h4>
-        <span className="text-[10px] font-bold text-[#C5A059] whitespace-nowrap">
+        <span className="text-[10px] font-sans tracking-widest text-gold whitespace-nowrap">
           ₹{service.memberPrice}
         </span>
       </div>
-      <p className="text-[10px] text-[#A39E93] mb-2 line-clamp-2">{service.tagline}</p>
+      <p className="text-[10px] text-pearl/50 mb-3 line-clamp-2 font-light">{service.tagline}</p>
       <div className="flex items-center justify-between">
-        <span className="text-[9px] text-[#A39E93]">{service.duration}</span>
+        <span className="text-[9px] uppercase tracking-[0.2em] text-pearl/40">{service.duration}</span>
         <Link
           href="/book"
-          className="text-[9px] font-bold text-[#C5A059] hover:text-[#DFBA73] flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity"
+          className="text-[9px] uppercase tracking-[0.2em] font-bold text-gold hover:text-pearl flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity"
         >
-          Book <ArrowRight className="w-2.5 h-2.5" />
+          Book Now
         </Link>
       </div>
     </div>
@@ -99,23 +92,23 @@ function FormatText({ text }: { text: string }) {
         // Bold: **text**
         const formatted = line.replace(
           /\*\*(.*?)\*\*/g,
-          '<strong class="text-[#FBF9F5] font-semibold">$1</strong>'
+          '<strong class="text-pearl font-normal">$1</strong>'
         );
         // Strikethrough: ~~text~~
         const withStrike = formatted.replace(
           /~~(.*?)~~/g,
-          '<del class="text-[#A39E93]/60">$1</del>'
+          '<del class="text-pearl/40">$1</del>'
         );
         // Emoji bullets
         const isListItem = /^[•✅🔹🏆💍🌸💃💡🧴📍⏰📞📱1️⃣2️⃣3️⃣4️⃣]/.test(line.trim());
         const isEmpty = line.trim() === '';
 
-        if (isEmpty) return <div key={i} className="h-1.5" />;
+        if (isEmpty) return <div key={i} className="h-2" />;
 
         return (
           <p
             key={i}
-            className={`text-[12px] leading-[1.6] ${isListItem ? 'pl-0.5' : ''}`}
+            className={`text-xs text-pearl/80 font-light leading-[1.7] ${isListItem ? 'pl-1' : ''}`}
             dangerouslySetInnerHTML={{ __html: withStrike }}
           />
         );
@@ -133,7 +126,6 @@ export default function AIAssistant() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
-  const [context, setContext] = useState<ConversationContext>(createInitialContext());
   const [hasSeenWelcome, setHasSeenWelcome] = useState(false);
   const [showScrollDown, setShowScrollDown] = useState(false);
 
@@ -170,21 +162,19 @@ export default function AIAssistant() {
     setIsOpen(true);
     if (!hasSeenWelcome) {
       setHasSeenWelcome(true);
-      const welcomeResponse = processMessage('hello', context);
       const welcomeMsg: ChatMessage = {
         id: crypto.randomUUID(),
         role: 'assistant',
-        text: welcomeResponse.response.text,
-        quickReplies: welcomeResponse.response.quickReplies,
+        text: "Hello! ✨ I'm Pearl, your personal AI beauty consultant at Classic Pearl Unisex Salon.\n\nI can help you choose the right treatments, check our transparent pricing, or book an appointment.\n\nWhat can I help you with today?",
+        quickReplies: ['Hair treatments', 'Skin & facials', "Men's grooming", 'Bridal makeup', 'View pricing', 'Pearl Membership ₹199'],
         timestamp: new Date(),
       };
       setMessages([welcomeMsg]);
-      setContext(welcomeResponse.updatedContext);
     }
   };
 
   // Process and send a message
-  const sendMessage = (text: string) => {
+  const sendMessage = async (text: string) => {
     if (!text.trim()) return;
 
     const userMsg: ChatMessage = {
@@ -194,29 +184,50 @@ export default function AIAssistant() {
       timestamp: new Date(),
     };
 
-    setMessages(prev => [...prev, userMsg]);
+    const newMessages = [...messages, userMsg];
+    setMessages(newMessages);
     setInputValue('');
     setIsTyping(true);
 
-    // Simulate thinking delay (200-800ms for realistic feel)
-    const delay = 400 + Math.random() * 400;
+    try {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          messages: newMessages.map(msg => ({ role: msg.role, text: msg.text }))
+        }),
+      });
 
-    setTimeout(() => {
-      const { response, updatedContext } = processMessage(text.trim(), context);
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to fetch AI response');
+      }
 
       const assistantMsg: ChatMessage = {
         id: crypto.randomUUID(),
         role: 'assistant',
-        text: response.text,
-        services: response.services,
-        quickReplies: response.quickReplies,
+        text: data.text,
+        quickReplies: data.quickReplies,
         timestamp: new Date(),
       };
 
       setMessages(prev => [...prev, assistantMsg]);
-      setContext(updatedContext);
+    } catch (error: any) {
+      console.error(error);
+      const errorMsg: ChatMessage = {
+        id: crypto.randomUUID(),
+        role: 'assistant',
+        text: error.message || "I'm having a little trouble connecting right now. Please try again or WhatsApp our concierge for immediate assistance.",
+        quickReplies: ['WhatsApp us'],
+        timestamp: new Date(),
+      };
+      setMessages(prev => [...prev, errorMsg]);
+    } finally {
       setIsTyping(false);
-    }, delay);
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -259,51 +270,49 @@ export default function AIAssistant() {
       {!isOpen && (
         <button
           onClick={handleOpen}
-          className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-gradient-to-br from-[#C5A059] to-[#DFBA73] text-[#0E0F12] flex items-center justify-center shadow-2xl shadow-[#C5A059]/30 hover:scale-110 transition-transform duration-300 group"
+          className="fixed bottom-6 right-6 z-50 w-16 h-16 bg-pearl text-onyx flex items-center justify-center hover:scale-105 transition-transform duration-300 group rounded-none shadow-2xl shadow-pearl/10"
           aria-label="Open AI Beauty Consultant"
         >
-          <Sparkles className="w-6 h-6 group-hover:rotate-12 transition-transform" />
-          {/* Pulse ring */}
-          <span className="absolute inset-0 rounded-full bg-[#C5A059]/20 animate-ping pointer-events-none"></span>
+          <Sparkles className="w-6 h-6" />
         </button>
       )}
 
       {/* ======= CHAT PANEL ======= */}
       {isOpen && (
         <div
-          className="fixed bottom-0 right-0 sm:bottom-6 sm:right-6 z-50 w-full sm:w-[400px] h-[100dvh] sm:h-[600px] bg-[#0E0F12] sm:rounded-2xl shadow-2xl border-0 sm:border sm:border-[#C5A059]/25 flex flex-col overflow-hidden"
+          className="fixed bottom-0 right-0 sm:bottom-6 sm:right-6 z-50 w-full sm:w-[440px] h-[100dvh] sm:h-[650px] bg-onyx sm:border border-pearl/10 flex flex-col overflow-hidden shadow-2xl shadow-onyx/50"
           style={{
             animation: 'fadeInUp 0.3s ease-out',
           }}
         >
           {/* ---- HEADER ---- */}
-          <div className="relative bg-gradient-to-r from-[#17181C] to-[#1A1C22] border-b border-[#C5A059]/20 px-4 py-3.5 flex items-center justify-between flex-shrink-0">
-            <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#C5A059] to-[#DFBA73] flex items-center justify-center shadow-lg">
-                <Bot className="w-4.5 h-4.5 text-[#0E0F12]" />
+          <div className="bg-charcoal border-b border-pearl/10 px-5 py-4 flex items-center justify-between flex-shrink-0">
+            <div className="flex items-center gap-4">
+              <div className="w-10 h-10 border border-pearl/20 bg-onyx flex items-center justify-center">
+                <Bot className="w-5 h-5 text-gold" />
               </div>
               <div>
-                <h3 className="text-[13px] font-bold text-[#FBF9F5] tracking-wide">Pearl AI Consultant</h3>
-                <div className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                  <span className="text-[10px] text-emerald-400 font-medium">Always Online</span>
+                <h3 className="text-xs font-serif text-pearl tracking-widest uppercase">Pearl AI</h3>
+                <div className="flex items-center gap-2 mt-1">
+                  <span className="w-1.5 h-1.5 bg-green-500 animate-pulse"></span>
+                  <span className="text-[9px] text-pearl/50 uppercase tracking-[0.2em]">Always Online</span>
                 </div>
               </div>
             </div>
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-2">
               <button
                 onClick={() => setIsOpen(false)}
-                className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+                className="p-2 hover:bg-pearl/5 transition-colors"
                 aria-label="Minimize chat"
               >
-                <Minimize2 className="w-4 h-4 text-[#A39E93]" />
+                <Minimize2 className="w-4 h-4 text-pearl/60" />
               </button>
               <button
                 onClick={() => setIsOpen(false)}
-                className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+                className="p-2 hover:bg-pearl/5 transition-colors"
                 aria-label="Close chat"
               >
-                <X className="w-4 h-4 text-[#A39E93]" />
+                <X className="w-4 h-4 text-pearl/60" />
               </button>
             </div>
           </div>
@@ -312,32 +321,32 @@ export default function AIAssistant() {
           <div
             ref={messagesContainerRef}
             onScroll={handleScroll}
-            className="flex-1 overflow-y-auto px-3 py-4 space-y-4 scrollbar-none"
+            className="flex-1 overflow-y-auto px-5 py-6 space-y-6 scrollbar-none"
           >
             {messages.map((msg) => (
               <div key={msg.id}>
                 {msg.role === 'user' ? (
                   /* User Message */
                   <div className="flex justify-end animate-fade-in-up">
-                    <div className="bg-gradient-to-br from-[#C5A059] to-[#DFBA73] text-[#0E0F12] rounded-2xl rounded-tr-md px-4 py-2.5 max-w-[80%] shadow-md">
-                      <p className="text-[12px] font-medium leading-relaxed">{msg.text}</p>
+                    <div className="bg-pearl text-onyx px-5 py-3.5 max-w-[80%] rounded-l-2xl rounded-tr-2xl">
+                      <p className="text-xs font-sans leading-relaxed">{msg.text}</p>
                     </div>
                   </div>
                 ) : (
                   /* Assistant Message */
-                  <div className="animate-fade-in-up">
-                    <div className="flex items-start gap-2.5">
-                      <div className="w-7 h-7 rounded-full bg-gradient-to-br from-[#C5A059] to-[#DFBA73] flex items-center justify-center flex-shrink-0 shadow-md mt-0.5">
-                        <Bot className="w-3.5 h-3.5 text-[#0E0F12]" />
+                  <div className="animate-fade-in-up space-y-4">
+                    <div className="flex items-start gap-3">
+                      <div className="w-8 h-8 rounded-full bg-pearl flex items-center justify-center flex-shrink-0 mt-1">
+                        <Bot className="w-4 h-4 text-onyx" />
                       </div>
-                      <div className="bg-[#1A1C22] border border-white/8 rounded-2xl rounded-tl-md px-4 py-3 max-w-[85%] shadow-sm">
+                      <div className="bg-charcoal border border-pearl/10 px-5 py-4 max-w-[85%] rounded-r-2xl rounded-bl-2xl">
                         <FormatText text={msg.text} />
                       </div>
                     </div>
 
-                    {/* Service Cards */}
+                    {/* Service Cards (Legacy support if the API returned structured data, but currently the new API only returns text and quickReplies) */}
                     {msg.services && msg.services.length > 0 && (
-                      <div className="ml-[38px] mt-2 grid grid-cols-1 gap-2">
+                      <div className="ml-[44px] grid grid-cols-1 gap-3">
                         {msg.services.slice(0, 3).map((service) => (
                           <ServiceCard key={service.id} service={service} />
                         ))}
@@ -346,12 +355,12 @@ export default function AIAssistant() {
 
                     {/* Quick Replies */}
                     {msg.quickReplies && msg.quickReplies.length > 0 && (
-                      <div className="ml-[38px] mt-2 flex flex-wrap gap-1.5">
+                      <div className="ml-[44px] flex flex-wrap gap-2">
                         {msg.quickReplies.map((reply, idx) => (
                           <button
                             key={idx}
                             onClick={() => handleQuickReply(reply)}
-                            className="text-[10px] font-semibold text-[#DFBA73] bg-[#14161B] border border-[#C5A059]/30 hover:border-[#C5A059] hover:bg-[#C5A059]/10 px-3 py-1.5 rounded-full transition-all"
+                            className="text-[9px] font-bold uppercase tracking-[0.1em] text-onyx bg-gold hover:bg-pearl px-4 py-2 transition-colors"
                           >
                             {reply}
                           </button>
@@ -373,53 +382,55 @@ export default function AIAssistant() {
           {showScrollDown && (
             <button
               onClick={scrollToBottom}
-              className="absolute bottom-[72px] left-1/2 -translate-x-1/2 bg-[#1A1C22] border border-[#C5A059]/30 text-[#C5A059] p-1.5 rounded-full shadow-lg hover:bg-[#C5A059]/10 transition-all z-10"
+              className="absolute bottom-[90px] left-1/2 -translate-x-1/2 bg-charcoal border border-pearl/10 text-pearl p-2 rounded-full shadow-2xl hover:bg-onyx transition-all z-10"
             >
               <ChevronDown className="w-4 h-4" />
             </button>
           )}
 
           {/* ---- INPUT BAR ---- */}
-          <div className="border-t border-white/10 bg-[#14161B] px-3 py-3 flex-shrink-0">
-            <form onSubmit={handleSubmit} className="flex items-center gap-2">
+          <div className="border-t border-pearl/10 bg-charcoal px-4 py-4 flex-shrink-0">
+            <form onSubmit={handleSubmit} className="flex items-center gap-3">
               <input
                 ref={inputRef}
                 type="text"
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
-                placeholder="Ask about hair, skin, pricing, booking..."
-                className="flex-1 bg-[#0E0F12] border border-white/10 focus:border-[#C5A059]/50 text-[#FBF9F5] text-[12px] rounded-xl px-4 py-3 outline-none transition-colors placeholder:text-[#A39E93]/60"
+                placeholder="Ask about treatments, pricing, or booking..."
+                className="flex-1 bg-onyx border border-pearl/10 focus:border-gold text-pearl text-xs px-4 py-3 outline-none transition-colors placeholder:text-pearl/30"
                 disabled={isTyping}
               />
               <button
                 type="submit"
                 disabled={!inputValue.trim() || isTyping}
-                className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#C5A059] to-[#DFBA73] text-[#0E0F12] flex items-center justify-center disabled:opacity-30 hover:shadow-lg hover:shadow-[#C5A059]/20 transition-all disabled:hover:shadow-none"
+                className="w-11 h-11 bg-pearl text-onyx flex items-center justify-center disabled:opacity-30 transition-all hover:bg-gold"
               >
                 <Send className="w-4 h-4" />
               </button>
             </form>
 
             {/* Quick Action Bar */}
-            <div className="flex items-center justify-between mt-2 px-1">
-              <Link
-                href="/book"
-                className="flex items-center gap-1 text-[9px] font-bold text-[#C5A059] hover:text-[#DFBA73] transition-colors"
-              >
-                <Calendar className="w-3 h-3" />
-                <span>BOOK NOW</span>
-              </Link>
-              <a
-                href={getWhatsAppConciergeUrl('Hi, I was chatting with the AI consultant on your website.')}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-1 text-[9px] font-bold text-emerald-400 hover:text-emerald-300 transition-colors"
-              >
-                <MessageSquare className="w-3 h-3" />
-                <span>WHATSAPP</span>
-              </a>
-              <span className="text-[8px] text-[#A39E93]/50">
-                Powered by Classic Pearl AI
+            <div className="flex items-center justify-between mt-4 px-1">
+              <div className="flex gap-4">
+                <Link
+                  href="/book"
+                  className="flex items-center gap-1.5 text-[9px] font-bold uppercase tracking-[0.2em] text-gold hover:text-pearl transition-colors"
+                >
+                  <Calendar className="w-3 h-3" />
+                  <span>Book</span>
+                </Link>
+                <a
+                  href={getWhatsAppConciergeUrl('Hi, I was chatting with the AI consultant on your website.')}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 text-[9px] font-bold uppercase tracking-[0.2em] text-pearl/50 hover:text-pearl transition-colors"
+                >
+                  <MessageSquare className="w-3 h-3" />
+                  <span>WhatsApp</span>
+                </a>
+              </div>
+              <span className="text-[8px] uppercase tracking-widest text-pearl/20">
+                Powered by Gemini
               </span>
             </div>
           </div>

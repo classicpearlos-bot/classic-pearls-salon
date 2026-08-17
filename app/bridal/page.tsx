@@ -2,10 +2,10 @@ import React from 'react';
 import Link from 'next/link';
 import { businessConfig } from '@/lib/config';
 import { getWhatsAppConciergeUrl } from '@/lib/whatsapp';
-import { Sparkles, Calendar, MessageSquare, CheckCircle2, Heart, Clock, ShieldCheck, ArrowRight } from 'lucide-react';
+import { Calendar, MessageSquare, CheckCircle2, Clock, ShieldCheck } from 'lucide-react';
 
 export const metadata = {
-  title: 'Bridal Studio & Makeover Packages | Classic Pearl Unisex Salon Bengaluru',
+  title: 'Bridal Studio & Makeover Packages | Classic Pearls Unisex Salon Bengaluru',
   description: 'Signature 18-hour waterproof HD airbrush bridal makeup, couture hair styling, and saree draping in Arekere, Bengaluru. Transparent pricing & pre-wedding trial included.',
 };
 
@@ -13,7 +13,7 @@ export default function BridalPage() {
   const packages = [
     {
       id: 'bridal-complete',
-      name: 'Signature Bridal Makeover Suite',
+      name: 'Signature Bridal Makeover',
       subtitle: 'Complete 18-Hour HD Airbrush Experience',
       regularPrice: 9500,
       memberPrice: 7999,
@@ -30,7 +30,7 @@ export default function BridalPage() {
     },
     {
       id: 'bridal-pre-care',
-      name: 'Pre-Bridal Radiance Prep Package',
+      name: 'Bridal Radiance Prep',
       subtitle: '3-Session Cellular Skin & Hair Glow',
       regularPrice: 6500,
       memberPrice: 5200,
@@ -46,7 +46,7 @@ export default function BridalPage() {
     },
     {
       id: 'bridesmaid-party',
-      name: 'Bridesmaid & Family Party Glam',
+      name: 'Bridesmaid & Family Glam',
       subtitle: 'HD Makeup & Contemporary Hair Styling',
       regularPrice: 3200,
       memberPrice: 2560,
@@ -62,104 +62,119 @@ export default function BridalPage() {
   ];
 
   return (
-    <div className="bg-[#0E0F12] text-[#FBF9F5] py-16 sm:py-24">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20">
+    <div className="bg-onyx text-pearl min-h-screen pt-32 pb-24">
+      <div className="max-w-[1400px] mx-auto px-6 md:px-12 space-y-32">
         
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto space-y-4">
-          <div className="inline-flex items-center space-x-2 bg-[#17181C] border border-[#C5A059]/40 px-3.5 py-1 rounded-full text-[10px] tracking-wider text-[#DFBA73] uppercase font-bold">
-            <Heart className="w-3 h-3 text-[#C5A059]" />
-            <span>BRIDAL MAKEUP SUITE • AREKERE, BENGALURU</span>
-          </div>
-          <h1 className="font-serif text-4xl sm:text-6xl text-[#FBF9F5]">
-            Bridal Artistry & <span className="italic text-[#DFBA73]">Makeovers</span>
+        <div className="text-center max-w-4xl mx-auto space-y-8">
+          <span className="text-[10px] tracking-[0.35em] text-gold uppercase font-bold block">
+            Bridal Suite • Arekere, Bengaluru
+          </span>
+          <h1 className="font-serif text-5xl sm:text-7xl text-pearl leading-[1.1]">
+            Bridal <span className="italic text-gold-soft">Artistry</span>
           </h1>
-          <p className="text-sm sm:text-base text-[#A39E93] font-light leading-relaxed">
+          <p className="text-sm text-pearl/60 font-light leading-relaxed max-w-2xl mx-auto">
             Flawless 18-hour waterproof HD makeup, couture bridal hair, and personalized pre-wedding skin preparation.
           </p>
         </div>
 
         {/* Hero Banner with Bridal Image */}
-        <div className="relative rounded-3xl overflow-hidden border border-[#C5A059]/30 aspect-[21/9] shadow-2xl">
+        <div className="relative border border-pearl/10 bg-charcoal aspect-[21/9] overflow-hidden group">
           <img
             src="https://images.unsplash.com/photo-1519699047748-de8e457a634e?auto=format&fit=crop&w=1600&q=80"
-            alt="Classic Pearl Bridal Studio"
-            className="w-full h-full object-cover"
+            alt="Classic Pearls Bridal Studio"
+            className="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-1000 ease-out group-hover:scale-105"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0E0F12] via-[#0E0F12]/40 to-transparent flex items-end p-8 sm:p-12">
-            <div className="max-w-xl space-y-2">
-              <span className="text-[10px] uppercase tracking-widest text-[#C5A059] font-bold">PRE-WEDDING TRIAL INCLUDED</span>
-              <h2 className="font-serif text-2xl sm:text-4xl text-[#FBF9F5]">Your Vision, Perfectly Executed</h2>
-              <p className="text-xs text-[#A39E93]">We test every shade, lash, and hairstyle in advance so you walk down the aisle in 100% confidence.</p>
+          <div className="absolute inset-0 bg-onyx/20 mix-blend-multiply pointer-events-none" />
+          
+          <div className="absolute bottom-6 left-6 right-6 flex items-end p-4 sm:p-8">
+            <div className="max-w-xl space-y-4 bg-onyx/90 backdrop-blur-md border border-pearl/10 p-6 sm:p-10">
+              <span className="text-[9px] uppercase tracking-[0.2em] text-gold font-bold block">
+                Pre-Wedding Trial Included
+              </span>
+              <h2 className="font-serif text-3xl sm:text-4xl text-pearl leading-snug">
+                Your Vision, <span className="italic text-gold-soft">Executed</span>
+              </h2>
+              <p className="text-xs text-pearl/50 font-light leading-relaxed">
+                We test every shade, lash, and hairstyle in advance so you walk down the aisle with absolute confidence.
+              </p>
             </div>
           </div>
         </div>
 
         {/* Packages Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {packages.map((pkg) => (
             <div
               key={pkg.id}
-              className={`rounded-3xl p-8 flex flex-col justify-between transition-all duration-300 relative shadow-2xl ${
+              className={`p-8 sm:p-12 flex flex-col justify-between transition-all duration-300 relative ${
                 pkg.popular
-                  ? 'bg-gradient-to-b from-[#1E2028] via-[#14161B] to-[#14161B] border-2 border-[#C5A059] scale-[1.02]'
-                  : 'bg-[#14161B] border border-white/10 hover:border-[#C5A059]/40'
+                  ? 'bg-charcoal border-2 border-gold scale-100 lg:scale-[1.02] z-10'
+                  : 'bg-transparent border border-pearl/10 hover:border-gold'
               }`}
             >
               {pkg.popular && (
-                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#C5A059] to-[#DFBA73] text-[#0E0F12] px-4 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider shadow">
-                  Most Popular Bridal Choice
+                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-pearl text-onyx px-4 py-1 text-[9px] font-bold uppercase tracking-[0.2em]">
+                  Most Popular
                 </div>
               )}
 
-              <div className="space-y-6">
+              <div className="space-y-8">
                 <div>
-                  <span className="text-[10px] uppercase tracking-wider text-[#C5A059] font-bold block">{pkg.subtitle}</span>
-                  <h3 className="font-serif text-2xl text-[#FBF9F5] mt-1">{pkg.name}</h3>
-                  <span className="text-xs text-[#A39E93] flex items-center gap-1 mt-1">
-                    <Clock className="w-3.5 h-3.5 text-[#C5A059]" /> {pkg.duration}
+                  <span className="text-[9px] uppercase tracking-[0.2em] text-gold block">
+                    {pkg.subtitle}
+                  </span>
+                  <h3 className="font-serif text-3xl text-pearl mt-2 leading-tight">
+                    {pkg.name}
+                  </h3>
+                  <span className="text-xs text-pearl/50 flex items-center gap-2 mt-4 font-light uppercase tracking-wider font-sans">
+                    <Clock className="w-3 h-3 text-gold" /> {pkg.duration}
                   </span>
                 </div>
 
                 {/* Price */}
-                <div className="p-4 bg-[#0E0F12] border border-white/5 rounded-2xl">
-                  <span className="text-[10px] text-[#A39E93] block">Regular: <s className="text-[#A39E93]">₹{pkg.regularPrice}</s></span>
-                  <div className="flex items-baseline gap-1.5 mt-0.5">
-                    <span className="font-serif text-3xl font-bold text-[#DFBA73]">₹{pkg.memberPrice}</span>
-                    <span className="text-[10px] font-bold text-emerald-400 uppercase">Member Rate</span>
+                <div className="p-6 border border-pearl/10 bg-onyx space-y-2">
+                  <span className="text-[10px] text-pearl/40 block font-sans tracking-wide uppercase">
+                    Standard Rate: <s className="text-pearl/30">₹{pkg.regularPrice}</s>
+                  </span>
+                  <div className="flex items-baseline gap-2">
+                    <span className="font-serif text-4xl text-gold">₹{pkg.memberPrice}</span>
+                    <span className="text-[9px] font-bold text-pearl/50 uppercase tracking-widest">Member Rate</span>
                   </div>
-                  <span className="text-[10px] text-emerald-400 block mt-1">Save ₹{pkg.regularPrice - pkg.memberPrice} with Pearl Pass</span>
+                  <span className="text-[10px] text-pearl/50 block font-serif italic pt-2">
+                    Save ₹{pkg.regularPrice - pkg.memberPrice} with Pearl Pass
+                  </span>
                 </div>
 
                 {/* Features */}
-                <ul className="space-y-3 text-xs text-[#FBF9F5]">
+                <ul className="space-y-4 pt-4 border-t border-pearl/10">
                   {pkg.features.map((feat, idx) => (
-                    <li key={idx} className="flex items-start gap-2.5">
-                      <CheckCircle2 className="w-4 h-4 text-[#C5A059] flex-shrink-0 mt-0.5" />
-                      <span>{feat}</span>
+                    <li key={idx} className="flex items-start gap-4 text-xs text-pearl/80">
+                      <span className="w-1.5 h-1.5 bg-gold mt-1.5 rounded-full flex-shrink-0"></span>
+                      <span className="leading-relaxed font-light">{feat}</span>
                     </li>
                   ))}
                 </ul>
               </div>
 
               {/* Action Buttons */}
-              <div className="pt-8 space-y-3">
+              <div className="pt-12 space-y-4">
                 <Link
                   href={`/book?service=bridal-complete-package`}
-                  className="w-full flex items-center justify-center space-x-2 bg-gradient-to-r from-[#C5A059] to-[#DFBA73] text-[#0E0F12] py-3.5 rounded-xl text-xs font-bold uppercase tracking-wider shadow-lg shadow-[#C5A059]/20"
+                  className="w-full flex items-center justify-center space-x-3 bg-pearl hover:bg-gold text-onyx py-4 text-[10px] font-bold uppercase tracking-[0.2em] transition-colors"
                 >
-                  <Calendar className="w-4 h-4" />
-                  <span>Reserve Bridal Date</span>
+                  <Calendar className="w-3.5 h-3.5" />
+                  <span>Reserve Date</span>
                 </Link>
 
                 <a
-                  href={getWhatsAppConciergeUrl(`Hello Classic Pearl Bridal Team, I would like to consult for ${pkg.name}.`)}
+                  href={getWhatsAppConciergeUrl(`Hello Classic Pearls Bridal Team, I would like to consult for ${pkg.name}.`)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full flex items-center justify-center space-x-2 bg-[#17181C] hover:bg-[#22242B] border border-[#C5A059]/40 text-[#DFBA73] py-3 rounded-xl text-xs font-semibold uppercase tracking-wider"
+                  className="w-full flex items-center justify-center space-x-3 bg-transparent hover:bg-charcoal border border-pearl/20 text-pearl py-4 text-[10px] font-bold uppercase tracking-[0.2em] transition-colors"
                 >
-                  <MessageSquare className="w-4 h-4 text-emerald-400" />
-                  <span>WhatsApp Bridal Stylist</span>
+                  <MessageSquare className="w-3.5 h-3.5 text-gold" />
+                  <span>Consult Stylist</span>
                 </a>
               </div>
             </div>
@@ -167,11 +182,13 @@ export default function BridalPage() {
         </div>
 
         {/* Venue / Destination Travel Alert */}
-        <div className="bg-[#14161B] border border-white/10 rounded-2xl p-8 text-center space-y-3 max-w-3xl mx-auto shadow-xl">
-          <ShieldCheck className="w-8 h-8 text-[#C5A059] mx-auto" />
-          <h3 className="font-serif text-2xl text-[#FBF9F5]">Destination & On-Venue Bridal Services</h3>
-          <p className="text-xs text-[#A39E93] leading-relaxed">
-            Our bridal team is available for destination weddings and on-venue hair & makeup services across Bengaluru and South India. Contact our bridal coordinator on WhatsApp for custom group estimates.
+        <div className="bg-charcoal border border-pearl/10 p-12 sm:p-16 text-center space-y-6 max-w-4xl mx-auto">
+          <ShieldCheck className="w-8 h-8 text-gold mx-auto" />
+          <h3 className="font-serif text-3xl sm:text-4xl text-pearl">
+            Destination & On-Venue <span className="italic text-gold-soft">Services</span>
+          </h3>
+          <p className="text-sm text-pearl/50 leading-relaxed font-light max-w-2xl mx-auto">
+            Our bridal team is available for destination weddings and on-venue hair & makeup services across Bengaluru and South India. Connect with our bridal coordinator for custom estimates.
           </p>
         </div>
 

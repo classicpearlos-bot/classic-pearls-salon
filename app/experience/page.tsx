@@ -8,24 +8,20 @@ import {
   Sparkles,
   Scissors,
   ShieldCheck,
-  CheckCircle2,
   ArrowRight,
   MapPin,
   Clock,
   Phone,
   MessageCircle,
-  Star,
-  Award,
   Search,
-  HeartHandshake,
-  Calendar,
+  Award,
   ExternalLink,
 } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'The Salon Experience & 5 Standards of Excellence | Classic Pearl Unisex Salon Bengaluru',
+  title: 'The Salon Experience & 5 Standards of Excellence | Classic Pearls Unisex Salon Bengaluru',
   description:
-    'Experience the elevated salon standard at Classic Pearl Unisex Salon in Arekere, Bengaluru. Explore our 5 pillars: personal consultations, 100% certified products, master stylists, hospital-grade hygiene, and transparent pricing.',
+    'Experience the elevated salon standard at Classic Pearls Unisex Salon in Arekere, Bengaluru. Explore our 5 pillars: personal consultations, certified products, master stylists, hospital-grade hygiene, and transparent pricing.',
 };
 
 export default function ExperiencePage() {
@@ -121,140 +117,94 @@ export default function ExperiencePage() {
   ];
 
   return (
-    <div className="bg-[#0E0F12] text-[#FBF9F5] py-16 sm:py-24">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24">
+    <div className="bg-onyx text-pearl min-h-screen pt-32 pb-24">
+      <div className="max-w-[1400px] mx-auto px-6 md:px-12 space-y-32">
         
         {/* ================================================================= */}
         {/* HERO SECTION */}
         {/* ================================================================= */}
-        <section className="text-center max-w-4xl mx-auto space-y-6">
-          <div className="inline-flex items-center space-x-2 bg-[#17181C] border border-[#C5A059]/40 px-4 py-1.5 rounded-full text-[11px] tracking-[0.25em] text-[#DFBA73] uppercase font-bold shadow-sm">
-            <Star className="w-3.5 h-3.5 text-[#C5A059] fill-[#C5A059]" />
-            <span>THE CLASSIC PEARL STANDARD • AREKERE, BENGALURU</span>
-          </div>
+        <section className="text-center max-w-4xl mx-auto space-y-8">
+          <span className="text-[10px] tracking-[0.35em] text-gold uppercase font-bold block">
+            The Classic Pearls Standard
+          </span>
 
-          <h1 className="font-serif text-4xl sm:text-6xl lg:text-7xl text-[#FBF9F5] leading-[1.15] tracking-tight">
-            The Classic Pearl <span className="italic text-[#DFBA73]">Experience</span>
+          <h1 className="font-serif text-5xl sm:text-7xl text-pearl leading-[1.1]">
+            The Atelier <span className="italic text-gold-soft">Experience</span>
           </h1>
 
-          <p className="text-base sm:text-lg text-[#A39E93] font-light leading-relaxed max-w-2xl mx-auto">
+          <p className="text-sm text-pearl/60 font-light leading-relaxed max-w-2xl mx-auto">
             Discover Bengaluru’s standard in hair artistry, aesthetic skincare, and bespoke hospitality.
-            Every visit to <span className="text-[#FBF9F5] font-medium">Classic Pearl Unisex Salon</span> is an unhurried ritual of precision, hygiene, and elevated care.
+            Every visit to <span className="text-pearl font-normal">Classic Pearls Unisex Salon</span> is an unhurried ritual of precision, hygiene, and elevated care.
           </p>
-
-          {/* Trust Highlights */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 pt-6 max-w-3xl mx-auto">
-            <div className="bg-[#14161B] border border-white/5 p-4 rounded-xl text-center">
-              <div className="text-[#DFBA73] font-serif text-2xl font-bold">4.9 ★</div>
-              <p className="text-[11px] text-[#A39E93] mt-0.5 uppercase tracking-wider">380+ Google Reviews</p>
-            </div>
-            <div className="bg-[#14161B] border border-white/5 p-4 rounded-xl text-center">
-              <div className="text-[#DFBA73] font-serif text-2xl font-bold">100%</div>
-              <p className="text-[11px] text-[#A39E93] mt-0.5 uppercase tracking-wider">Certified Formulations</p>
-            </div>
-            <div className="bg-[#14161B] border border-white/5 p-4 rounded-xl text-center">
-              <div className="text-[#DFBA73] font-serif text-2xl font-bold">7 Days</div>
-              <p className="text-[11px] text-[#A39E93] mt-0.5 uppercase tracking-wider">10 AM – 9 PM Everyday</p>
-            </div>
-            <div className="bg-[#14161B] border border-white/5 p-4 rounded-xl text-center">
-              <div className="text-[#DFBA73] font-serif text-2xl font-bold">Arekere</div>
-              <p className="text-[11px] text-[#A39E93] mt-0.5 uppercase tracking-wider">80ft BDA Main Road</p>
-            </div>
-          </div>
         </section>
 
         {/* ================================================================= */}
         {/* STOREFRONT SHOWCASE SECTION */}
         {/* ================================================================= */}
         <section className="space-y-6">
-          <div className="relative rounded-3xl overflow-hidden border-2 border-[#C5A059]/30 bg-[#14161B] shadow-2xl">
+          <div className="relative overflow-hidden border border-pearl/10 bg-charcoal">
             {/* Image Container with Luxury Overlay */}
-            <div className="relative aspect-[16/9] md:aspect-[21/9] w-full overflow-hidden">
+            <div className="relative aspect-[16/9] md:aspect-[21/9] w-full overflow-hidden group">
               <Image
                 src="/salon-storefront.jpg"
-                alt="Classic Pearl Unisex Salon storefront on 80ft BDA Main Road, Arekere, Bengaluru"
+                alt="Classic Pearls Unisex Salon storefront on 80ft BDA Main Road, Arekere, Bengaluru"
                 fill
                 priority
-                className="object-cover object-center transition-transform duration-700 hover:scale-[1.02]"
+                className="object-cover object-center grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-1000 ease-out group-hover:scale-105"
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0E0F12] via-[#0E0F12]/35 to-transparent pointer-events-none" />
+              <div className="absolute inset-0 bg-onyx/20 mix-blend-multiply pointer-events-none" />
               
-              {/* Top Floating Badge */}
-              <div className="absolute top-4 left-4 sm:top-6 sm:left-6">
-                <span className="inline-flex items-center space-x-1.5 bg-[#0E0F12]/85 backdrop-blur-md border border-[#C5A059]/50 text-[#DFBA73] text-[10px] sm:text-xs font-bold uppercase tracking-widest px-3.5 py-1.5 rounded-full shadow-lg">
-                  <MapPin className="w-3.5 h-3.5 text-[#C5A059]" />
-                  <span>VISIT OUR AREKERE SALON</span>
-                </span>
-              </div>
-
               {/* Bottom Caption Overlay */}
-              <div className="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
-                <div className="max-w-2xl bg-[#0E0F12]/90 backdrop-blur-md border border-[#C5A059]/30 p-4 sm:p-5 rounded-2xl">
-                  <span className="text-[10px] uppercase tracking-[0.2em] text-[#C5A059] font-bold block mb-1">
-                    OUR SIGNATURE LOCATION
+              <div className="absolute bottom-6 left-6 right-6 flex flex-col md:flex-row md:items-end justify-between gap-6">
+                <div className="max-w-2xl bg-onyx/90 backdrop-blur-md border border-pearl/10 p-6 sm:p-8">
+                  <span className="text-[9px] uppercase tracking-[0.2em] text-gold block mb-2 font-bold">
+                    Our Signature Location
                   </span>
-                  <p className="font-serif text-lg sm:text-2xl text-[#FBF9F5] font-medium leading-snug">
-                    Our Salon on 80ft BDA Main Road, Arekere, Bengaluru
+                  <p className="font-serif text-2xl sm:text-3xl text-pearl leading-snug">
+                    Arekere, Bengaluru
                   </p>
-                  <p className="text-xs text-[#A39E93] mt-1 font-light flex items-center gap-1.5">
-                    <MapPin className="w-3.5 h-3.5 text-[#C5A059] flex-shrink-0" />
-                    <span>{businessConfig.address.street}, {businessConfig.address.area}, Bengaluru {businessConfig.address.postalCode}</span>
+                  <p className="text-xs text-pearl/50 mt-2 font-light tracking-wide font-sans uppercase">
+                    {businessConfig.address.street}, {businessConfig.address.area}, Bengaluru {businessConfig.address.postalCode}
                   </p>
                 </div>
 
                 {/* Quick Storefront Actions */}
-                <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+                <div className="flex flex-col sm:flex-row gap-4">
                   <a
                     href={businessConfig.mapsUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center space-x-2 bg-[#17181C]/90 hover:bg-[#22242B] border border-[#C5A059]/40 text-[#DFBA73] px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider backdrop-blur-md shadow-lg transition-all"
+                    className="bg-transparent hover:bg-charcoal border border-pearl/20 text-pearl px-6 py-4 text-[10px] font-bold uppercase tracking-[0.2em] flex items-center gap-3 transition-colors"
                   >
-                    <span>Get Directions</span>
-                    <ExternalLink className="w-3.5 h-3.5" />
-                  </a>
-                  <a
-                    href={`tel:${businessConfig.phoneRaw}`}
-                    className="inline-flex items-center space-x-2 bg-gradient-to-r from-[#C5A059] to-[#DFBA73] text-[#0E0F12] px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider shadow-lg transition-all"
-                  >
-                    <Phone className="w-3.5 h-3.5" />
-                    <span>Call Salon</span>
+                    <span>Directions</span>
+                    <ExternalLink className="w-3.5 h-3.5 text-gold" />
                   </a>
                 </div>
               </div>
             </div>
 
             {/* Quick Location & Schedule Strip */}
-            <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-white/10 border-t border-[#C5A059]/20 bg-[#17181C]">
-              <div className="p-4 sm:p-5 flex items-start space-x-3.5">
-                <MapPin className="w-5 h-5 text-[#C5A059] flex-shrink-0 mt-0.5" />
-                <div>
-                  <span className="text-[10px] uppercase tracking-wider text-[#A39E93] font-bold block">Location</span>
-                  <p className="text-xs text-[#FBF9F5] font-medium leading-relaxed mt-0.5">
-                    1st Floor, MNK Arcade, 80ft BDA Main Rd, Beside Camry Hospital, Arekere
-                  </p>
-                </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-pearl/10 border-t border-pearl/10 bg-charcoal">
+              <div className="p-8 space-y-2">
+                <span className="text-[9px] uppercase tracking-[0.2em] text-gold block">Location</span>
+                <p className="text-xs text-pearl leading-relaxed">
+                  1st Floor, MNK Arcade, 80ft BDA Main Rd, Beside Camry Hospital, Arekere
+                </p>
               </div>
 
-              <div className="p-4 sm:p-5 flex items-start space-x-3.5">
-                <Clock className="w-5 h-5 text-[#C5A059] flex-shrink-0 mt-0.5" />
-                <div>
-                  <span className="text-[10px] uppercase tracking-wider text-[#A39E93] font-bold block">Operating Hours</span>
-                  <p className="text-xs text-[#FBF9F5] font-medium leading-relaxed mt-0.5">
-                    10:00 AM – 09:00 PM • Open Everyday (Mon–Sun)
-                  </p>
-                </div>
+              <div className="p-8 space-y-2">
+                <span className="text-[9px] uppercase tracking-[0.2em] text-gold block">Operating Hours</span>
+                <p className="text-xs text-pearl leading-relaxed">
+                  10:00 AM – 09:00 PM<br/>Monday – Sunday
+                </p>
               </div>
 
-              <div className="p-4 sm:p-5 flex items-start space-x-3.5">
-                <Phone className="w-5 h-5 text-[#C5A059] flex-shrink-0 mt-0.5" />
-                <div>
-                  <span className="text-[10px] uppercase tracking-wider text-[#A39E93] font-bold block">Direct Contact</span>
-                  <p className="text-xs text-[#FBF9F5] font-medium leading-relaxed mt-0.5">
-                    +91 83107 30322 • Walk-ins & Appointments Welcome
-                  </p>
-                </div>
+              <div className="p-8 space-y-2">
+                <span className="text-[9px] uppercase tracking-[0.2em] text-gold block">Contact</span>
+                <p className="text-xs text-pearl leading-relaxed">
+                  {businessConfig.phone}<br/>Walk-ins & Appointments
+                </p>
               </div>
             </div>
           </div>
@@ -263,64 +213,56 @@ export default function ExperiencePage() {
         {/* ================================================================= */}
         {/* 5 PILLARS OF OUR STANDARD */}
         {/* ================================================================= */}
-        <section className="space-y-12">
-          <div className="text-center max-w-3xl mx-auto space-y-4">
-            <span className="text-[10px] tracking-[0.3em] text-[#C5A059] uppercase font-bold block">
-              OUR UNCOMPROMISING BENCHMARKS
+        <section className="space-y-16">
+          <div className="text-center max-w-3xl mx-auto space-y-6">
+            <span className="text-[10px] tracking-[0.3em] text-gold uppercase font-bold block">
+              Uncompromising Benchmarks
             </span>
-            <h2 className="font-serif text-3xl sm:text-5xl text-[#FBF9F5]">
-              5 Pillars of Our <span className="italic text-[#DFBA73]">Standard</span>
+            <h2 className="font-serif text-4xl sm:text-5xl text-pearl">
+              Pillars of <span className="italic text-gold-soft">Excellence</span>
             </h2>
-            <p className="text-sm text-[#A39E93] font-light leading-relaxed">
-              Every haircut, color transformation, texture treatment, and skin ritual at Classic Pearl Unisex Salon is executed to these five fundamental commitments.
+            <p className="text-sm text-pearl/50 font-light leading-relaxed">
+              Every haircut, color transformation, texture treatment, and skin ritual at Classic Pearls Unisex Salon is executed to these five fundamental commitments.
             </p>
           </div>
 
-          <div className="space-y-6 max-w-5xl mx-auto">
+          <div className="space-y-8 max-w-5xl mx-auto">
             {pillars.map((p) => {
               const IconComponent = p.icon;
               return (
                 <div
                   key={p.num}
-                  className="bg-[#14161B] border border-white/10 hover:border-[#C5A059]/60 rounded-2xl p-6 sm:p-8 transition-all duration-300 shadow-xl hover:shadow-[#C5A059]/10 group"
+                  className="bg-charcoal border border-pearl/10 p-8 sm:p-12 transition-all duration-300 hover:border-gold group"
                 >
-                  <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-6">
+                  <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-8">
                     {/* Number and Header */}
-                    <div className="flex items-start gap-4 sm:gap-6">
+                    <div className="flex items-start gap-6 sm:gap-8">
                       <div className="flex flex-col items-center">
-                        <span className="font-serif text-4xl sm:text-5xl font-bold text-[#C5A059] group-hover:text-[#DFBA73] transition-colors flex-shrink-0">
+                        <span className="font-serif text-5xl sm:text-6xl text-gold group-hover:text-gold-soft transition-colors flex-shrink-0">
                           {p.num}
                         </span>
-                        <div className="w-8 h-0.5 bg-[#C5A059]/30 mt-2 rounded-full" />
                       </div>
 
-                      <div className="space-y-2">
-                        <div className="flex flex-wrap items-center gap-2">
-                          <span className="text-[10px] uppercase tracking-widest text-[#C5A059] font-bold px-2.5 py-0.5 bg-[#17181C] border border-[#C5A059]/30 rounded-md">
-                            {p.badge}
-                          </span>
-                        </div>
-                        <h3 className="font-serif text-2xl sm:text-3xl text-[#FBF9F5] leading-snug group-hover:text-[#DFBA73] transition-colors">
+                      <div className="space-y-4">
+                        <span className="text-[9px] uppercase tracking-[0.2em] text-gold block">
+                          {p.badge}
+                        </span>
+                        <h3 className="font-serif text-3xl sm:text-4xl text-pearl leading-snug">
                           {p.title}
                         </h3>
-                        <p className="text-xs sm:text-sm text-[#A39E93] leading-relaxed font-light pt-1 max-w-2xl">
+                        <p className="text-xs text-pearl/60 leading-relaxed font-light max-w-2xl">
                           {p.desc}
                         </p>
                       </div>
                     </div>
-
-                    {/* Icon Accent */}
-                    <div className="hidden lg:flex items-center justify-center w-14 h-14 rounded-2xl bg-[#17181C] border border-[#C5A059]/30 group-hover:border-[#C5A059] group-hover:scale-105 transition-all flex-shrink-0">
-                      <IconComponent className="w-6 h-6 text-[#DFBA73]" />
-                    </div>
                   </div>
 
                   {/* Feature Checkpoints */}
-                  <div className="mt-6 pt-6 border-t border-white/5 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div className="mt-8 pt-8 border-t border-pearl/10 grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {p.highlights.map((h, i) => (
-                      <div key={i} className="flex items-start space-x-2.5 text-xs text-[#FBF9F5]/90">
-                        <CheckCircle2 className="w-4 h-4 text-[#C5A059] flex-shrink-0 mt-0.5" />
-                        <span>{h}</span>
+                      <div key={i} className="flex items-start space-x-4 text-xs text-pearl/80">
+                        <span className="w-1.5 h-1.5 bg-gold mt-1.5 rounded-full flex-shrink-0"></span>
+                        <span className="leading-relaxed">{h}</span>
                       </div>
                     ))}
                   </div>
@@ -333,32 +275,29 @@ export default function ExperiencePage() {
         {/* ================================================================= */}
         {/* THE GUEST EXPERIENCE JOURNEY */}
         {/* ================================================================= */}
-        <section className="bg-gradient-to-b from-[#14161B] to-[#17181C] border border-[#C5A059]/20 rounded-3xl p-8 sm:p-12 shadow-2xl">
-          <div className="text-center max-w-2xl mx-auto space-y-3 mb-12">
-            <span className="text-[10px] tracking-[0.3em] text-[#C5A059] uppercase font-bold block">
-              YOUR VISIT BLUEPRINT
+        <section className="bg-charcoal border border-pearl/10 p-12 sm:p-20">
+          <div className="text-center max-w-2xl mx-auto space-y-6 mb-16">
+            <span className="text-[10px] tracking-[0.3em] text-gold uppercase font-bold block">
+              The Journey
             </span>
-            <h2 className="font-serif text-3xl sm:text-4xl text-[#FBF9F5]">
-              What to Expect on <span className="italic text-[#DFBA73]">Your Visit</span>
+            <h2 className="font-serif text-4xl sm:text-5xl text-pearl">
+              Your <span className="italic text-gold-soft">Blueprint</span>
             </h2>
-            <p className="text-xs sm:text-sm text-[#A39E93] font-light">
-              From the moment you step into our 1st-floor salon in Arekere, your experience is smooth, restorative, and attentive.
-            </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {journeySteps.map((j) => (
               <div
                 key={j.step}
-                className="bg-[#0E0F12] border border-white/5 hover:border-[#C5A059]/40 p-6 rounded-2xl space-y-3 transition-all relative group"
+                className="border-l border-pearl/20 pl-6 space-y-4"
               >
-                <span className="text-xs font-mono font-bold text-[#C5A059] block tracking-wider">
-                  STEP {j.step}
+                <span className="text-[10px] font-sans font-bold text-gold block tracking-[0.2em] uppercase">
+                  Phase {j.step}
                 </span>
-                <h3 className="font-serif text-xl text-[#FBF9F5] group-hover:text-[#DFBA73] transition-colors">
+                <h3 className="font-serif text-2xl text-pearl">
                   {j.title}
                 </h3>
-                <p className="text-xs text-[#A39E93] leading-relaxed font-light">
+                <p className="text-xs text-pearl/50 leading-relaxed font-light">
                   {j.desc}
                 </p>
               </div>
@@ -369,56 +308,34 @@ export default function ExperiencePage() {
         {/* ================================================================= */}
         {/* BOTTOM CTA */}
         {/* ================================================================= */}
-        <section className="bg-gradient-to-r from-[#17181C] via-[#1E2028] to-[#17181C] border-2 border-[#C5A059]/40 rounded-3xl p-10 sm:p-14 text-center space-y-8 max-w-4xl mx-auto shadow-2xl relative overflow-hidden">
-          <div className="space-y-3 max-w-2xl mx-auto">
-            <span className="text-[10px] tracking-[0.3em] text-[#C5A059] uppercase font-bold block">
-              RESERVE YOUR BESPOKE SESSION
-            </span>
-            <h2 className="font-serif text-3xl sm:text-5xl text-[#FBF9F5]">
-              Ready for the Classic Pearl <span className="italic text-[#DFBA73]">Standard</span>?
+        <section className="text-center space-y-12 max-w-4xl mx-auto pt-16 border-t border-pearl/10">
+          <div className="space-y-6 max-w-2xl mx-auto">
+            <h2 className="font-serif text-4xl sm:text-5xl text-pearl">
+              Ready for the Classic Pearls <span className="italic text-gold-soft">Standard</span>?
             </h2>
-            <p className="text-xs sm:text-sm text-[#A39E93] font-light leading-relaxed">
-              Book your customized appointment online or connect directly with our salon concierge on WhatsApp for prompt scheduling.
+            <p className="text-sm text-pearl/50 font-light leading-relaxed">
+              Book your customized appointment online or connect directly with our salon concierge for prompt scheduling.
             </p>
           </div>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
             <Link
               href="/book"
-              className="w-full sm:w-auto inline-flex items-center justify-center space-x-2.5 bg-gradient-to-r from-[#C5A059] to-[#DFBA73] hover:from-[#DFBA73] hover:to-[#C5A059] text-[#0E0F12] px-8 py-4 rounded-xl text-xs font-bold uppercase tracking-wider shadow-xl shadow-[#C5A059]/20 transition-all"
+              className="bg-pearl text-onyx hover:bg-gold px-8 py-4 text-[10px] font-bold uppercase tracking-[0.2em] flex items-center justify-center gap-3 transition-colors w-full sm:w-auto"
             >
-              <Calendar className="w-4 h-4 text-[#0E0F12]" />
-              <span>Book Your Experience</span>
-              <ArrowRight className="w-4 h-4 text-[#0E0F12]" />
+              <span>Reserve Your Experience</span>
+              <ArrowRight className="w-4 h-4" />
             </Link>
 
             <a
               href={getWhatsAppConciergeUrl('Hello Classic Pearl Unisex Salon, I would like to book a salon experience.')}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full sm:w-auto inline-flex items-center justify-center space-x-2.5 bg-[#0E0F12] hover:bg-[#22242B] border border-[#C5A059]/50 text-[#DFBA73] px-8 py-4 rounded-xl text-xs font-bold uppercase tracking-wider transition-all"
+              className="bg-transparent hover:bg-charcoal border border-pearl/20 text-pearl px-8 py-4 text-[10px] font-bold uppercase tracking-[0.2em] flex items-center justify-center gap-3 transition-colors w-full sm:w-auto"
             >
-              <MessageCircle className="w-4 h-4 text-emerald-400" />
+              <MessageCircle className="w-4 h-4 text-gold" />
               <span>WhatsApp Concierge</span>
             </a>
-          </div>
-
-          {/* Footer Info Strip */}
-          <div className="pt-6 border-t border-white/10 flex flex-wrap items-center justify-center gap-6 text-[11px] text-[#A39E93]">
-            <span className="flex items-center gap-1.5">
-              <MapPin className="w-3.5 h-3.5 text-[#C5A059]" />
-              MNK Arcade, 80ft BDA Main Rd, Arekere, Bengaluru
-            </span>
-            <span className="hidden sm:inline text-white/20">•</span>
-            <span className="flex items-center gap-1.5">
-              <Clock className="w-3.5 h-3.5 text-[#C5A059]" />
-              10:00 AM – 09:00 PM Everyday
-            </span>
-            <span className="hidden sm:inline text-white/20">•</span>
-            <span className="flex items-center gap-1.5">
-              <Phone className="w-3.5 h-3.5 text-[#C5A059]" />
-              +91 83107 30322
-            </span>
           </div>
         </section>
 

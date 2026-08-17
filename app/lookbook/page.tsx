@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { LOOKBOOK_ITEMS } from '@/data/lookbook';
 import BeforeAfterSlider from '@/components/ui/BeforeAfterSlider';
-import { Sparkles, Calendar, ArrowRight, Tag } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 export default function LookbookPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
@@ -14,42 +14,43 @@ export default function LookbookPage() {
   );
 
   return (
-    <div className="bg-[#0E0F12] text-[#FBF9F5] py-16 sm:py-24">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+    <div className="bg-onyx text-pearl min-h-screen pt-32 pb-24">
+      <div className="max-w-[1400px] mx-auto px-6 md:px-12">
         
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto space-y-4">
-          <div className="inline-flex items-center space-x-2 bg-[#17181C] border border-[#C5A059]/40 px-3.5 py-1 rounded-full text-[10px] tracking-wider text-[#DFBA73] uppercase font-bold">
-            <Sparkles className="w-3 h-3 text-[#C5A059]" />
-            <span>REAL CLIENT RESULTS</span>
-          </div>
-          <h1 className="font-serif text-4xl sm:text-6xl text-[#FBF9F5]">
-            Transformations <span className="italic text-[#DFBA73]">Lookbook</span>
+        <div className="text-center max-w-4xl mx-auto space-y-8 mb-24">
+          <span className="text-[10px] tracking-[0.35em] text-gold uppercase font-bold block">
+            The Archive
+          </span>
+          <h1 className="font-serif text-5xl sm:text-7xl text-pearl leading-[1.1]">
+            Signature <span className="italic text-gold-soft">Transformations</span>
           </h1>
-          <p className="text-sm sm:text-base text-[#A39E93] font-light leading-relaxed">
-            Witness real transformations in hair color, Balayage, Nano Plastia, skin luminescence, and grooming crafted at Classic Pearl Unisex Salon.
+          <p className="text-sm text-pearl/60 font-light leading-relaxed max-w-2xl mx-auto">
+            Witness real transformations in hair color, Balayage, Nano Plastia, skin luminescence, and grooming crafted at Classic Pearls Unisex Salon.
           </p>
         </div>
 
         {/* Featured Interactive Before/After Showcase */}
-        <div className="max-w-4xl mx-auto space-y-4">
-          <div className="text-center space-y-1">
-            <span className="text-[10px] uppercase tracking-wider text-[#C5A059] font-bold">Featured Transformation</span>
-            <h2 className="font-serif text-2xl sm:text-3xl text-[#FBF9F5]">Champagne Pearl Balayage & Glaze</h2>
+        <div className="max-w-5xl mx-auto space-y-8 mb-32">
+          <div className="text-center space-y-2">
+            <span className="text-[10px] uppercase tracking-[0.3em] text-gold block">Masterwork</span>
+            <h2 className="font-serif text-3xl sm:text-4xl text-pearl">Champagne Pearl Balayage & Glaze</h2>
           </div>
-          <BeforeAfterSlider
-            beforeImage={LOOKBOOK_ITEMS[0].beforeImage || LOOKBOOK_ITEMS[0].image}
-            afterImage={LOOKBOOK_ITEMS[0].afterImage || LOOKBOOK_ITEMS[0].image}
-            beforeLabel="BEFORE"
-            afterLabel="AFTER RESULT"
-            altText="Balayage Transformation"
-          />
+          <div className="border border-pearl/10 p-2 sm:p-4 bg-charcoal">
+            <BeforeAfterSlider
+              beforeImage={LOOKBOOK_ITEMS[0].beforeImage || LOOKBOOK_ITEMS[0].image}
+              afterImage={LOOKBOOK_ITEMS[0].afterImage || LOOKBOOK_ITEMS[0].image}
+              beforeLabel="BEFORE"
+              afterLabel="AFTER"
+              altText="Balayage Transformation"
+            />
+          </div>
         </div>
 
         {/* Category Filter Bar */}
-        <div className="flex items-center justify-center gap-2 overflow-x-auto pb-2 scrollbar-none">
+        <div className="flex flex-wrap items-center justify-center gap-4 mb-20">
           {[
-            { id: 'all', label: 'All Results' },
+            { id: 'all', label: 'All Works' },
             { id: 'color', label: 'Balayage & Color' },
             { id: 'treatments', label: 'Botox & Nano Plastia' },
             { id: 'skin', label: 'Korean Glass Skin' },
@@ -59,10 +60,10 @@ export default function LookbookPage() {
             <button
               key={tab.id}
               onClick={() => setSelectedCategory(tab.id)}
-              className={`px-5 py-2 rounded-full text-xs uppercase tracking-wider font-semibold whitespace-nowrap transition-all ${
+              className={`px-6 py-2 text-[10px] uppercase tracking-[0.2em] transition-all duration-300 ${
                 selectedCategory === tab.id
-                  ? 'bg-[#C5A059] text-[#0E0F12] shadow'
-                  : 'bg-[#14161B] text-[#A39E93] hover:text-white border border-white/5'
+                  ? 'border-b border-gold text-gold-soft'
+                  : 'border-b border-transparent text-pearl/50 hover:text-pearl'
               }`}
             >
               {tab.label}
@@ -70,42 +71,50 @@ export default function LookbookPage() {
           ))}
         </div>
 
-        {/* Gallery Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Gallery Grid (Editorial Format) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-20 animate-fade-in-up">
           {filteredItems.map((item) => (
             <div
               key={item.id}
-              className="bg-[#14161B] rounded-2xl overflow-hidden border border-white/10 hover:border-[#C5A059]/40 transition-all duration-300 group shadow-xl flex flex-col justify-between"
+              className="group flex flex-col justify-between"
             >
               <div>
-                <div className="aspect-[4/3] overflow-hidden">
+                <div className="aspect-[4/5] bg-charcoal overflow-hidden relative mb-6">
                   <img
                     src={item.image}
                     alt={item.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700 group-hover:scale-105"
                   />
-                </div>
-                <div className="p-6 space-y-2">
-                  <span className="text-[10px] uppercase tracking-wider text-[#C5A059] font-bold block">
+                  <div className="absolute bottom-0 left-0 bg-onyx/80 backdrop-blur px-4 py-2 text-[9px] font-sans uppercase tracking-[0.2em] text-gold border-t border-r border-pearl/10">
                     {item.categoryLabel}
-                  </span>
-                  <h3 className="font-serif text-xl text-[#FBF9F5]">{item.title}</h3>
-                  <p className="text-xs text-[#A39E93] leading-relaxed font-light">{item.caption}</p>
+                  </div>
+                </div>
+
+                <div className="space-y-4 px-2">
+                  <h3 className="font-serif text-2xl text-pearl group-hover:text-gold-soft transition-colors">
+                    {item.title}
+                  </h3>
+                  <p className="text-xs text-pearl/50 leading-relaxed font-light">
+                    {item.caption}
+                  </p>
                 </div>
               </div>
 
               {/* Pricing & CTA */}
-              <div className="p-6 pt-0 border-t border-white/5 mt-2 flex items-center justify-between">
+              <div className="mt-8 pt-6 border-t border-pearl/5 flex items-center justify-between px-2">
                 <div>
-                  <span className="text-[10px] text-[#A39E93] line-through block">₹{item.regularPrice}</span>
-                  <span className="font-serif text-lg font-bold text-[#DFBA73]">₹{item.memberPrice} (Member)</span>
+                  <span className="font-serif text-xl text-pearl block">₹{item.memberPrice}</span>
+                  <span className="text-[9px] font-sans text-pearl/30 uppercase tracking-[0.2em]">
+                    Regular: ₹{item.regularPrice}
+                  </span>
                 </div>
 
                 <Link
                   href={`/book?service=${encodeURIComponent(item.serviceId)}`}
-                  className="bg-gradient-to-r from-[#C5A059] to-[#DFBA73] text-[#0E0F12] px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider shadow"
+                  className="text-gold hover:text-pearl transition-colors flex items-center gap-2 text-xs font-semibold tracking-[0.2em] uppercase"
                 >
-                  Book Similar
+                  <span>Book Exact</span>
+                  <ArrowRight className="w-4 h-4" />
                 </Link>
               </div>
             </div>
@@ -113,13 +122,13 @@ export default function LookbookPage() {
         </div>
 
         {/* Bottom CTA */}
-        <div className="text-center pt-8">
+        <div className="text-center pt-32">
           <Link
             href="/book"
-            className="inline-flex items-center space-x-2 bg-gradient-to-r from-[#C5A059] to-[#DFBA73] text-[#0E0F12] px-8 py-4 rounded-xl text-xs font-bold uppercase tracking-wider shadow-2xl shadow-[#C5A059]/20"
+            className="inline-flex items-center justify-center space-x-3 bg-pearl text-onyx hover:bg-gold px-12 py-5 text-[10px] font-bold tracking-[0.2em] uppercase transition-colors"
           >
-            <Calendar className="w-4 h-4" />
-            <span>Book Your Transformation</span>
+            <span>Begin Your Transformation</span>
+            <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
 
